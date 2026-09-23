@@ -1,0 +1,55 @@
+name: Feature request
+description: 사용자 가치와 완료 조건이 명확한 기능 작업을 제안합니다.
+title: "[Feature] "
+labels:
+  - type:feature
+body:
+  - type:textarea
+    id: problem
+    attributes:
+      label: 해결하려는 문제
+      description: 구현 방법보다 사용자 또는 운영상의 문제를 먼저 작성합니다.
+    validations:
+      required: true
+  - type:textarea
+    id: proposal
+    attributes:
+      label: 제안 내용
+      description: 원하는 동작과 범위를 작성합니다.
+    validations:
+      required: true
+  - type:textarea
+    id: acceptance
+    attributes:
+      label: 완료 조건
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type:dropdown
+    id: area
+    attributes:
+      label: 주요 영역
+      options:
+        - Backend
+        - Frontend
+        - AI
+        - Infra / Operations
+        - Documentation
+    validations:
+      required: true
+  - type:dropdown
+    id: priority
+    attributes:
+      label: 제안 우선순위
+      options:
+        - P0 - 즉시 대응
+        - P1 - 이번 스프린트 후보
+        - P2 - 백로그 후보
+    validations:
+      required: true
+  - type:textarea
+    id: notes
+    attributes:
+      label: 참고 자료와 제약

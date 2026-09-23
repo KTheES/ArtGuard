@@ -1,0 +1,55 @@
+name: Bug report
+description: 재현 가능한 결함과 회귀 문제를 등록합니다.
+title: "[Bug] "
+labels:
+  - type:bug
+body:
+  - type:markdown
+    attributes:
+      value: |
+        재현 정보와 영향 범위를 구체적으로 작성해 주세요. 비밀값과 개인정보는 첨부하지 않습니다.
+  - type:textarea
+    id: summary
+    attributes:
+      label: 문제 설명
+      description: 실제 동작과 기대 동작의 차이를 작성합니다.
+      placeholder: 무엇이 잘못되었으며 어떤 영향이 있나요?
+    validations:
+      required: true
+  - type:textarea
+    id: reproduce
+    attributes:
+      label: 재현 절차
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type:textarea
+    id: expected
+    attributes:
+      label: 기대 결과
+    validations:
+      required: true
+  - type:textarea
+    id: environment
+    attributes:
+      label: 실행 환경
+      placeholder: OS, 브라우저, Java/Python/Node 버전, 관련 설정
+    validations:
+      required: true
+  - type:textarea
+    id: evidence
+    attributes:
+      label: 로그 또는 증거
+      description: 민감정보를 제거한 로그, 스크린샷, 관련 링크를 첨부합니다.
+  - type:checkboxes
+    id: checks
+    attributes:
+      label: 확인 사항
+      options:
+        - label: 동일한 이슈가 이미 등록되어 있지 않은지 확인했습니다.
+          required: true
+        - label: 로그와 첨부물에서 비밀값·개인정보를 제거했습니다.
+          required: true

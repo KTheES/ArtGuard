@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 프로젝트 기획 문서
+    url: https://github.com/KTheES/copyright_detect
+    about: 제안서, PRD, ERD와 학기 마일스톤은 기획 문서 저장소에서 확인합니다.
