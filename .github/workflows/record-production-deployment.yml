@@ -1,0 +1,70 @@
+name: Record Production Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Deployed commit SHA or branch (blank uses the selected workflow ref)
+        required: false
+        default: ""
+      outcome:
+        description: Actual deployment result
+        required: true
+        type: choice
+        options:
+          - success
+          - failure
+          - error
+        default: success
+      description:
+        description: Release note or external deployment URL
+        required: false
+        default: "Production deployment recorded manually"
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  record:
+    name: Record the real deployment result
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Create deployment and terminal status
+        uses: actions/github-script@v7
+        env:
+          DEPLOY_REF: ${{ inputs.ref || github.sha }}
+          DEPLOY_OUTCOME: ${{ inputs.outcome }}
+          DEPLOY_DESCRIPTION: ${{ inputs.description }}
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: process.env.DEPLOY_REF,
+              environment: "production",
+              auto_merge: false,
+              required_contexts: [],
+              description: process.env.DEPLOY_DESCRIPTION,
+              transient_environment: false,
+              production_environment: true,
+            });
+
+            if (deployment.status !== 201) {
+              core.setFailed(`Deployment creation returned HTTP ${deployment.status}`);
+              return;
+            }
+
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.data.id,
+              state: process.env.DEPLOY_OUTCOME,
+              environment: "production",
+              description: process.env.DEPLOY_DESCRIPTION.slice(0, 140),
+              log_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              auto_inactive: process.env.DEPLOY_OUTCOME === "success",
+            });
+
+            core.notice(`Recorded deployment ${deployment.data.id} for ${deployment.data.sha}`);

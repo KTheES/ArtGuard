@@ -1,0 +1,546 @@
+{
+  "schema": "artworkguard-evaluation-v1",
+  "synthetic": true,
+  "pairs": [
+    {
+      "id": "0-original",
+      "label": true,
+      "category": "original",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/0-original.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "0-crop",
+      "label": true,
+      "category": "crop",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/0-crop.png",
+        "sha256": "038e7117912ffdb39e7032fea0b645399b94de1bab4626989e08e5724b7c003f",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "0-rotate",
+      "label": true,
+      "category": "rotate",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/0-rotate.png",
+        "sha256": "c62f58ec9071509094a273c43a5ffc4aaaf868a1e2648d3a59bee4f68409f3bd",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "0-color_change",
+      "label": true,
+      "category": "color_change",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/0-color_change.png",
+        "sha256": "5d4a7c4dab92ba3d47fa472dc794f844024b6d709ee92a84d601236790e26de2",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "0-mockup",
+      "label": true,
+      "category": "mockup",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/0-mockup.png",
+        "sha256": "4bd13fa9dc99d788965b7c03a3a60114421b8e903811b6d24e3a61a4e91ce1df",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "0-watermark",
+      "label": true,
+      "category": "watermark",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/0-watermark.png",
+        "sha256": "1adbd5d094069144b275e25543d9336e05840b0ab2441ff0900b0c906706099a",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "0-partial",
+      "label": true,
+      "category": "partial",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/0-partial.png",
+        "sha256": "8f03f6d59d97826634b26e1c846f9e8a1aca87f097b3187a9a6c59d5da6a5a87",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "0-mirror",
+      "label": true,
+      "category": "mirror",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/0-mirror.png",
+        "sha256": "10b6e5fb8b5824489a86758fd73963503a195d7dfdb2def1bb4d991c0b77a56e",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "0-unrelated",
+      "label": false,
+      "category": "unrelated",
+      "reference": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "candidate": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-original",
+      "label": true,
+      "category": "original",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/1-original.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-crop",
+      "label": true,
+      "category": "crop",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/1-crop.png",
+        "sha256": "47e6daf06e7e3e70793910a5f6fe0e4f3c940bb0f48b9e6be7d8e6f287de742c",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-rotate",
+      "label": true,
+      "category": "rotate",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/1-rotate.png",
+        "sha256": "124592e9457c65b2679ad81a4c82b638f929942987c1728779febf0e61e8e1f5",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-color_change",
+      "label": true,
+      "category": "color_change",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/1-color_change.png",
+        "sha256": "9c287bee3a167aa3eedd7170a68da04fdf5e180ed773065eaead07b0e5740aed",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-mockup",
+      "label": true,
+      "category": "mockup",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/1-mockup.png",
+        "sha256": "200cf627021a81a1d6dc2a97b65145dd06802cf2c4038d8dfab8437d8e4bdd38",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-watermark",
+      "label": true,
+      "category": "watermark",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/1-watermark.png",
+        "sha256": "52cbc6f8ecc63b159e99038d49ce737fb1e8a607ff26e29c4f4da35671220bf9",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-partial",
+      "label": true,
+      "category": "partial",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/1-partial.png",
+        "sha256": "bff7d70eb955f570c77fcf2f62e94d63417f74f5a8ee492d14735f354b70b9d1",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-mirror",
+      "label": true,
+      "category": "mirror",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/1-mirror.png",
+        "sha256": "e9cf8358843c9c1c7f992de2d5d02647b16138f6814c0ff5cfb9bce2c18194a6",
+        "source_group": "shape-1"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "1-unrelated",
+      "label": false,
+      "category": "unrelated",
+      "reference": {
+        "path": "images/source-1.png",
+        "sha256": "6e9a8bb2e7b698aa754a24778e0a8ca108489d29dfda168cf6d7a1fdb8e2d318",
+        "source_group": "shape-1"
+      },
+      "candidate": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-original",
+      "label": true,
+      "category": "original",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/2-original.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-crop",
+      "label": true,
+      "category": "crop",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/2-crop.png",
+        "sha256": "5050384abc837c3fc42c9e0f11c31ba588aaf1bd8f6d9f1057795df4522dbc41",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-rotate",
+      "label": true,
+      "category": "rotate",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/2-rotate.png",
+        "sha256": "f64a041ada9865b1e97f5fc56298cbb0547057de6f659a3d41730696fcd8d826",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-color_change",
+      "label": true,
+      "category": "color_change",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/2-color_change.png",
+        "sha256": "66990909afe1f9cce0760ba8e458b6629fa334461fae6e97773918feb9b61c1b",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-mockup",
+      "label": true,
+      "category": "mockup",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/2-mockup.png",
+        "sha256": "f9a39bc94a3c8a35cd1ea7e02a11fa0d02a86bd7878ca1634108ce2047799361",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-watermark",
+      "label": true,
+      "category": "watermark",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/2-watermark.png",
+        "sha256": "142d9fc7a27518963617a22da9656aa7f04a7c7f1d19ec781354120e4ac5cb67",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-partial",
+      "label": true,
+      "category": "partial",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/2-partial.png",
+        "sha256": "24b0b1472b628a303df56b25ffb46331e02a00424c6b8e7817bcbce9ac88f381",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-mirror",
+      "label": true,
+      "category": "mirror",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/2-mirror.png",
+        "sha256": "531f387697bd89c5eff690e11ddffd5eda4b1c40c05667f855d7cb25d2447881",
+        "source_group": "shape-2"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    },
+    {
+      "id": "2-unrelated",
+      "label": false,
+      "category": "unrelated",
+      "reference": {
+        "path": "images/source-2.png",
+        "sha256": "9a93229494ae47fa505a703924852546017e5689ecfa153e4fdd11d25676517e",
+        "source_group": "shape-2"
+      },
+      "candidate": {
+        "path": "images/source-0.png",
+        "sha256": "a6ccd427a8ac2c1d8296d1be352741a7fbc1b83ab7d868061cd21b38d549544d",
+        "source_group": "shape-0"
+      },
+      "split": "test",
+      "provenance": "Procedural geometric software fixture v1",
+      "rights": "Project-generated test fixture",
+      "reviewer": "synthetic-generator-v1",
+      "review_status": "synthetic"
+    }
+  ]
+}

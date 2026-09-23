@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="680" viewBox="0 0 1240 680" role="img" aria-labelledby="title desc">
+  <title id="title">ArtworkGuard DORA Metrics Dashboard</title>
+  <desc id="desc">Four DORA metric cards and weekly deployment trend.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111f"/><stop offset="1" stop-color="#101b31"/></linearGradient>
+    <style>
+      .title{font:700 30px system-ui,sans-serif;fill:#f4f7fb} .subtitle{font:400 14px system-ui,sans-serif;fill:#8fa5c1}
+      .label{font:600 14px system-ui,sans-serif;fill:#8fa5c1} .value{font:700 36px system-ui,sans-serif;fill:#f4f7fb}
+      .detail{font:400 12px system-ui,sans-serif;fill:#6f86a5} .axis{font:400 12px system-ui,sans-serif;fill:#7185a1}
+      .section{font:600 18px system-ui,sans-serif;fill:#dce6f2} .badge{font:700 12px system-ui,sans-serif;fill:#30200a}
+    </style>
+  </defs>
+  <rect width="1240" height="680" rx="24" fill="url(#bg)"/>
+  <circle cx="1190" cy="20" r="180" fill="#177ddc" opacity=".10"/>
+  <text x="48" y="66" class="title">ArtworkGuard · DORA Metrics</text>
+  <text x="48" y="94" class="subtitle">KTheES/ArtGuard · 2026-06-25 — 2026-09-23</text>
+  <g><rect x="1080" y="46" width="108" height="34" rx="17" fill="#ffb84d"/><text x="1134" y="69" text-anchor="middle" class="badge">SAMPLE</text></g>
+  <rect x="48" y="138" width="262" height="150" rx="18" fill="#121d33" stroke="#29405f"/><text x="70" y="176" class="label">Lead Time</text><text x="70" y="230" class="value">2.5h</text><text x="70" y="263" class="detail">PR merge → production</text><rect x="334" y="138" width="262" height="150" rx="18" fill="#121d33" stroke="#29405f"/><text x="356" y="176" class="label">Deploy Frequency</text><text x="356" y="230" class="value">0.31/week</text><text x="356" y="263" class="detail">successful production deploys</text><rect x="620" y="138" width="262" height="150" rx="18" fill="#121d33" stroke="#29405f"/><text x="642" y="176" class="label">MTTR</text><text x="642" y="230" class="value">3.5h</text><text x="642" y="263" class="detail">incident open → close</text><rect x="906" y="138" width="262" height="150" rx="18" fill="#121d33" stroke="#29405f"/><text x="928" y="176" class="label">Change Failure Rate</text><text x="928" y="230" class="value">33.33%</text><text x="928" y="263" class="detail">failed / terminal deploys</text>
+  <text x="48" y="352" class="section">Weekly production deployments</text>
+  <line x1="70" y1="540" x2="1185" y2="540" stroke="#29405f"/>
+  <line x1="70" y1="390" x2="70" y2="540" stroke="#29405f"/>
+  <rect x="92" y="465.0" width="38" height="75.0" rx="5" fill="#39d98a"/><rect x="134" y="540.0" width="20" height="0.0" rx="4" fill="#ff6b7a"/><text x="122" y="570" text-anchor="middle" class="axis">08-03</text><rect x="230" y="465.0" width="38" height="75.0" rx="5" fill="#39d98a"/><rect x="272" y="465.0" width="20" height="75.0" rx="4" fill="#ff6b7a"/><text x="260" y="570" text-anchor="middle" class="axis">08-10</text><rect x="368" y="540.0" width="38" height="0.0" rx="5" fill="#39d98a"/><rect x="410" y="540.0" width="20" height="0.0" rx="4" fill="#ff6b7a"/><text x="398" y="570" text-anchor="middle" class="axis">08-17</text><rect x="506" y="465.0" width="38" height="75.0" rx="5" fill="#39d98a"/><rect x="548" y="540.0" width="20" height="0.0" rx="4" fill="#ff6b7a"/><text x="536" y="570" text-anchor="middle" class="axis">08-24</text><rect x="644" y="540.0" width="38" height="0.0" rx="5" fill="#39d98a"/><rect x="686" y="540.0" width="20" height="0.0" rx="4" fill="#ff6b7a"/><text x="674" y="570" text-anchor="middle" class="axis">08-31</text><rect x="782" y="465.0" width="38" height="75.0" rx="5" fill="#39d98a"/><rect x="824" y="540.0" width="20" height="0.0" rx="4" fill="#ff6b7a"/><text x="812" y="570" text-anchor="middle" class="axis">09-07</text><rect x="920" y="540.0" width="38" height="0.0" rx="5" fill="#39d98a"/><rect x="962" y="465.0" width="20" height="75.0" rx="4" fill="#ff6b7a"/><text x="950" y="570" text-anchor="middle" class="axis">09-14</text><rect x="1058" y="540.0" width="38" height="0.0" rx="5" fill="#39d98a"/><rect x="1100" y="540.0" width="20" height="0.0" rx="4" fill="#ff6b7a"/><text x="1088" y="570" text-anchor="middle" class="axis">09-21</text>
+  <rect x="930" y="350" width="12" height="12" rx="3" fill="#39d98a"/><text x="950" y="361" class="axis">success</text>
+  <rect x="1020" y="350" width="12" height="12" rx="3" fill="#ff6b7a"/><text x="1040" y="361" class="axis">failure/error</text>
+  <text x="48" y="634" class="subtitle">Generated 2026-09-23T00:00:00Z · Data: GitHub Deployments, Pull Requests, Issues</text>
+</svg>

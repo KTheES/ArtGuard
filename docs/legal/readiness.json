@@ -1,0 +1,23 @@
+{
+  "schema": "artworkguard-legal-readiness-v1",
+  "reviewDate": "2026-09-14",
+  "status": "INTERNAL_DRAFT",
+  "readyForPublicRelease": false,
+  "legalApproval": false,
+  "published": false,
+  "enforcedByRuntime": false,
+  "operatorJurisdiction": null,
+  "operatorContact": null,
+  "effectiveDate": null,
+  "blockers": [
+    {"id":"L01","owner":"operator","status":"OPEN","item":"운영자·관할·문의창구·시행일"},
+    {"id":"L02","owner":"legal_and_product","status":"OPEN","item":"처리 근거·필수/선택·연령·동의 버전"},
+    {"id":"L03","owner":"operator_and_legal","status":"OPEN","item":"수탁·제공·국외 이전 실정보"},
+    {"id":"L04","owner":"engineering_and_legal","status":"OPEN","item":"보유기간·물리 삭제·백업·보존 예외"},
+    {"id":"L05","owner":"operations_and_engineering","status":"OPEN","item":"권리 요청 접수·본인확인·처리 추적"},
+    {"id":"L06","owner":"operator_and_legal","status":"OPEN","item":"마켓 계약·이미지 재이용 권한"},
+    {"id":"L07","owner":"legal_and_operations","status":"OPEN","item":"저작권 신고·이의·DMCA 적용성"},
+    {"id":"L08","owner":"operator_and_legal","status":"OPEN","item":"결제 고지·해지·환불·철회"},
+    {"id":"L09","owner":"security_and_operations","status":"OPEN","item":"원본 격리·악성코드·사고 대응"}
+  ]
+}

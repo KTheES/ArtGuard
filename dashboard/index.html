@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ArtworkGuard DORA Metrics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+      :root { color-scheme: dark; --bg:#07101d; --panel:#111d31; --line:#29405f; --text:#f2f6fb; --muted:#91a6c0; --green:#39d98a; --red:#ff6b7a; --blue:#4da3ff; --amber:#ffb84d; }
+      * { box-sizing: border-box; }
+      body { margin:0; min-height:100vh; font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif; color:var(--text); background:radial-gradient(circle at 95% 0,#173867 0,transparent 30%),linear-gradient(145deg,#07101d,#0e1930); }
+      .shell { width:min(1180px,calc(100% - 32px)); margin:auto; padding:48px 0 64px; }
+      header { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; margin-bottom:28px; }
+      h1 { margin:0 0 9px; font-size:clamp(26px,4vw,42px); letter-spacing:-.04em; }
+      header p,.meta { margin:0; color:var(--muted); }
+      .badge { display:none; padding:8px 13px; color:#342208; background:var(--amber); border-radius:999px; font-size:12px; font-weight:800; letter-spacing:.08em; }
+      .badge.show { display:inline-flex; }
+      .notice { display:none; margin:0 0 20px; padding:14px 16px; color:#ffe0a8; background:#362915; border:1px solid #715221; border-radius:12px; }
+      .notice.show { display:block; }
+      .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+      .card,.chart-card { background:linear-gradient(160deg,rgba(19,32,54,.96),rgba(12,23,40,.96)); border:1px solid var(--line); box-shadow:0 16px 40px rgba(0,0,0,.2); }
+      .card { padding:22px; border-radius:18px; min-height:158px; }
+      .label { color:var(--muted); font-size:13px; font-weight:700; }
+      .value { margin:18px 0 10px; font-size:34px; font-weight:800; letter-spacing:-.04em; }
+      .detail { color:#7087a6; font-size:12px; line-height:1.45; }
+      .grid { display:grid; grid-template-columns:1.3fr 1fr; gap:16px; margin-top:16px; }
+      .chart-card { min-height:350px; padding:22px; border-radius:18px; }
+      .chart-card h2 { margin:0 0 5px; font-size:17px; }
+      .chart-card p { margin:0 0 20px; color:var(--muted); font-size:12px; }
+      .canvas-wrap { position:relative; height:260px; }
+      footer { margin-top:22px; color:var(--muted); font-size:12px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+      a { color:#83bdff; }
+      @media (max-width:900px) { .cards{grid-template-columns:repeat(2,1fr)} .grid{grid-template-columns:1fr} }
+      @media (max-width:540px) { .shell{width:min(100% - 20px,1180px);padding-top:28px} header{flex-direction:column}.cards{grid-template-columns:1fr}.card{min-height:135px} }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <div>
+          <h1>ArtworkGuard · DORA</h1>
+          <p id="repository">지표 데이터를 불러오는 중입니다.</p>
+        </div>
+        <span id="sampleBadge" class="badge">SAMPLE DATA</span>
+      </header>
+      <div id="notice" class="notice"></div>
+      <section class="cards" aria-label="DORA 4대 지표">
+        <article class="card"><div class="label">Lead Time for Changes</div><div class="value" id="lead">—</div><div class="detail" id="leadDetail">PR merge → production</div></article>
+        <article class="card"><div class="label">Deployment Frequency</div><div class="value" id="frequency">—</div><div class="detail" id="frequencyDetail">successful production deploys</div></article>
+        <article class="card"><div class="label">Mean Time to Restore</div><div class="value" id="mttr">—</div><div class="detail" id="mttrDetail">incident open → close</div></article>
+        <article class="card"><div class="label">Change Failure Rate</div><div class="value" id="cfr">—</div><div class="detail" id="cfrDetail">failed / terminal deploys</div></article>
+      </section>
+      <section class="grid">
+        <article class="chart-card">
+          <h2>주간 운영 배포</h2><p>GitHub Deployment terminal status 기준</p>
+          <div class="canvas-wrap"><canvas id="deploymentsChart"></canvas></div>
+        </article>
+        <article class="chart-card">
+          <h2>속도와 복구 추이</h2><p>Lead Time 중앙값과 MTTR 평균</p>
+          <div class="canvas-wrap"><canvas id="timeChart"></canvas></div>
+        </article>
+      </section>
+      <footer><span id="generated"></span><span>Data source: GitHub Deployments · Pull Requests · Issues</span></footer>
+    </main>
+    <script>
+      const value = (number, suffix = "") => number == null ? "N/A" : `${Number(number).toLocaleString("ko-KR", { maximumFractionDigits: 2 })}${suffix}`;
+      const dataPath = new URLSearchParams(location.search).get("data") || "../reports/dora/latest.json";
+      const colors = { grid:"rgba(143,165,193,.15)", text:"#91a6c0", green:"#39d98a", red:"#ff6b7a", blue:"#4da3ff", amber:"#ffb84d" };
+
+      async function loadDashboard() {
+        try {
+          const response = await fetch(dataPath, { cache: "no-store" });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const data = await response.json();
+          const metrics = data.metrics;
+          const series = data.series || [];
+          document.getElementById("repository").textContent = `${data.repository} · ${data.window.start.slice(0,10)} — ${data.window.end.slice(0,10)}`;
+          document.getElementById("lead").textContent = value(metrics.lead_time_for_changes.median_hours, "h");
+          document.getElementById("leadDetail").textContent = `n=${metrics.lead_time_for_changes.sample_size} · p90 ${value(metrics.lead_time_for_changes.p90_hours,"h")}`;
+          document.getElementById("frequency").textContent = value(metrics.deployment_frequency.per_week, "/week");
+          document.getElementById("frequencyDetail").textContent = `성공 배포 ${metrics.deployment_frequency.successful_deployments}건`;
+          document.getElementById("mttr").textContent = value(metrics.mean_time_to_restore.mean_hours, "h");
+          document.getElementById("mttrDetail").textContent = `incident ${metrics.mean_time_to_restore.incident_count}건`;
+          document.getElementById("cfr").textContent = value(metrics.change_failure_rate.percent, "%");
+          document.getElementById("cfrDetail").textContent = `실패 ${metrics.change_failure_rate.failed_deployments}/${metrics.change_failure_rate.terminal_deployments}`;
+          document.getElementById("generated").textContent = `Generated ${data.generated_at}`;
+          if (data.source.mode === "sample") {
+            document.getElementById("sampleBadge").classList.add("show");
+            const notice = document.getElementById("notice");
+            notice.textContent = "현재 화면은 구조 검증용 샘플 데이터입니다. GitHub Actions 최초 실행 후 실측 데이터로 교체됩니다.";
+            notice.classList.add("show");
+          }
+          renderCharts(series);
+        } catch (error) {
+          const notice = document.getElementById("notice");
+          notice.textContent = `DORA JSON을 불러오지 못했습니다: ${error.message}. 저장소 루트에서 HTTP 서버를 실행했는지 확인하세요.`;
+          notice.classList.add("show");
+        }
+      }
+
+      function chartOptions(yTitle) {
+        return { responsive:true, maintainAspectRatio:false, interaction:{mode:"index",intersect:false}, plugins:{legend:{labels:{color:colors.text,usePointStyle:true,boxWidth:9}}}, scales:{x:{ticks:{color:colors.text,maxRotation:0},grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:yTitle,color:colors.text},ticks:{color:colors.text},grid:{color:colors.grid}}} };
+      }
+
+      function renderCharts(series) {
+        const labels = series.map(item => item.week_start.slice(5));
+        new Chart(document.getElementById("deploymentsChart"), { type:"bar", data:{labels,datasets:[{label:"성공",data:series.map(i=>i.successful_deployments),backgroundColor:colors.green,borderRadius:5},{label:"실패/오류",data:series.map(i=>i.failed_deployments),backgroundColor:colors.red,borderRadius:5}]}, options:chartOptions("deployments") });
+        new Chart(document.getElementById("timeChart"), { type:"line", data:{labels,datasets:[{label:"Lead Time",data:series.map(i=>i.lead_time_median_hours),borderColor:colors.blue,backgroundColor:colors.blue,spanGaps:true,tension:.35},{label:"MTTR",data:series.map(i=>i.mttr_mean_hours),borderColor:colors.amber,backgroundColor:colors.amber,spanGaps:true,tension:.35}]}, options:chartOptions("hours") });
+      }
+
+      loadDashboard();
+    </script>
+  </body>
+</html>
