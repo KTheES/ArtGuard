@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-23T00:00:00Z",
+  "generated_at": "2026-09-28T05:04:14Z",
   "repository": "KTheES/ArtGuard",
   "window": {
-    "start": "2026-06-25T00:00:00Z",
-    "end": "2026-09-23T00:00:00Z",
+    "start": "2026-06-30T05:04:14Z",
+    "end": "2026-09-28T05:04:14Z",
     "days": 90.0
   },
   "configuration": {
@@ -13,29 +13,29 @@
     "lead_time_matching": "pull_request.merge_commit_sha == deployment.sha"
   },
   "source": {
-    "mode": "sample",
+    "mode": "github",
     "deployment_provider": "github_deployments",
     "incident_provider": "github_issues"
   },
   "metrics": {
     "lead_time_for_changes": {
-      "median_hours": 2.5,
-      "p90_hours": 5.1,
-      "sample_size": 4
+      "median_hours": null,
+      "p90_hours": null,
+      "sample_size": 0
     },
     "deployment_frequency": {
-      "successful_deployments": 4,
-      "per_week": 0.31
+      "successful_deployments": 0,
+      "per_week": 0.0
     },
     "mean_time_to_restore": {
-      "mean_hours": 3.5,
-      "median_hours": 3.5,
-      "incident_count": 2
+      "mean_hours": null,
+      "median_hours": null,
+      "incident_count": 0
     },
     "change_failure_rate": {
-      "percent": 33.33,
-      "failed_deployments": 2,
-      "terminal_deployments": 6
+      "percent": null,
+      "failed_deployments": 0,
+      "terminal_deployments": 0
     }
   },
   "quality": {
@@ -47,62 +47,10 @@
     ]
   },
   "samples": {
-    "lead_time": [
-      {
-        "pull_request": 11,
-        "merge_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "merged_at": "2026-08-04T09:00:00Z",
-        "deployed_at": "2026-08-04T12:00:00Z",
-        "hours": 3.0
-      },
-      {
-        "pull_request": 13,
-        "merge_sha": "cccccccccccccccccccccccccccccccccccccccc",
-        "merged_at": "2026-08-12T10:00:00Z",
-        "deployed_at": "2026-08-12T12:00:00Z",
-        "hours": 2.0
-      },
-      {
-        "pull_request": 14,
-        "merge_sha": "dddddddddddddddddddddddddddddddddddddddd",
-        "merged_at": "2026-08-25T10:00:00Z",
-        "deployed_at": "2026-08-25T16:00:00Z",
-        "hours": 6.0
-      },
-      {
-        "pull_request": 15,
-        "merge_sha": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        "merged_at": "2026-09-08T10:00:00Z",
-        "deployed_at": "2026-09-08T11:30:00Z",
-        "hours": 1.5
-      }
-    ],
-    "incidents": [
-      {
-        "issue": 101,
-        "title": "Production image upload outage",
-        "opened_at": "2026-08-11T10:30:00Z",
-        "restored_at": "2026-08-11T12:30:00Z",
-        "hours": 2.0
-      },
-      {
-        "issue": 102,
-        "title": "Detection API unavailable",
-        "opened_at": "2026-09-15T14:00:00Z",
-        "restored_at": "2026-09-15T19:00:00Z",
-        "hours": 5.0
-      }
-    ]
+    "lead_time": [],
+    "incidents": []
   },
   "series": [
-    {
-      "week_start": "2026-06-22",
-      "successful_deployments": 0,
-      "failed_deployments": 0,
-      "lead_time_median_hours": null,
-      "mttr_mean_hours": null,
-      "change_failure_rate_percent": null
-    },
     {
       "week_start": "2026-06-29",
       "successful_deployments": 0,
@@ -145,19 +93,19 @@
     },
     {
       "week_start": "2026-08-03",
-      "successful_deployments": 1,
+      "successful_deployments": 0,
       "failed_deployments": 0,
-      "lead_time_median_hours": 3.0,
+      "lead_time_median_hours": null,
       "mttr_mean_hours": null,
-      "change_failure_rate_percent": 0.0
+      "change_failure_rate_percent": null
     },
     {
       "week_start": "2026-08-10",
-      "successful_deployments": 1,
-      "failed_deployments": 1,
-      "lead_time_median_hours": 2.0,
-      "mttr_mean_hours": 2.0,
-      "change_failure_rate_percent": 50.0
+      "successful_deployments": 0,
+      "failed_deployments": 0,
+      "lead_time_median_hours": null,
+      "mttr_mean_hours": null,
+      "change_failure_rate_percent": null
     },
     {
       "week_start": "2026-08-17",
@@ -169,11 +117,11 @@
     },
     {
       "week_start": "2026-08-24",
-      "successful_deployments": 1,
+      "successful_deployments": 0,
       "failed_deployments": 0,
-      "lead_time_median_hours": 6.0,
+      "lead_time_median_hours": null,
       "mttr_mean_hours": null,
-      "change_failure_rate_percent": 0.0
+      "change_failure_rate_percent": null
     },
     {
       "week_start": "2026-08-31",
@@ -185,22 +133,30 @@
     },
     {
       "week_start": "2026-09-07",
-      "successful_deployments": 1,
+      "successful_deployments": 0,
       "failed_deployments": 0,
-      "lead_time_median_hours": 1.5,
+      "lead_time_median_hours": null,
       "mttr_mean_hours": null,
-      "change_failure_rate_percent": 0.0
+      "change_failure_rate_percent": null
     },
     {
       "week_start": "2026-09-14",
       "successful_deployments": 0,
-      "failed_deployments": 1,
+      "failed_deployments": 0,
       "lead_time_median_hours": null,
-      "mttr_mean_hours": 5.0,
-      "change_failure_rate_percent": 100.0
+      "mttr_mean_hours": null,
+      "change_failure_rate_percent": null
     },
     {
       "week_start": "2026-09-21",
+      "successful_deployments": 0,
+      "failed_deployments": 0,
+      "lead_time_median_hours": null,
+      "mttr_mean_hours": null,
+      "change_failure_rate_percent": null
+    },
+    {
+      "week_start": "2026-09-28",
       "successful_deployments": 0,
       "failed_deployments": 0,
       "lead_time_median_hours": null,
