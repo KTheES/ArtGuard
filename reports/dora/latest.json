@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-28T05:04:14Z",
+  "generated_at": "2026-10-05T05:17:53Z",
   "repository": "KTheES/ArtGuard",
   "window": {
-    "start": "2026-06-30T05:04:14Z",
-    "end": "2026-09-28T05:04:14Z",
+    "start": "2026-07-07T05:17:53Z",
+    "end": "2026-10-05T05:17:53Z",
     "days": 90.0
   },
   "configuration": {
@@ -51,14 +51,6 @@
     "incidents": []
   },
   "series": [
-    {
-      "week_start": "2026-06-29",
-      "successful_deployments": 0,
-      "failed_deployments": 0,
-      "lead_time_median_hours": null,
-      "mttr_mean_hours": null,
-      "change_failure_rate_percent": null
-    },
     {
       "week_start": "2026-07-06",
       "successful_deployments": 0,
@@ -157,6 +149,14 @@
     },
     {
       "week_start": "2026-09-28",
+      "successful_deployments": 0,
+      "failed_deployments": 0,
+      "lead_time_median_hours": null,
+      "mttr_mean_hours": null,
+      "change_failure_rate_percent": null
+    },
+    {
+      "week_start": "2026-10-05",
       "successful_deployments": 0,
       "failed_deployments": 0,
       "lead_time_median_hours": null,
