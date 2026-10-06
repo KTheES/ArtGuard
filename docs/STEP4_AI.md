@@ -15,14 +15,14 @@ FastAPI가 DINOv2 이미지 임베딩을 반환하는 내부 서비스입니다.
 Python 3.12 이상에서 실행합니다. CPU PyTorch를 별도 공식 인덱스로 먼저 설치합니다.
 
 ```powershell
-Set-Location C:\copyright\_detect\_project\ai-service
+Set-Location .\ai-service
 .\scripts\setup.ps1 -Python python -Dev
 ```
 
-이 PC에는 일반 python 명령이 없었습니다. 검증에 사용한 Python을 지정하려면:
+`python` 명령이 PATH에 없다면 설치된 Python 3.12 이상 실행 파일의 경로를 지정하세요.
 
 ```powershell
-.\scripts\setup.ps1 -Python 'C:\Users\espls\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -Dev
+.\scripts\setup.ps1 -Python '<Python 3.12 실행 파일 경로>' -Dev
 ```
 
 설치는 .venv에만 적용합니다. 모델 캐시는 .model-cache에 저장되며 Git에서 제외됩니다.

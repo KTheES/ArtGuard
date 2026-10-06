@@ -6,7 +6,7 @@
 
 ## Docker 복구
 
-Docker Desktop 시작을 막던 런타임 소켓이 Windows에서 접근 불가능한 reparse point로 남아 있었다. 최초 `dockerInference`를 정리한 뒤 다른 stale socket에서도 같은 문제가 확인되어, Docker 프로세스를 종료하고 런타임 전용 `C:\Users\espls\AppData\Local\Docker\run` 폴더를 `run.codex-backup-20260929-150215`로 이동해 보존했다. Docker가 새 `run` 폴더를 생성한 후 다음을 확인했다.
+Docker Desktop 시작을 막던 런타임 소켓이 Windows에서 접근 불가능한 reparse point로 남아 있었다. 최초 `dockerInference`를 정리한 뒤 다른 stale socket에서도 같은 문제가 확인되어, Docker 프로세스를 종료하고 런타임 전용 `$env:LOCALAPPDATA\Docker\run` 폴더를 `run.backup-<timestamp>`로 이동해 보존했다. Docker가 새 `run` 폴더를 생성한 후 다음을 확인했다.
 
 - `docker desktop status`: `running`
 - Docker Client/Server 28.3.2 응답
