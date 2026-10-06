@@ -64,6 +64,8 @@ Health/OpenAPI 접근, 미구현 API 차단을 확인합니다. Docker가 없으
 
 2026-10-01 [STEP 34 품질 게이트](docs/STEP34_QUALITY_GATE_CHECKLIST.md)에서는 정상·경계·실패 경로, 로컬 회귀 526개와 응답시간·SQL 호출 수 기준을 통과했습니다. 현재 변경은 커밋하지 않아 원격 GitHub CI만 NOT_RUN입니다.
 
+2026-10-06 [STEP 35 애플리케이션 원격 CI](docs/STEP35_APPLICATION_CI.md)를 추가했습니다. PR·`main` push에서 저장소 안전성, 백엔드 단위/통합, AI 비모델, 프런트엔드, DORA 수집기 테스트를 병렬 실행하며 최초 원격 성공 전까지 상태는 NOT_RUN입니다.
+
 ## 초기 설계
 
 도메인별 패키지를 갖춘 모듈형 모놀리스로 시작합니다. Flyway V1은 vector 확장을, V2는 회원, V3는 작품·업로드 요청 테이블을 생성합니다. API 공통 응답은 `success/data/error/timestamp`입니다.
