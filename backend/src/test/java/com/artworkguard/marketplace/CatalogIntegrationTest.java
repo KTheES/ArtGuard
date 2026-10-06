@@ -15,6 +15,7 @@ import org.testcontainers.utility.DockerImageName;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 @Tag("integration") @Testcontainers @SpringBootTest
+@org.springframework.test.annotation.DirtiesContext(classMode=org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS)
 class CatalogIntegrationTest {
  @Container static PostgreSQLContainer<?> postgres=new PostgreSQLContainer<>(DockerImageName.parse("pgvector/pgvector:pg17").asCompatibleSubstituteFor("postgres"));
  @Container static GenericContainer<?> redis=new GenericContainer<>("redis:7.4-alpine").withExposedPorts(6379);

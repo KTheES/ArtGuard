@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.awaitility.Awaitility.await;
 @Tag("integration") @Testcontainers @SpringBootTest(properties="artworkguard.embedding.enabled=true")
+@org.springframework.test.annotation.DirtiesContext(classMode=org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS)
 class ProductEmbeddingIntegrationTest {
  @Container static PostgreSQLContainer<?> postgres=new PostgreSQLContainer<>(DockerImageName.parse("pgvector/pgvector:pg17").asCompatibleSubstituteFor("postgres"));
  @Container static GenericContainer<?> redis=new GenericContainer<>("redis:7.4-alpine").withExposedPorts(6379);
@@ -33,11 +34,14 @@ class ProductEmbeddingIntegrationTest {
  @AfterAll static void stop(){if(server!=null)server.stop(0);}
  @DynamicPropertySource static void properties(DynamicPropertyRegistry r)throws Exception{
   server=HttpServer.create(new InetSocketAddress("127.0.0.1",0),0);
-  server.createContext("/v1/embeddings",exchange->{
+  server.createContext("/v1/region-embeddings",exchange->{
    var mapper=new ObjectMapper();var response=mapper.createObjectNode();
    response.put("model","dinov2").put("modelId",EmbeddingModel.ID).put("version",EmbeddingModel.VERSION)
     .put("preprocessingVersion",EmbeddingModel.PREPROCESSING).put("dimension",768).put("normalized",true);
    var vector=response.putArray("embedding");for(int i=0;i<768;i++)vector.add(i==0?1.0:0.0);
+   response.put("perceptualHashVersion","phash32-dhash9-luma-v1").put("pHash","0000000000000000").put("dHash","0000000000000000").put("regionScheme","fixed-overlap-5-v1");
+   var regions=response.putArray("regions");
+   for(String key:List.of("CENTER","TOP_LEFT","TOP_RIGHT","BOTTOM_LEFT","BOTTOM_RIGHT")){var region=regions.addObject();region.put("key",key).put("x",0).put("y",0).put("width",0.5).put("height",0.5).put("pHash","0000000000000000").put("dHash","0000000000000000");region.set("embedding",vector.deepCopy());}
    exchange.getRequestBody().readAllBytes();byte[] bytes=mapper.writeValueAsBytes(response);
    exchange.getResponseHeaders().add("Content-Type","application/json");exchange.sendResponseHeaders(200,bytes.length);
    exchange.getResponseBody().write(bytes);exchange.close();
@@ -62,6 +66,7 @@ class ProductEmbeddingIntegrationTest {
    for(var id:ids)assertEquals("COMPLETED",jobs.status(id).status());
   });
   assertEquals(3,jdbc.queryForObject("SELECT count(*) FROM current_product_image_embedding",Integer.class));
+  assertEquals(15,jdbc.queryForObject("SELECT count(*) FROM product_image_region_embedding",Integer.class));
   assertEquals(768,jdbc.queryForObject("SELECT min(vector_dims(embedding)) FROM product_image_embedding",Integer.class));
   importer.persist(MarketplaceCode.MOCK,listings);
   assertEquals(3,jdbc.queryForObject("SELECT count(*) FROM product_embedding_job",Integer.class));

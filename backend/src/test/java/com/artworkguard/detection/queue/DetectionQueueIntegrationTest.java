@@ -25,6 +25,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.awaitility.Awaitility.await;
 @Tag("integration") @Testcontainers @SpringBootTest(properties="artworkguard.detection.enabled=true")
+@org.springframework.test.annotation.DirtiesContext(classMode=org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS)
 class DetectionQueueIntegrationTest {
  @Container static PostgreSQLContainer<?> postgres=new PostgreSQLContainer<>(DockerImageName.parse("pgvector/pgvector:pg17").asCompatibleSubstituteFor("postgres"));
  @Container static GenericContainer<?> redis=new GenericContainer<>("redis:7.4-alpine").withExposedPorts(6379);

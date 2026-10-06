@@ -17,3 +17,25 @@ htmlcov/
 .model-cache/
 *.log
 /prd.md
+
+# Local credentials and signing material
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+**/credentials.json
+**/service-account*.json
+.aws/
+.npmrc
+
+# Local databases, uploads, and backups
+*.db
+*.sqlite
+*.sqlite3
+/uploads/
+/storage/
+/backups/
+/*.sql
+*.dump

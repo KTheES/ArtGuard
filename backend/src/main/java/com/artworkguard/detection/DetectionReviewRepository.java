@@ -14,7 +14,7 @@ public class DetectionReviewRepository {
   JOIN product p ON p.id=d.product_id JOIN marketplace m ON m.id=p.marketplace_id
   JOIN product_image_embedding e ON e.id=d.product_embedding_id
   LEFT JOIN product_image_region_embedding r ON r.id=d.product_region_embedding_id
-  LEFT JOIN current_product_image_embedding c ON c.id=e.id
+  LEFT JOIN current_product_image_embedding c ON c.id=e.id AND c.model=d.model AND c.model_version=d.model_version AND c.preprocessing_version=d.preprocessing_version
   """;
  private static final String SELECT="""
   SELECT d.*,a.title AS artwork_title,p.title AS product_title,p.product_url,m.code,

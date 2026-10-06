@@ -27,11 +27,12 @@ import javax.imageio.ImageIO;
 import static org.assertj.core.api.Assertions.*;
 @Tag("integration") @Testcontainers
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
+@org.springframework.test.annotation.DirtiesContext(classMode=org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS)
 class ArtworkIntegrationTest {
  @Container static PostgreSQLContainer<?> postgres=new PostgreSQLContainer<>(DockerImageName.parse("pgvector/pgvector:pg17").asCompatibleSubstituteFor("postgres"));
  @Container static GenericContainer<?> redis=new GenericContainer<>("redis:7.4-alpine").withExposedPorts(6379);
  static final String SECRET=UUID.randomUUID().toString();
- @Container static GenericContainer<?> minio=new GenericContainer<>("minio/minio:RELEASE.2025-04-22T22-12-26Z")
+ @Container static GenericContainer<?> minio=new GenericContainer<>("quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z")
   .withEnv("MINIO_ROOT_USER","integration-user").withEnv("MINIO_ROOT_PASSWORD",SECRET)
   .withCommand("server","/data").withExposedPorts(9000)
   .waitingFor(org.testcontainers.containers.wait.strategy.Wait.forHttp("/minio/health/ready").forPort(9000));
