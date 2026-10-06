@@ -81,7 +81,7 @@ h1, h2, p { margin-top: 0; }
 .landing-nav .landing-link:hover { color: var(--coral); }
 .top-actions { display: flex; gap: 10px; align-items: center; }
 
-.primary, .outline, .ghost, .social, .button, .option-card {
+.primary, .outline, .ghost, .button, .option-card {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -199,11 +199,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .form-options a { color: var(--coral); }
 .check-label, .radio-label { display: flex; align-items: center; gap: 3px; color: var(--ink-soft); font-weight: 500; }
 input[type='checkbox'], input[type='radio'] { width: 16px; height: 16px; accent-color: var(--coral); }
-.divider { display: flex; gap: 12px; align-items: center; margin: 20px 0; color: #a4aab4; font-size: 11px; }
-.divider::before, .divider::after { flex: 1; height: 1px; content: ''; background: var(--line); }
-.social-buttons { display: grid; gap: 10px; }
-.social { width: 100%; color: var(--ink); background: #fff; border-color: #dfe2e8; }
-.social:hover { background: #fafafa; border-color: #c7cbd3; }
 .auth-switch { margin: 23px 0 0; color: var(--muted); text-align: center; font-size: 11px; }
 .text-button { display: inline; padding: 3px; color: var(--coral); font-weight: 600; }
 .text-button:hover { text-decoration: underline; }
@@ -310,7 +305,7 @@ input[type='checkbox'], input[type='radio'] { width: 16px; height: 16px; accent-
 .form-note { max-width: 760px; margin-top: 14px; color: var(--muted); font-size: 11px; }
 
 /* 7. 마이페이지 */
-.identity-card { display: grid; grid-template-columns: 58px 1fr auto; gap: 16px; align-items: center; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.identity-card { display: grid; grid-template-columns: 58px 1fr; gap: 16px; align-items: center; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 .profile-avatar { display: grid; width: 58px; height: 58px; color: var(--coral); font-size: 20px; place-items: center; background: var(--peach); border-radius: 50%; }
 .identity-copy h2 { margin-bottom: 3px; font-size: 17px; }
 .identity-copy p { margin: 0; color: var(--muted); font-size: 11px; }
@@ -398,7 +393,6 @@ input[type='checkbox'], input[type='radio'] { width: 16px; height: 16px; accent-
   .result-row .more { display: none; }
   .product-detail { grid-template-columns: 1fr; padding: 16px; }
   .identity-card { grid-template-columns: 52px 1fr; }
-  .identity-card > button { grid-column: 1 / -1; }
   .account-table { grid-template-columns: 105px 1fr; }
 }
 

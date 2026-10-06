@@ -214,13 +214,10 @@ function auth(signup = false) {
       }
     });
   };
-  const divider = el('div', '또는', 'divider');
-  const social = el('div', undefined, 'social-buttons');
-  social.append(button('G  Google로 계속하기', () => message('소셜 로그인은 현재 MVP 범위에 포함되지 않습니다.', 'info'), 'social'), button('●  Apple로 계속하기', () => message('소셜 로그인은 현재 MVP 범위에 포함되지 않습니다.', 'info'), 'social'));
   const switcher = el('p', signup ? '이미 계정이 있나요? ' : '계정이 없으신가요? ', 'auth-switch');
   const switchButton = button(signup ? '로그인하기' : '회원가입하기', () => auth(!signup), 'text-button');
   switcher.append(switchButton);
-  shell.append(tabs, heading, form, divider, social, switcher);
+  shell.append(tabs, heading, form, switcher);
   app.append(shell);
 }
 
@@ -561,7 +558,7 @@ async function profile() {
   identity.append(el('div', (user.nickname || user.email).slice(0, 1).toUpperCase(), 'profile-avatar'));
   const copy = el('div', undefined, 'identity-copy');
   copy.append(el('h2', user.nickname || 'ArtGuard 사용자'), el('p', user.email));
-  identity.append(copy, button('프로필 수정', () => message('프로필 수정 API는 아직 제공되지 않습니다.', 'info'), 'outline'));
+  identity.append(copy);
   const info = el('section', undefined, 'account-section');
   info.append(el('h2', '계정 정보'));
   const table = el('dl', undefined, 'account-table');
