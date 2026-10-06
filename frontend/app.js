@@ -285,6 +285,23 @@ function upload() {
   dropzone.append(file, el('span', icons.image, 'drop-icon'), el('strong', '이미지를 드래그하거나\n클릭하여 업로드하세요.'), el('small', 'PNG, JPG, JPEG (최대 20MB)'));
   const filename = el('span', '선택된 파일 없음', 'filename');
   file.onchange = () => { filename.textContent = file.files[0]?.name || '선택된 파일 없음'; };
+  dropzone.ondragover = event => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+    dropzone.classList.add('is-dragging');
+  };
+  dropzone.ondragleave = () => dropzone.classList.remove('is-dragging');
+  dropzone.ondrop = event => {
+    event.preventDefault();
+    dropzone.classList.remove('is-dragging');
+    const dropped = event.dataTransfer.files;
+    if (dropped.length !== 1) {
+      message('이미지는 한 번에 한 개씩 업로드해 주세요.', 'info');
+      return;
+    }
+    file.files = dropped;
+    file.dispatchEvent(new Event('change'));
+  };
   const title = field(form, '작품 제목', 'title', 'text', 200);
   title.required = true;
   title.placeholder = '등록할 작품의 제목을 입력하세요.';
@@ -292,7 +309,7 @@ function upload() {
   description.placeholder = '작품을 구분할 수 있는 설명을 입력하세요.';
   form.prepend(dropzone, filename);
   const alternatives = el('div', undefined, 'upload-alternatives');
-  alternatives.append(button(`${icons.link}  이미지 URL로 불러오기`, () => message('URL 가져오기는 안전한 원격 수집 정책 검토 후 제공됩니다.', 'info'), 'option-card'), button(`${icons.folder}  여러 이미지 업로드`, () => file.click(), 'option-card'));
+  alternatives.append(button(`${icons.link}  이미지 URL로 불러오기`, () => message('URL 가져오기는 안전한 원격 수집 정책 검토 후 제공됩니다.', 'info'), 'option-card'), button(`${icons.folder}  내 이미지에서 선택`, () => file.click(), 'option-card'));
   form.append(alternatives);
   const submit = el('button', '탐지 시작  ✣', 'primary wide scan-submit');
   submit.type = 'submit';
@@ -520,12 +537,13 @@ async function reports(detectionId = '') {
   });
   const format = el('fieldset', undefined, 'format-row');
   format.append(el('legend', '파일 형식'));
-  ['PDF (권장)', 'CSV'].forEach((labelText, index) => {
+  [['pdf', 'PDF (권장)']].forEach(([value, labelText]) => {
     const label = el('label', undefined, 'radio-label');
     const input = el('input');
     input.type = 'radio';
     input.name = 'format';
-    input.checked = index === 0;
+    input.value = value;
+    input.checked = true;
     label.append(input, document.createTextNode(` ${labelText}`));
     format.append(label);
   });

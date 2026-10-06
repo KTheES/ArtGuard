@@ -227,6 +227,7 @@ input[type='checkbox'], input[type='radio'] { width: 16px; height: 16px; accent-
 .upload-form { max-width: 800px; }
 .dropzone { display: grid; min-height: 260px; margin-bottom: 9px; padding: 34px; text-align: center; place-items: center; align-content: center; color: var(--muted); background: linear-gradient(145deg, #fffaf8, #fff7f3); border: 1.5px dashed #ffa995; border-radius: 11px; cursor: pointer; transition: background 150ms ease, border-color 150ms ease; }
 .dropzone:hover { background: var(--peach); border-color: var(--coral); }
+.dropzone.is-dragging { background: #ffe8df; border-color: var(--coral); box-shadow: inset 0 0 0 2px rgb(255 91 67 / 12%); }
 .dropzone input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .dropzone strong { color: #495164; font-size: 15px; white-space: pre-line; }
 .dropzone small { margin-top: 7px; color: #9aa1ad; font-size: 11px; }
