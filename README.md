@@ -1,6 +1,6 @@
 # ArtworkGuard
 
-등록 작품을 주기적으로 비동기 검색하는 플랫폼입니다. STEP 26까지 백엔드 기능을 개발하고 STEP 27 정책 초안·STEP 28 MVP 차이 점검을 정리했습니다. MVP 웹 화면을 추가했으며 전체 연결 검증은 남아 있습니다.
+등록 작품을 주기적으로 비동기 검색하는 플랫폼입니다. STEP 26까지 백엔드 기능을 개발하고 STEP 27 정책 초안·STEP 28 MVP 차이 점검을 정리했습니다. MVP 웹 화면을 추가했고 STEP 31~32의 자동 테스트와 STEP 33의 격리 로컬 MVP 수용 시험을 통과했습니다.
 탐지 결과는 사용자가 검토할 의심 후보이며 법적 판정이 아닙니다.
 
 프로젝트 제안서, PRD, ERD와 학기 마일스톤은 별도의 [기획 문서 저장소](https://github.com/KTheES/copyright_detect)에서 관리합니다. 이 저장소는 실행 가능한 ArtworkGuard 애플리케이션 소스와 운영 자동화만 관리합니다.
@@ -60,6 +60,10 @@ Start-Process http://localhost:8080/swagger-ui.html
 Health/OpenAPI 접근, 미구현 API 차단을 확인합니다. Docker가 없으면 실패하며 건너뛰지 않습니다.
 기본 Health는 PostgreSQL·Redis를 반영합니다. Kafka 연결은 통합 테스트와 Compose healthcheck로 확인합니다.
 
+2026-09-29 최신 검증에서는 [STEP 32 입력 경계값 테스트 확장](docs/STEP32_TEST_EXPANSION.md)의 신규 105개를 포함해 단위 테스트 422개와 Docker 통합 테스트 21개, 총 443개가 실패·오류·건너뜀 없이 통과했습니다.
+
+2026-10-01 [STEP 34 품질 게이트](docs/STEP34_QUALITY_GATE_CHECKLIST.md)에서는 정상·경계·실패 경로, 로컬 회귀 526개와 응답시간·SQL 호출 수 기준을 통과했습니다. 현재 변경은 커밋하지 않아 원격 GitHub CI만 NOT_RUN입니다.
+
 ## 초기 설계
 
 도메인별 패키지를 갖춘 모듈형 모놀리스로 시작합니다. Flyway V1은 vector 확장을, V2는 회원, V3는 작품·업로드 요청 테이블을 생성합니다. API 공통 응답은 `success/data/error/timestamp`입니다.
@@ -75,7 +79,7 @@ Kafka producer에는 idempotence와 제한된 delivery timeout을 설정했습�
 
 ## 다음 단계
 
-MVP 웹 화면(로그인·작품 업로드·탐지 목록/상세)을 구현했습니다. [실행 및 검증 범위](frontend/README.md). [STEP 30 검증](docs/STEP30_LOCAL_VALIDATION.md): 백엔드·AI·웹 396개 테스트와 JAR 빌드 통과. Docker 시작 오류로 전체 연결 시험은 미완료이며, 다음 작업은 Docker 실행 환경 복구 후 통합·수용 시험입니다. [STEP 28 차이 점검](docs/STEP28_MVP_GAP_REVIEW.md)과 [수용 점검표](docs/MVP_ACCEPTANCE.md)에 우선순위와 완료 조건을 정리했습니다. [STEP 27 개인정보·법률 검토 준비](docs/STEP27_LEGAL_READINESS.md)에 내부 정책 초안·데이터 목록·삭제 절차와 미확정 사항을 정리했습니다. 정책 공개·법률 승인·물리 삭제 구현·운영 통합 검증은 미완료입니다. [STEP 26 감사 로그](docs/STEP26_AUDIT_LOG.md), 네이티브 앱 검증·악성코드 검사·OAuth, 실제 AI 평가·임계값 보정의 범위는 각 문서를 참고하세요.
+MVP 웹 화면(로그인·작품 업로드·탐지 목록/상세)을 구현했습니다. [실행 및 검증 범위](frontend/README.md). [STEP 33 수용 시험](docs/STEP33_MVP_ACCEPTANCE_RESULT.md)에서 격리된 PostgreSQL·Redis·Kafka·MinIO·Mailpit, 백엔드·웹과 실제 DINOv2를 연결해 M01~M12를 통과했습니다. [STEP 32 테스트 확장](docs/STEP32_TEST_EXPANSION.md)은 입력 경계값 105개를 포함한 단위 422개·통합 21개, 총 443개 통과를 기록합니다. [STEP 31 통합 검증](docs/STEP31_INTEGRATION_VALIDATION.md)과 [STEP 30 검증](docs/STEP30_LOCAL_VALIDATION.md)은 각 실행 시점의 결과로 유지합니다. 다음 작업은 실제 AliExpress·운영 SMTP/S3/Stripe 연결, 실제 데이터 AI 평가·임계값 보정, 정책 승인·물리 삭제·백업 복구 및 운영 보안 검증입니다.
 
 STEP 24 API: [판매자 분석](docs/STEP24_SELLER_INTELLIGENCE.md). 본인 작품과 관리자 집계를 분리하고 탐지·창작자 수, 검토 우선순위, 최초·최근 탐지 시점을 제공합니다.
 
