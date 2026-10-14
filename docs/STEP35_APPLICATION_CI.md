@@ -1,6 +1,6 @@
 # STEP 35 애플리케이션 원격 CI
 
-작성일: 2026-10-06. 상태: **구현 및 로컬 정적 검증 완료, GitHub Actions 최초 실행 대기**.
+작성일: 2026-10-06. 상태: **PARTIAL — 원격 5개 Job PASS, 백엔드 통합 Job 실패 원인 분석 중**.
 
 ## 1. 결정 사항 및 배경 (ADR)
 
@@ -117,6 +117,12 @@ python -m unittest discover -s tests -p "test_*.py" -v
 | 백엔드 통합 테스트 | NOT_RUN — 로컬 Docker 엔진 중지, 원격 CI에서 실행 예정 |
 
 로컬 합계는 502개다. 기존 STEP 34의 실제 모델 3개와 백엔드 통합 21개 결과를 소급 변경하지 않으며, 이번 변경의 원격 통합 성공 여부는 GitHub Actions 결과로 별도 판정한다.
+
+### 최초 원격 실행 결과
+
+[Application CI 실행 #37429473087](https://github.com/KTheES/ArtGuard/actions/runs/37429473087)에서 저장소 안전성, 백엔드 단위·빌드, AI, 프런트엔드, DORA 수집기 Job은 통과했다. 백엔드 통합 Job은 Testcontainers 단계까지 진입한 뒤 종료 코드 1로 실패했고 결과 아티팩트는 정상 업로드됐다. 테스트 XML의 상세 실패는 인증 후 확인하며, 확인 전에는 애플리케이션 결함이나 Runner 환경 문제 중 하나로 단정하지 않는다.
+
+GitHub 주석에서 Node.js 20 기반 Action의 지원 종료 경고를 확인해 `checkout`·`setup-java`·`setup-python`·`setup-node`·`upload-artifact`·`github-script`를 2026-10-06 기준 공식 최신 메이저로 갱신했다. Application CI뿐 아니라 DORA 수집·배포 기록 워크플로우에도 같은 런타임 기준을 적용했으며 원격 재검증은 다음 push에서 수행한다.
 
 ## 6. FAQ 및 Onboarding
 
