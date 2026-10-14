@@ -7,7 +7,7 @@ Issue 접수 누락을 줄이고 첫 응답 SLA와 주간 흐름을 같은 기�
 ## 아키텍처 설계
 
 ```text
-Issue 생성 ──> 자동 접수 댓글 + support/sla:active 라벨
+support 라벨 부여 ──> 자동 접수 댓글 + sla:active 라벨
                     │
 6시간 Schedule ────┴──> 첫 팀 응답 검사 ──> sla:breached 라벨
                     │
@@ -22,11 +22,11 @@ GitHub REST API의 Issue, Comment, Label 인터페이스만 사용합니다.
 
 | 입력/상태          | 처리                                   | 출력                                     |
 | ------------------ | -------------------------------------- | ---------------------------------------- |
-| 새 Issue           | 접수 안내, 라벨 보장                   | 댓글, `support`, `sla:active`            |
+| support 라벨 Issue | 접수 안내, 중복 댓글 방지              | 댓글, `sla:active`                       |
 | 열린 support Issue | OWNER/MEMBER/COLLABORATOR 첫 댓글 확인 | 활성 라벨 제거 또는 위반 라벨 추가       |
 | 최근 7일 Issue     | 생성·종료·SLA 위반 집계                | `지원 운영 주간 요약 · YYYY-MM-DD` Issue |
 
-SLA 시계는 Issue 생성 시각부터 24시간이며 봇 댓글은 첫 팀 응답으로 세지 않습니다.
+SLA 시계는 Issue 생성 시각부터 기본 24시간이며 봇 댓글은 첫 팀 응답으로 세지 않습니다. 저장소 변수 `SUPPORT_SLA_HOURS`에 1~720 사이의 시간을 지정할 수 있고, 유효하지 않은 값은 24시간으로 대체합니다.
 
 ## 트러블슈팅 가이드
 
