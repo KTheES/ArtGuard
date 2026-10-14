@@ -5,6 +5,8 @@
 
 프로젝트 제안서, PRD, ERD와 학기 마일스톤은 별도의 [기획 문서 저장소](https://github.com/KTheES/copyright_detect)에서 관리합니다. 이 저장소는 실행 가능한 ArtworkGuard 애플리케이션 소스와 운영 자동화만 관리합니다.
 
+기여자는 [기여 가이드](CONTRIBUTING.md)와 [PR 리뷰 가이드](docs/REVIEW_GUIDE.md)를 따라 feature 브랜치, Conventional Commits, `[MUST]`/`[SHOULD]` 리뷰를 적용합니다.
+
 작품 업로드와 로컬 MinIO 실행은 [STEP 3 안내](docs/STEP3_ARTWORK.md)를 참고하세요. 기본 실행에서는 저장소 연동이 비활성 상태입니다.
 
 AI 실행은 [STEP 4 안내](ai-service/README.md), 비동기 저장 연결은 [STEP 5 안내](docs/STEP5_EMBEDDING.md)를 참고하세요.
@@ -64,7 +66,9 @@ Health/OpenAPI 접근, 미구현 API 차단을 확인합니다. Docker가 없으
 
 2026-10-01 [STEP 34 품질 게이트](docs/STEP34_QUALITY_GATE_CHECKLIST.md)에서는 정상·경계·실패 경로, 로컬 회귀 526개와 응답시간·SQL 호출 수 기준을 통과했습니다. 현재 변경은 커밋하지 않아 원격 GitHub CI만 NOT_RUN입니다.
 
-2026-10-06 [STEP 35 애플리케이션 원격 CI](docs/STEP35_APPLICATION_CI.md)를 추가했습니다. PR·`main` push에서 저장소 안전성, 백엔드 단위/통합, AI 비모델, 프런트엔드, DORA 수집기 테스트를 병렬 실행하며 최초 원격 성공 전까지 상태는 NOT_RUN입니다.
+2026-10-06 [STEP 35 애플리케이션 원격 CI](docs/STEP35_APPLICATION_CI.md)를 추가했습니다. PR·`main` push에서 저장소 안전성, 백엔드 단위/통합, AI 비모델, 프런트엔드, DORA 수집기 테스트를 병렬 실행합니다. 최초 원격 실행은 5개 Job이 통과했고 백엔드 통합 Job의 실패 원인을 분석 중이므로 상태는 PARTIAL입니다.
+
+2026-10-06 [STEP 36 DORA 대시보드 검증](docs/STEP36_DORA_DASHBOARD_VALIDATION.md)에서 Chart.js 카드·차트의 실제 렌더링을 확인하고 JSON 계약·경로·차트 변환 신규 테스트 154개를 통과했습니다. [STEP 37~41 백로그](docs/STEP37_41_GAP_BACKLOG.md)는 E2E, 실제 AI 평가, 배포·DORA 실측, 외부 연동, 데이터 수명주기·법률 승인을 구분합니다.
 
 ## 초기 설계
 
