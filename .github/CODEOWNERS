@@ -1,0 +1,13 @@
+# 기본 소유자
+* @KTheES
+
+# 변경 영향이 큰 영역
+/.github/ @KTheES
+/backend/ @KTheES
+/ai-service/ @KTheES
+/frontend/ @KTheES
+/dashboard/ @KTheES
+/infra/ @KTheES
+/ops/ @KTheES
+/docs/ @KTheES
+

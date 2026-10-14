@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag("integration")
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@org.springframework.test.annotation.DirtiesContext(classMode=org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS)
 class ArtworkGuardApplicationTests {
     @Container static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
         DockerImageName.parse("pgvector/pgvector:pg17").asCompatibleSubstituteFor("postgres"));

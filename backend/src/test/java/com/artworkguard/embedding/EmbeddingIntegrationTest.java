@@ -26,6 +26,7 @@ import static org.mockito.Mockito.*;
 import static org.awaitility.Awaitility.await;
 @Tag("integration") @Testcontainers
 @SpringBootTest(properties="artworkguard.embedding.enabled=true")
+@org.springframework.test.annotation.DirtiesContext(classMode=org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS)
 class EmbeddingIntegrationTest {
  @Container static PostgreSQLContainer<?> postgres=new PostgreSQLContainer<>(DockerImageName.parse("pgvector/pgvector:pg17").asCompatibleSubstituteFor("postgres"));
  @Container static GenericContainer<?> redis=new GenericContainer<>("redis:7.4-alpine").withExposedPorts(6379);
@@ -35,7 +36,7 @@ class EmbeddingIntegrationTest {
   try{
    var server=HttpServer.create(new InetSocketAddress("127.0.0.1",0),0);
    server.createContext("/v1/embeddings",exchange->{
-    byte[] response=new EmbeddingContractTest().valid().toString().getBytes(java.nio.charset.StandardCharsets.UTF_8);
+    byte[] response=new EmbeddingContractTest().valid().put("perceptualHashVersion","phash32-dhash9-luma-v1").put("pHash","0000000000000000").put("dHash","0000000000000000").toString().getBytes(java.nio.charset.StandardCharsets.UTF_8);
     exchange.getRequestBody().readAllBytes();exchange.getResponseHeaders().add("Content-Type","application/json");
     exchange.sendResponseHeaders(200,response.length);exchange.getResponseBody().write(response);exchange.close();
    });server.start();return server;

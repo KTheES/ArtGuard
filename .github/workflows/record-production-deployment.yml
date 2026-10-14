@@ -32,7 +32,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Create deployment and terminal status
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         env:
           DEPLOY_REF: ${{ inputs.ref || github.sha }}
           DEPLOY_OUTCOME: ${{ inputs.outcome }}
