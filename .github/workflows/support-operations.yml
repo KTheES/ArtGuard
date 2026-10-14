@@ -1,0 +1,151 @@
+name: Support Operations Draft
+
+on:
+  issues:
+    types: [opened]
+  schedule:
+    - cron: "17 */6 * * *"
+    - cron: "23 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: support-operations-${{ github.event_name }}-${{ github.event.schedule || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  acknowledge:
+    name: Acknowledge new issue
+    if: github.event_name == 'issues' && github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Add support labels and acknowledgement
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = [
+              { name: 'support', color: '0E8A16', description: '지원 운영 추적 대상' },
+              { name: 'sla:active', color: 'FBCA04', description: '첫 응답 SLA 측정 중' },
+              { name: 'sla:breached', color: 'B60205', description: '첫 응답 SLA 초과' },
+              { name: 'weekly-summary', color: '5319E7', description: '지원 운영 주간 요약' }
+            ];
+            for (const label of labels) {
+              try {
+                await github.rest.issues.getLabel({ ...context.repo, name: label.name });
+              } catch (error) {
+                if (error.status !== 404) throw error;
+                await github.rest.issues.createLabel({ ...context.repo, ...label });
+              }
+            }
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.issue.number,
+              labels: ['support', 'sla:active']
+            });
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: '접수했습니다. 담당자가 내용을 확인한 뒤 첫 응답을 남기겠습니다. 공개 Issue에는 비밀번호, 토큰, 개인정보를 올리지 마세요.'
+            });
+
+  track-sla:
+    name: Track first-response SLA
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Evaluate open support issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              ...context.repo,
+              state: 'open',
+              labels: 'support',
+              per_page: 100
+            });
+            const teamAssociations = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
+            const now = Date.now();
+            for (const issue of issues.filter(item => !item.pull_request)) {
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                ...context.repo,
+                issue_number: issue.number,
+                per_page: 100
+              });
+              const hasTeamResponse = comments.some(comment =>
+                comment.user?.type !== 'Bot' && teamAssociations.has(comment.author_association)
+              );
+              const currentLabels = new Set(issue.labels.map(label => typeof label === 'string' ? label : label.name));
+              if (hasTeamResponse && currentLabels.has('sla:active')) {
+                await github.rest.issues.removeLabel({
+                  ...context.repo,
+                  issue_number: issue.number,
+                  name: 'sla:active'
+                }).catch(error => { if (error.status !== 404) throw error; });
+              } else if (!hasTeamResponse && now - Date.parse(issue.created_at) > 24 * 60 * 60 * 1000) {
+                await github.rest.issues.addLabels({
+                  ...context.repo,
+                  issue_number: issue.number,
+                  labels: ['sla:breached']
+                });
+              }
+            }
+
+  weekly-summary:
+    name: Publish weekly support summary
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '23 0 * * 1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Create an idempotent weekly summary issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const end = new Date();
+            const start = new Date(end.getTime() - 7 * 24 * 60 * 60 * 1000);
+            const date = end.toISOString().slice(0, 10);
+            const title = `지원 운영 주간 요약 · ${date}`;
+            try {
+              await github.rest.issues.getLabel({ ...context.repo, name: 'weekly-summary' });
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              await github.rest.issues.createLabel({
+                ...context.repo,
+                name: 'weekly-summary',
+                color: '5319E7',
+                description: '지원 운영 주간 요약'
+              });
+            }
+            const allIssues = await github.paginate(github.rest.issues.listForRepo, {
+              ...context.repo,
+              state: 'all',
+              since: start.toISOString(),
+              per_page: 100
+            });
+            if (allIssues.some(issue => issue.title === title)) {
+              core.info(`Weekly summary already exists: ${title}`);
+              return;
+            }
+            const issues = allIssues.filter(item => !item.pull_request && !item.labels.some(label => (typeof label === 'string' ? label : label.name) === 'weekly-summary'));
+            const created = issues.filter(issue => Date.parse(issue.created_at) >= start.getTime()).length;
+            const closed = issues.filter(issue => issue.closed_at && Date.parse(issue.closed_at) >= start.getTime()).length;
+            const breached = issues.filter(issue => issue.labels.some(label => (typeof label === 'string' ? label : label.name) === 'sla:breached')).length;
+            const body = [
+              `관측 기간: ${start.toISOString()} ~ ${end.toISOString()}`,
+              '',
+              `- 생성 Issue: ${created}건`,
+              `- 종료 Issue: ${closed}건`,
+              `- 현재 조회 범위의 SLA 위반: ${breached}건`,
+              '',
+              '> 자동 생성된 초안입니다. 운영 회의에서 원인과 후속 액션을 보완하세요.'
+            ].join('\n');
+            await github.rest.issues.create({
+              ...context.repo,
+              title,
+              body,
+              labels: ['weekly-summary']
+            });
