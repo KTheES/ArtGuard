@@ -5,6 +5,13 @@
 
 프로젝트 제안서, PRD, ERD와 학기 마일스톤은 별도의 [기획 문서 저장소](https://github.com/KTheES/copyright_detect)에서 관리합니다. 이 저장소는 실행 가능한 ArtworkGuard 애플리케이션 소스와 운영 자동화만 관리합니다.
 
+## Wiki와 협업 문서
+
+- [GitHub Wiki](https://github.com/KTheES/ArtGuard/wiki): Getting Started, Development Guide, Troubleshooting
+- [Wiki 원본](docs/wiki/Home.md): PR 검토와 복구를 위한 저장소 사본
+- [Architecture Decision Records](docs/adr/README.md): 기술 결정 배경과 결과
+- [지원 운영 자동화 초안](docs/SUPPORT_OPERATIONS.md): 자동 응답, SLA 추적, 주간 요약
+
 작품 업로드와 로컬 MinIO 실행은 [STEP 3 안내](docs/STEP3_ARTWORK.md)를 참고하세요. 기본 실행에서는 저장소 연동이 비활성 상태입니다.
 
 AI 실행은 [STEP 4 안내](ai-service/README.md), 비동기 저장 연결은 [STEP 5 안내](docs/STEP5_EMBEDDING.md)를 참고하세요.
