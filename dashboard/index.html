@@ -62,53 +62,6 @@
       </section>
       <footer><span id="generated"></span><span>Data source: GitHub Deployments · Pull Requests · Issues</span></footer>
     </main>
-    <script>
-      const value = (number, suffix = "") => number == null ? "N/A" : `${Number(number).toLocaleString("ko-KR", { maximumFractionDigits: 2 })}${suffix}`;
-      const dataPath = new URLSearchParams(location.search).get("data") || "../reports/dora/latest.json";
-      const colors = { grid:"rgba(143,165,193,.15)", text:"#91a6c0", green:"#39d98a", red:"#ff6b7a", blue:"#4da3ff", amber:"#ffb84d" };
-
-      async function loadDashboard() {
-        try {
-          const response = await fetch(dataPath, { cache: "no-store" });
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          const data = await response.json();
-          const metrics = data.metrics;
-          const series = data.series || [];
-          document.getElementById("repository").textContent = `${data.repository} · ${data.window.start.slice(0,10)} — ${data.window.end.slice(0,10)}`;
-          document.getElementById("lead").textContent = value(metrics.lead_time_for_changes.median_hours, "h");
-          document.getElementById("leadDetail").textContent = `n=${metrics.lead_time_for_changes.sample_size} · p90 ${value(metrics.lead_time_for_changes.p90_hours,"h")}`;
-          document.getElementById("frequency").textContent = value(metrics.deployment_frequency.per_week, "/week");
-          document.getElementById("frequencyDetail").textContent = `성공 배포 ${metrics.deployment_frequency.successful_deployments}건`;
-          document.getElementById("mttr").textContent = value(metrics.mean_time_to_restore.mean_hours, "h");
-          document.getElementById("mttrDetail").textContent = `incident ${metrics.mean_time_to_restore.incident_count}건`;
-          document.getElementById("cfr").textContent = value(metrics.change_failure_rate.percent, "%");
-          document.getElementById("cfrDetail").textContent = `실패 ${metrics.change_failure_rate.failed_deployments}/${metrics.change_failure_rate.terminal_deployments}`;
-          document.getElementById("generated").textContent = `Generated ${data.generated_at}`;
-          if (data.source.mode === "sample") {
-            document.getElementById("sampleBadge").classList.add("show");
-            const notice = document.getElementById("notice");
-            notice.textContent = "현재 화면은 구조 검증용 샘플 데이터입니다. GitHub Actions 최초 실행 후 실측 데이터로 교체됩니다.";
-            notice.classList.add("show");
-          }
-          renderCharts(series);
-        } catch (error) {
-          const notice = document.getElementById("notice");
-          notice.textContent = `DORA JSON을 불러오지 못했습니다: ${error.message}. 저장소 루트에서 HTTP 서버를 실행했는지 확인하세요.`;
-          notice.classList.add("show");
-        }
-      }
-
-      function chartOptions(yTitle) {
-        return { responsive:true, maintainAspectRatio:false, interaction:{mode:"index",intersect:false}, plugins:{legend:{labels:{color:colors.text,usePointStyle:true,boxWidth:9}}}, scales:{x:{ticks:{color:colors.text,maxRotation:0},grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:yTitle,color:colors.text},ticks:{color:colors.text},grid:{color:colors.grid}}} };
-      }
-
-      function renderCharts(series) {
-        const labels = series.map(item => item.week_start.slice(5));
-        new Chart(document.getElementById("deploymentsChart"), { type:"bar", data:{labels,datasets:[{label:"성공",data:series.map(i=>i.successful_deployments),backgroundColor:colors.green,borderRadius:5},{label:"실패/오류",data:series.map(i=>i.failed_deployments),backgroundColor:colors.red,borderRadius:5}]}, options:chartOptions("deployments") });
-        new Chart(document.getElementById("timeChart"), { type:"line", data:{labels,datasets:[{label:"Lead Time",data:series.map(i=>i.lead_time_median_hours),borderColor:colors.blue,backgroundColor:colors.blue,spanGaps:true,tension:.35},{label:"MTTR",data:series.map(i=>i.mttr_mean_hours),borderColor:colors.amber,backgroundColor:colors.amber,spanGaps:true,tension:.35}]}, options:chartOptions("hours") });
-      }
-
-      loadDashboard();
-    </script>
+    <script type="module" src="./app.mjs"></script>
   </body>
 </html>

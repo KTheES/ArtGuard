@@ -15,3 +15,11 @@ http://localhost:8000/dashboard/?data=../reports/dora/latest.json
 ```
 
 로컬 파일을 브라우저에서 직접 열면 `fetch()` 보안 정책으로 JSON 로딩이 차단될 수 있으므로 HTTP 서버를 사용해야 합니다.
+
+## 검증
+
+```bash
+npm test
+```
+
+대시보드는 같은 origin의 `.json` 파일만 `?data=` 입력으로 허용합니다. JSON 스키마, 수치 범위, 주차 정렬과 차트 변환 로직은 Node.js 테스트로 검증합니다.
