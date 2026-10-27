@@ -16,6 +16,10 @@ ArtworkGuard는 [MIT License](LICENSE)로 공개되어 있습니다. 기여 전 
 
 공개 이슈나 PR에는 비밀번호, 토큰, 개인정보, 고객 데이터 또는 저작권이 불명확한 이미지를 첨부하지 마세요. 보안 취약점은 공개 이슈 대신 저장소의 비공개 보안 신고 경로를 사용합니다.
 
+## CI/CD
+
+- [Application CI 운영 가이드](docs/CI_PIPELINE.md) — Lint, Build, OS/Node.js Matrix Test, Artifact 기반 CI Preview Deploy
+
 작품 업로드와 로컬 MinIO 실행은 [STEP 3 안내](docs/STEP3_ARTWORK.md)를 참고하세요. 기본 실행에서는 저장소 연동이 비활성 상태입니다.
 
 AI 실행은 [STEP 4 안내](ai-service/README.md), 비동기 저장 연결은 [STEP 5 안내](docs/STEP5_EMBEDDING.md)를 참고하세요.
