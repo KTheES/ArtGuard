@@ -5,6 +5,17 @@
 
 프로젝트 제안서, PRD, ERD와 학기 마일스톤은 별도의 [기획 문서 저장소](https://github.com/KTheES/copyright_detect)에서 관리합니다. 이 저장소는 실행 가능한 ArtworkGuard 애플리케이션 소스와 운영 자동화만 관리합니다.
 
+## 오픈소스 참여
+
+ArtworkGuard는 [MIT License](LICENSE)로 공개되어 있습니다. 기여 전 [기여 가이드](CONTRIBUTING.md)와 [행동 강령](CODE_OF_CONDUCT.md)을 확인해 주세요.
+
+- [OSS 라이선스 비교와 MIT 선택 기준](docs/OSS_LICENSE_ANALYSIS.md)
+- [조직 내부 Inner Source 도입 로드맵](docs/INNER_SOURCE_ROADMAP.md)
+- 버그·기능 제안: [GitHub Issues](https://github.com/KTheES/ArtGuard/issues)
+- 설계·RFC 논의: [GitHub Discussions](https://github.com/KTheES/ArtGuard/discussions)
+
+공개 이슈나 PR에는 비밀번호, 토큰, 개인정보, 고객 데이터 또는 저작권이 불명확한 이미지를 첨부하지 마세요. 보안 취약점은 공개 이슈 대신 저장소의 비공개 보안 신고 경로를 사용합니다.
+
 작품 업로드와 로컬 MinIO 실행은 [STEP 3 안내](docs/STEP3_ARTWORK.md)를 참고하세요. 기본 실행에서는 저장소 연동이 비활성 상태입니다.
 
 AI 실행은 [STEP 4 안내](ai-service/README.md), 비동기 저장 연결은 [STEP 5 안내](docs/STEP5_EMBEDDING.md)를 참고하세요.
