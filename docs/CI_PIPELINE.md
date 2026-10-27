@@ -15,7 +15,7 @@ Matrix Test (Ubuntu/Windows × Node.js 22/24)
     ▼
 Deploy CI Preview
        테스트된 아티팩트 다운로드 및 재업로드
-       GitHub Deployment 상태 기록
+       `ci-preview` 환경의 GitHub Deployment 상태 자동 기록
 ```
 
 PR에서는 Build와 Matrix Test까지만 실행한다. `main`, `feat/**`, `fix/**` 브랜치 push 및 수동 실행에서는 모든 테스트가 성공한 뒤 `ci-preview` 환경에 배포 이력을 기록한다. 실제 운영 배포는 별도 `Record Production Deployment` 워크플로우가 담당한다.

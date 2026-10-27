@@ -13,7 +13,6 @@ on:
 
 permissions:
   contents: read
-  deployments: write
 
 concurrency:
   group: application-ci-${{ github.workflow }}-${{ github.ref }}
@@ -117,25 +116,6 @@ jobs:
           name: frontend-build-${{ github.run_id }}
           path: deploy/frontend
 
-      - name: Create GitHub deployment
-        id: deployment
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const response = await github.rest.repos.createDeployment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: context.sha,
-              environment: "ci-preview",
-              auto_merge: false,
-              required_contexts: [],
-              description: "Artifact-backed CI preview deployment",
-              transient_environment: true,
-              production_environment: false,
-            });
-            core.setOutput("deployment_id", response.data.id);
-
       - name: Upload deployable artifact
         uses: actions/upload-artifact@v4
         with:
@@ -159,22 +139,3 @@ jobs:
             if (!response.ok) throw new Error(`Webhook returned HTTP ${response.status}`);
           '
 
-      - name: Finalize GitHub deployment status
-        if: always() && steps.deployment.outputs.deployment_id != ''
-        uses: actions/github-script@v7
-        env:
-          DEPLOYMENT_ID: ${{ steps.deployment.outputs.deployment_id }}
-          DEPLOYMENT_STATE: ${{ job.status == 'success' && 'success' || 'failure' }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: Number(process.env.DEPLOYMENT_ID),
-              state: process.env.DEPLOYMENT_STATE,
-              environment: "ci-preview",
-              description: `Application CI ${process.env.DEPLOYMENT_STATE}`,
-              log_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-              auto_inactive: process.env.DEPLOYMENT_STATE === "success",
-            });
