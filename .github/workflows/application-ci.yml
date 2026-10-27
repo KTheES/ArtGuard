@@ -1,0 +1,140 @@
+name: Application CI
+
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+      - "fix/**"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: application-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint JavaScript
+        run: npm run lint
+
+      - name: Build web assets
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build-${{ github.run_id }}
+          path: frontend/dist
+          if-no-files-found: error
+          retention-days: 14
+
+  test:
+    name: Test · ${{ matrix.os }} · Node ${{ matrix.node-version }}
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+        node-version:
+          - "22.x"
+          - "24.x"
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build-${{ github.run_id }}
+          path: frontend/dist
+
+      - name: Verify downloaded artifact
+        run: node --check dist/app.js
+
+      - name: Run tests
+        run: npm test
+
+  deploy:
+    name: Deploy CI preview
+    needs:
+      - build
+      - test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: ci-preview
+    env:
+      # Optional environment secret. Its value must never be committed or printed.
+      DEPLOY_WEBHOOK_URL: ${{ secrets.ARTGUARD_DEPLOY_WEBHOOK_URL }}
+    steps:
+      - name: Download tested build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build-${{ github.run_id }}
+          path: deploy/frontend
+
+      - name: Upload deployable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-deployable-${{ github.run_id }}
+          path: deploy/frontend
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Notify optional deployment webhook
+        if: env.DEPLOY_WEBHOOK_URL != ''
+        env:
+          DEPLOY_PAYLOAD: >-
+            {"repository":"${{ github.repository }}","sha":"${{ github.sha }}","run_id":"${{ github.run_id }}"}
+        run: |
+          node --input-type=module -e '
+            const response = await fetch(process.env.DEPLOY_WEBHOOK_URL, {
+              method: "POST",
+              headers: {"content-type": "application/json"},
+              body: process.env.DEPLOY_PAYLOAD,
+            });
+            if (!response.ok) throw new Error(`Webhook returned HTTP ${response.status}`);
+          '
