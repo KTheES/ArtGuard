@@ -18,7 +18,7 @@ Deploy CI Preview
        `ci-preview` 환경의 GitHub Deployment 상태 자동 기록
 ```
 
-PR에서는 Build와 Matrix Test까지만 실행한다. `main`, `feat/**`, `fix/**` 브랜치 push 및 수동 실행에서는 모든 테스트가 성공한 뒤 `ci-preview` 환경에 배포 이력을 기록한다. 실제 운영 배포는 별도 `Record Production Deployment` 워크플로우가 담당한다.
+PR과 기능 브랜치 push에서는 Build와 Matrix Test까지만 실행한다. `main` 브랜치 push 또는 `main`에서의 수동 실행은 모든 테스트가 성공한 뒤 `ci-preview` 환경에 배포 이력을 기록한다. 이 제한은 검토되지 않은 브랜치가 Environment Secret에 접근하지 못하게 한다. 실제 운영 배포는 별도 `Record Production Deployment` 워크플로우가 담당한다.
 
 ## Secret 설정
 
