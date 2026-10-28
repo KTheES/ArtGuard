@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   publish:
-    name: Publish @kthes/artworkguard-web
+    name: Publish @kthes/artguard-frontend
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
