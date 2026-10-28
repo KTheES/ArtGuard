@@ -18,7 +18,7 @@
 ## Docker 이미지
 
 - 로컬 이미지: `artguard-frontend:1.0.1-local`
-- 원격 이미지: `ghcr.io/kthes/artguard-frontend`
+- 원격 이미지: `ghcr.io/kthes/artworkguard-web`
 - 워크플로우: `.github/workflows/container-publish.yml`
 - 태그: `latest`, 전체 commit SHA, `frontend-v*`에서 추출한 버전
 - Build cache: GitHub Actions cache backend
