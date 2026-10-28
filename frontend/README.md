@@ -22,6 +22,16 @@ node --test
 
 백엔드는 별도로 `127.0.0.1:8080`에서 실행해야 합니다. 다른 로컬 포트는 `BACKEND_ORIGIN=http://127.0.0.1:8081` 환경 변수로 설정합니다. 웹 포트는 `PORT`로 바꿉니다. localhost 대신 표시된 127.0.0.1 주소로 접속합니다.
 
+## Docker 실행
+
+```powershell
+docker build --tag artguard-frontend:1.0.1-local --file frontend/Dockerfile frontend
+docker run --rm --publish 127.0.0.1:15174:5173 artguard-frontend:1.0.1-local
+# http://127.0.0.1:15174
+```
+
+컨테이너는 non-root `node` 사용자로 실행되며 `/` HTTP 응답을 이용한 health check를 포함합니다. API 프록시 대상은 기본적으로 컨테이너 내부 loopback이므로 실제 연결 환경에서는 별도 네트워크·백엔드 구성을 검토해야 합니다.
+
 ## 제공 화면
 
 - 회원가입·로그인·로그아웃. 토큰은 메모리에 보관하며 새로고침하면 재로그인합니다. 동시 401 응답의 갱신 요청을 합치고 갱신 실패 시 로그인 화면으로 돌아갑니다.
