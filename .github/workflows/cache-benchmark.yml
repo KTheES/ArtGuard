@@ -91,7 +91,7 @@ jobs:
           cat benchmark/cache-comparison.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload benchmark report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ci-cache-benchmark-${{ github.run_id }}
           path: benchmark/cache-comparison.md
