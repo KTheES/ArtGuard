@@ -23,7 +23,7 @@
 - 태그: `latest`, 전체 commit SHA, `frontend-v*`에서 추출한 버전
 - Build cache: GitHub Actions cache backend
 
-멀티 스테이지 Dockerfile의 build 단계에서 Lint, Test, 정적 자산 Build를 수행한다. runtime은 `node:22-alpine`, non-root `node` 사용자, HTTP health check를 사용한다.
+멀티 스테이지 Dockerfile의 build 단계에서 Lint, Test, 정적 자산 Build를 수행한다. build/runtime base image는 검증한 `node:22-alpine` digest로 고정하고 Dependabot이 갱신한다. runtime은 non-root `node` 사용자와 HTTP health check를 사용한다.
 
 ### 2026-10-28 로컬 검증
 
