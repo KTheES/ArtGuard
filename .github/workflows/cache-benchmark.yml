@@ -83,8 +83,8 @@ jobs:
           - Runner: ubuntu-latest
           - Node.js: 22.x
           - Cache hit: $CACHE_HIT
-          - Without cache: **${BEFORE_MS} ms**
-          - With warm cache: **${AFTER_MS} ms**
+          - Without cache (npm ci): **${BEFORE_MS} ms**
+          - With warm cache (restore included): **${AFTER_MS} ms**
           - Saved: **${saved_ms} ms**
           - Improvement: **${improvement}%**
           EOF

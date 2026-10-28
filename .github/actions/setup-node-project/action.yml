@@ -19,7 +19,7 @@ outputs:
     description: Whether the exact node_modules cache key was restored
     value: ${{ steps.modules_cache.outputs.cache-hit }}
   install_duration_ms:
-    description: Dependency installation step duration in milliseconds
+    description: Dependency preparation duration, including cache restore or npm ci, in milliseconds
     value: ${{ steps.install.outputs.duration_ms }}
 
 runs:
@@ -34,6 +34,11 @@ runs:
       id: node_runtime
       shell: bash
       run: echo "version=$(node --version)" >> "$GITHUB_OUTPUT"
+
+    - name: Start dependency preparation timer
+      id: dependency_timer
+      shell: bash
+      run: echo "started_at_ms=$(node -e 'process.stdout.write(String(Date.now()))')" >> "$GITHUB_OUTPUT"
 
     - name: Restore node_modules cache
       id: modules_cache
@@ -50,13 +55,13 @@ runs:
         CACHE_ENABLED: ${{ inputs.enable-cache }}
         CACHE_HIT: ${{ steps.modules_cache.outputs.cache-hit }}
         PROJECT_DIRECTORY: ${{ inputs.working-directory }}
+        STARTED_AT_MS: ${{ steps.dependency_timer.outputs.started_at_ms }}
       run: |
-        started_at=$(node -e 'process.stdout.write(String(Date.now()))')
         if [[ "$CACHE_ENABLED" != "true" || "$CACHE_HIT" != "true" ]]; then
           (cd "$PROJECT_DIRECTORY" && npm ci --no-audit --no-fund)
         else
           echo "Exact node_modules cache restored; npm ci skipped."
         fi
         ended_at=$(node -e 'process.stdout.write(String(Date.now()))')
-        echo "duration_ms=$((ended_at - started_at))" >> "$GITHUB_OUTPUT"
+        echo "duration_ms=$((ended_at - STARTED_AT_MS))" >> "$GITHUB_OUTPUT"
         (cd "$PROJECT_DIRECTORY" && npm ls --all --omit=optional)
