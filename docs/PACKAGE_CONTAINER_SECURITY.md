@@ -6,7 +6,7 @@
 
 ## npm 패키지 배포
 
-- 패키지: `@kthes/artworkguard-web`
+- 패키지: `@kthes/artguard-frontend`
 - Registry: `https://npm.pkg.github.com`
 - 기준 버전: `1.0.0`
 - Patch 업데이트: `1.0.1`
@@ -20,7 +20,7 @@
 ## Docker 이미지
 
 - 로컬 이미지: `artguard-frontend:1.0.1-local`
-- 원격 이미지: `ghcr.io/kthes/artguard/artworkguard-web`
+- 원격 이미지: `ghcr.io/kthes/artguard-frontend`
 - 워크플로우: `.github/workflows/container-publish.yml`
 - 태그: `latest`, 전체 commit SHA, `frontend-v*`에서 추출한 버전
 - Build cache: GitHub Actions cache backend
