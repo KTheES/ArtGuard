@@ -4,11 +4,16 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "lint": "node --check app.js && node --check api.js && node --check server.mjs && node --check scripts/build.mjs",
+    "lint": "eslint . --max-warnings=0",
     "build": "node scripts/build.mjs",
     "test": "node --test"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0"
   }
 }

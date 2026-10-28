@@ -106,9 +106,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: ci-preview
-    env:
-      # Optional environment secret. Its value must never be committed or printed.
-      DEPLOY_WEBHOOK_URL: ${{ secrets.ARTGUARD_DEPLOY_WEBHOOK_URL }}
     steps:
       - name: Download tested build artifact
         uses: actions/download-artifact@v4
@@ -124,12 +121,28 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+      - name: Verify secret-backed GitHub API access
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const {data: repository} = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            core.notice(`Authenticated deploy context for ${repository.full_name}`);
+
       - name: Notify optional deployment webhook
-        if: env.DEPLOY_WEBHOOK_URL != ''
         env:
+          # Scope the optional custom secret to this step only.
+          DEPLOY_WEBHOOK_URL: ${{ secrets.ARTGUARD_DEPLOY_WEBHOOK_URL }}
           DEPLOY_PAYLOAD: >-
             {"repository":"${{ github.repository }}","sha":"${{ github.sha }}","run_id":"${{ github.run_id }}"}
         run: |
+          if [ -z "$DEPLOY_WEBHOOK_URL" ]; then
+            echo "Deployment webhook is not configured; notification skipped."
+            exit 0
+          fi
           node --input-type=module -e '
             const response = await fetch(process.env.DEPLOY_WEBHOOK_URL, {
               method: "POST",
