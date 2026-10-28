@@ -13,14 +13,49 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
   group: application-ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  changes:
+    name: Detect relevant changes
+    runs-on: ubuntu-latest
+    outputs:
+      frontend_ci: ${{ steps.filter.outputs.frontend_ci }}
+      deployable: ${{ steps.filter.outputs.deployable }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Classify changed files
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            frontend_ci:
+              - "frontend/**"
+              - ".github/actions/setup-node-project/**"
+              - ".github/workflows/application-ci.yml"
+              - ".github/workflows/reusable-node-quality.yml"
+            deployable:
+              - "frontend/index.html"
+              - "frontend/style.css"
+              - "frontend/app.js"
+              - "frontend/api.js"
+              - "frontend/server.mjs"
+              - "frontend/scripts/build.mjs"
+              - "frontend/package.json"
+              - "frontend/package-lock.json"
+              - "infra/**"
+              - "docker-compose*.yml"
+
   build:
     name: Build and lint
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.frontend_ci == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     defaults:
@@ -30,15 +65,12 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up cached Node project
+        uses: ./.github/actions/setup-node-project
         with:
           node-version: "22.x"
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
+          working-directory: frontend
+          enable-cache: "true"
 
       - name: Lint JavaScript
         run: npm run lint
@@ -55,54 +87,40 @@ jobs:
           retention-days: 14
 
   test:
-    name: Test · ${{ matrix.os }} · Node ${{ matrix.node-version }}
-    needs: build
+    name: Matrix quality
+    needs:
+      - changes
+      - build
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.frontend_ci == 'true'
     strategy:
       fail-fast: false
       matrix:
         os:
           - ubuntu-latest
           - windows-latest
+          - macos-latest
         node-version:
           - "22.x"
           - "24.x"
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-build-${{ github.run_id }}
-          path: frontend/dist
-
-      - name: Verify downloaded artifact
-        run: node --check dist/app.js
-
-      - name: Run tests
-        run: npm test
+    uses: ./.github/workflows/reusable-node-quality.yml
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.node-version }}
+      artifact-name: frontend-build-${{ github.run_id }}
+      enable-cache: true
 
   deploy:
     name: Deploy CI preview
     needs:
+      - changes
       - build
       - test
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.event_name != 'pull_request' &&
+      (github.event_name == 'workflow_dispatch' || needs.changes.outputs.deployable == 'true') &&
+      needs.build.result == 'success' &&
+      needs.test.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: ci-preview

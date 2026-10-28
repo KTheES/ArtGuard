@@ -1,0 +1,67 @@
+name: Set up Node project
+description: Configure Node.js, restore an exact node_modules cache, and install dependencies on a cache miss.
+
+inputs:
+  node-version:
+    description: Node.js version passed to actions/setup-node
+    required: true
+  working-directory:
+    description: Directory containing package-lock.json
+    required: false
+    default: frontend
+  enable-cache:
+    description: Whether to restore and save the node_modules cache
+    required: false
+    default: "true"
+
+outputs:
+  cache_hit:
+    description: Whether the exact node_modules cache key was restored
+    value: ${{ steps.modules_cache.outputs.cache-hit }}
+  install_duration_ms:
+    description: Dependency preparation duration, including cache restore or npm ci, in milliseconds
+    value: ${{ steps.install.outputs.duration_ms }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Resolve Node.js runtime version
+      id: node_runtime
+      shell: bash
+      run: echo "version=$(node --version)" >> "$GITHUB_OUTPUT"
+
+    - name: Start dependency preparation timer
+      id: dependency_timer
+      shell: bash
+      run: echo "started_at_ms=$(node -e 'process.stdout.write(String(Date.now()))')" >> "$GITHUB_OUTPUT"
+
+    - name: Restore node_modules cache
+      id: modules_cache
+      if: inputs.enable-cache == 'true'
+      uses: actions/cache@v4
+      with:
+        path: ${{ inputs.working-directory }}/node_modules
+        key: node-modules-${{ runner.os }}-node-${{ steps.node_runtime.outputs.version }}-${{ hashFiles(format('{0}/package-lock.json', inputs.working-directory)) }}
+
+    - name: Install or verify dependencies
+      id: install
+      shell: bash
+      env:
+        CACHE_ENABLED: ${{ inputs.enable-cache }}
+        CACHE_HIT: ${{ steps.modules_cache.outputs.cache-hit }}
+        PROJECT_DIRECTORY: ${{ inputs.working-directory }}
+        STARTED_AT_MS: ${{ steps.dependency_timer.outputs.started_at_ms }}
+      run: |
+        if [[ "$CACHE_ENABLED" != "true" || "$CACHE_HIT" != "true" ]]; then
+          (cd "$PROJECT_DIRECTORY" && npm ci --no-audit --no-fund)
+        else
+          echo "Exact node_modules cache restored; npm ci skipped."
+        fi
+        ended_at=$(node -e 'process.stdout.write(String(Date.now()))')
+        echo "duration_ms=$((ended_at - STARTED_AT_MS))" >> "$GITHUB_OUTPUT"
+        (cd "$PROJECT_DIRECTORY" && npm ls --all --omit=optional)

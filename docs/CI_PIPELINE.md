@@ -2,23 +2,27 @@
 
 ## 목적과 결정 배경
 
-`Application CI`는 프런트엔드의 ESLint, Build, Matrix Test, CI Preview Deploy를 한 워크플로우에서 검증한다. Node.js 22는 프로젝트의 최소 지원 버전이며, Node.js 24와 Windows/Ubuntu 조합을 함께 검증해 런타임 및 OS 회귀를 조기에 발견한다.
+`Application CI`는 프런트엔드의 ESLint, Build, Matrix Test, CI Preview Deploy를 검증한다. Node.js 22는 프로젝트의 최소 지원 버전이며, Node.js 24와 Ubuntu/Windows/macOS 조합을 함께 검증해 런타임 및 OS 회귀를 조기에 발견한다. Matrix 테스트는 Reusable Workflow, Node 설정과 exact cache는 Composite Action으로 공통화한다.
 
 ## 파이프라인 구조
 
 ```text
-Build + Lint
+Changed-files detection
+    ▼
+Build + Lint (Composite Action)
     │  frontend-build 아티팩트 업로드
     ▼
-Matrix Test (Ubuntu/Windows × Node.js 22/24)
+Reusable Matrix Test (Ubuntu/Windows/macOS × Node.js 22/24)
     │  빌드 아티팩트 다운로드 및 테스트
     ▼
-Deploy CI Preview
+Conditional Deploy CI Preview
        테스트된 아티팩트 다운로드 및 재업로드
        `ci-preview` 환경의 GitHub Deployment 상태 자동 기록
 ```
 
-PR과 기능 브랜치 push에서는 Build와 Matrix Test까지만 실행한다. `main` 브랜치 push 또는 `main`에서의 수동 실행은 모든 테스트가 성공한 뒤 `ci-preview` 환경에 배포 이력을 기록한다. 이 제한은 검토되지 않은 브랜치가 Environment Secret에 접근하지 못하게 한다. 실제 운영 배포는 별도 `Record Production Deployment` 워크플로우가 담당한다.
+PR과 기능 브랜치 push에서는 변경 감지 후 필요한 Build와 Matrix Test만 실행한다. `main`에서는 deployable 파일 변경과 모든 테스트 성공 조건을 만족할 때만 `ci-preview` 환경에 배포 이력을 기록한다. 수동 실행은 전체 파이프라인을 점검한다. 이 제한은 불필요한 runner 사용을 줄이고 검토되지 않은 브랜치가 Environment Secret에 접근하지 못하게 한다. 실제 운영 배포는 별도 `Record Production Deployment` 워크플로우가 담당한다.
+
+캐시 측정 방법과 수치는 [CI 워크플로우 최적화 전후 비교 리포트](CI_OPTIMIZATION_REPORT.md)를 참고한다.
 
 ## Secret 설정
 
@@ -40,5 +44,8 @@ PR과 기능 브랜치 push에서는 Build와 Matrix Test까지만 실행한다.
 ## 실행 및 증적
 
 - 워크플로우: `.github/workflows/application-ci.yml`
+- Reusable Workflow: `.github/workflows/reusable-node-quality.yml`
+- Composite Action: `.github/actions/setup-node-project/action.yml`
+- Cache Benchmark: `.github/workflows/cache-benchmark.yml`
 - 실행 내역: 저장소의 `Actions → Application CI`
 - 아티팩트: 각 실행 상세 화면 하단의 `Artifacts`
