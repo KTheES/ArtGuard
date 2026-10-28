@@ -140,7 +140,7 @@ jobs:
           retention-days: 30
 
       - name: Verify secret-backed GitHub API access
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
