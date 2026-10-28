@@ -1,0 +1,99 @@
+name: CI Cache Benchmark
+
+on:
+  push:
+    branches:
+      - feat/ci-workflow-optimization
+    paths:
+      - ".github/actions/setup-node-project/**"
+      - ".github/workflows/cache-benchmark.yml"
+      - "frontend/package-lock.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  uncached:
+    name: Measure without cache
+    runs-on: ubuntu-latest
+    outputs:
+      duration_ms: ${{ steps.setup.outputs.install_duration_ms }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install without cache
+        id: setup
+        uses: ./.github/actions/setup-node-project
+        with:
+          node-version: "22.x"
+          enable-cache: "false"
+
+  seed-cache:
+    name: Seed exact cache
+    needs: uncached
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Populate cache
+        uses: ./.github/actions/setup-node-project
+        with:
+          node-version: "22.x"
+          enable-cache: "true"
+
+  cached:
+    name: Measure with warm cache
+    needs: seed-cache
+    runs-on: ubuntu-latest
+    outputs:
+      duration_ms: ${{ steps.setup.outputs.install_duration_ms }}
+      cache_hit: ${{ steps.setup.outputs.cache_hit }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Restore warm cache
+        id: setup
+        uses: ./.github/actions/setup-node-project
+        with:
+          node-version: "22.x"
+          enable-cache: "true"
+
+  report:
+    name: Publish benchmark report
+    needs:
+      - uncached
+      - cached
+    runs-on: ubuntu-latest
+    env:
+      BEFORE_MS: ${{ needs.uncached.outputs.duration_ms }}
+      AFTER_MS: ${{ needs.cached.outputs.duration_ms }}
+      CACHE_HIT: ${{ needs.cached.outputs.cache_hit }}
+    steps:
+      - name: Calculate improvement
+        run: |
+          improvement=$(awk -v before="$BEFORE_MS" -v after="$AFTER_MS" 'BEGIN { if (before == 0) print "0.00"; else printf "%.2f", ((before - after) / before) * 100 }')
+          saved_ms=$((BEFORE_MS - AFTER_MS))
+          mkdir -p benchmark
+          cat > benchmark/cache-comparison.md <<EOF
+          # CI Cache Benchmark
+
+          - Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          - Commit: ${{ github.sha }}
+          - Runner: ubuntu-latest
+          - Node.js: 22.x
+          - Cache hit: $CACHE_HIT
+          - Without cache: **${BEFORE_MS} ms**
+          - With warm cache: **${AFTER_MS} ms**
+          - Saved: **${saved_ms} ms**
+          - Improvement: **${improvement}%**
+          EOF
+          cat benchmark/cache-comparison.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload benchmark report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-cache-benchmark-${{ github.run_id }}
+          path: benchmark/cache-comparison.md
+          if-no-files-found: error
+          retention-days: 90

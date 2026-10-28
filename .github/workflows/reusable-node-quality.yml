@@ -1,0 +1,59 @@
+name: Reusable Node Quality
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        description: GitHub-hosted runner image
+        required: true
+        type: string
+      node-version:
+        description: Node.js version
+        required: true
+        type: string
+      artifact-name:
+        description: Build artifact produced by the caller
+        required: true
+        type: string
+      working-directory:
+        description: Node.js project directory
+        required: false
+        default: frontend
+        type: string
+      enable-cache:
+        description: Enable exact node_modules caching
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Test · ${{ inputs.os }} · Node ${{ inputs.node-version }}
+    runs-on: ${{ inputs.os }}
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up cached Node project
+        uses: ./.github/actions/setup-node-project
+        with:
+          node-version: ${{ inputs.node-version }}
+          working-directory: ${{ inputs.working-directory }}
+          enable-cache: ${{ inputs.enable-cache }}
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.working-directory }}/dist
+
+      - name: Verify downloaded artifact
+        run: node --check ${{ inputs.working-directory }}/dist/app.js
+
+      - name: Run tests
+        working-directory: ${{ inputs.working-directory }}
+        run: npm test
