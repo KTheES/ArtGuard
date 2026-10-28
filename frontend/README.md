@@ -1,6 +1,17 @@
 # ArtworkGuard 로컬 웹 앱
 
-Node.js 22 이상. 외부 npm 의존성이나 빌드 과정 없이 실행합니다.
+## GitHub Packages
+
+배포 패키지는 `@kthes/artworkguard-web` 이름으로 GitHub Packages에서 관리합니다. `frontend-v<version>` 태그가 `package.json` 버전과 일치할 때만 publish workflow가 실행됩니다.
+
+```bash
+npm config set @kthes:registry https://npm.pkg.github.com
+npm install @kthes/artworkguard-web@1.0.1
+```
+
+Private package 접근이 필요한 경우 토큰을 `.npmrc`에 직접 쓰지 말고 `NODE_AUTH_TOKEN` 환경변수 또는 GitHub Actions Secret으로 주입합니다.
+
+Node.js 22 이상에서 `npm ci` 후 실행합니다. 배포 패키지는 빌드된 정적 자산과 로컬 프록시 서버만 포함합니다.
 
 ```powershell
 Set-Location C:\copyright\_detect\_project\frontend
