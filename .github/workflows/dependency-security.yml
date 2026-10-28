@@ -1,0 +1,124 @@
+name: Dependency Security
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/package.json"
+      - "frontend/package-lock.json"
+      - "frontend/scripts/render-audit-report.mjs"
+      - ".github/workflows/dependency-security.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "frontend/package.json"
+      - "frontend/package-lock.json"
+      - "frontend/scripts/render-audit-report.mjs"
+      - ".github/workflows/dependency-security.yml"
+  schedule:
+    # Monday 06:00 KST (Sunday 21:00 UTC).
+    - cron: "0 21 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    name: npm audit and report
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate npm audit JSON and Markdown
+        id: report
+        shell: bash
+        run: |
+          mkdir -p ../reports/security
+          set +e
+          npm audit --json > ../reports/security/npm-audit.json
+          audit_exit=$?
+          set -e
+          node scripts/render-audit-report.mjs ../reports/security/npm-audit.json ../reports/security/NPM_AUDIT_REPORT.md
+          echo "audit_exit=$audit_exit" >> "$GITHUB_OUTPUT"
+
+      - name: Add report to job summary
+        run: cat ../reports/security/NPM_AUDIT_REPORT.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload security report
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-${{ github.run_id }}
+          path: |
+            reports/security/npm-audit.json
+            reports/security/NPM_AUDIT_REPORT.md
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Create or update high-risk issue
+        if: steps.report.outputs.issue_required == 'true' && github.event_name != 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          HIGH_COUNT: ${{ steps.report.outputs.high }}
+          CRITICAL_COUNT: ${{ steps.report.outputs.critical }}
+          TOTAL_COUNT: ${{ steps.report.outputs.total }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const title = "[Security] npm audit high/critical vulnerabilities";
+            const body = [
+              "Automated dependency audit found blocking vulnerabilities.",
+              "",
+              `- High: ${process.env.HIGH_COUNT}`,
+              `- Critical: ${process.env.CRITICAL_COUNT}`,
+              `- Total: ${process.env.TOTAL_COUNT}`,
+              `- Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              "",
+              "Do not paste tokens, private registry credentials, or unpublished advisory details into this issue.",
+            ].join("\n");
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              labels: "priority:P1",
+              per_page: 100,
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ["type:bug", "area:frontend", "priority:P1"],
+              });
+            }
+
+      - name: Fail on high or critical vulnerabilities
+        if: steps.report.outputs.issue_required == 'true'
+        run: exit 1

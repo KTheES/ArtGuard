@@ -1,0 +1,82 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:00"
+      timezone: Asia/Seoul
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    labels:
+      - area:frontend
+      - priority:P2
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      frontend-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:15"
+      timezone: Asia/Seoul
+    open-pull-requests-limit: 5
+    labels:
+      - area:infra
+      - priority:P2
+    commit-message:
+      prefix: "ci(deps)"
+    groups:
+      actions-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: docker
+    directory: /frontend
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:30"
+      timezone: Asia/Seoul
+    open-pull-requests-limit: 3
+    labels:
+      - area:infra
+      - priority:P2
+    commit-message:
+      prefix: "chore(container)"
+    groups:
+      frontend-base-images:
+        patterns:
+          - "*"
+
+  - package-ecosystem: docker
+    directory: /ai-service
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:45"
+      timezone: Asia/Seoul
+    open-pull-requests-limit: 3
+    labels:
+      - area:ai
+      - area:infra
+      - priority:P2
+    commit-message:
+      prefix: "chore(container)"
+    groups:
+      ai-base-images:
+        patterns:
+          - "*"

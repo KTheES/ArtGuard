@@ -26,4 +26,7 @@ export function createServer(backend='http://127.0.0.1:8080') {
   try{const body=await readFile(new URL(files[path],import.meta.url));res.setHeader('Content-Type',path.endsWith('.js')?'text/javascript':path.endsWith('.css')?'text/css':'text/html; charset=utf-8');res.end(body);}catch{res.writeHead(500).end();}
  });
 }
-if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url))createServer(process.env.BACKEND_ORIGIN).listen(Number(process.env.PORT||5173),'127.0.0.1',()=>console.log('ArtworkGuard: http://127.0.0.1:'+ (process.env.PORT||5173)));
+if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+ const port=Number(process.env.PORT||5173);const host=process.env.HOST||'127.0.0.1';
+ createServer(process.env.BACKEND_ORIGIN).listen(port,host,()=>console.log(`ArtworkGuard: http://${host}:${port}`));
+}

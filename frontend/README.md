@@ -1,6 +1,17 @@
 # ArtworkGuard 로컬 웹 앱
 
-Node.js 22 이상. 외부 npm 의존성이나 빌드 과정 없이 실행합니다.
+## GitHub Packages
+
+배포 패키지는 `@kthes/artworkguard-web` 이름으로 GitHub Packages에서 관리합니다. `frontend-v<version>` 태그가 `package.json` 버전과 일치할 때만 publish workflow가 실행됩니다.
+
+```bash
+npm config set @kthes:registry https://npm.pkg.github.com
+npm install @kthes/artworkguard-web@1.0.1
+```
+
+Private package 접근이 필요한 경우 토큰을 `.npmrc`에 직접 쓰지 말고 `NODE_AUTH_TOKEN` 환경변수 또는 GitHub Actions Secret으로 주입합니다.
+
+Node.js 22 이상에서 `npm ci` 후 실행합니다. 배포 패키지는 빌드된 정적 자산과 로컬 프록시 서버만 포함합니다.
 
 ```powershell
 Set-Location C:\copyright\_detect\_project\frontend
@@ -10,6 +21,16 @@ node --test
 ```
 
 백엔드는 별도로 `127.0.0.1:8080`에서 실행해야 합니다. 다른 로컬 포트는 `BACKEND_ORIGIN=http://127.0.0.1:8081` 환경 변수로 설정합니다. 웹 포트는 `PORT`로 바꿉니다. localhost 대신 표시된 127.0.0.1 주소로 접속합니다.
+
+## Docker 실행
+
+```powershell
+docker build --tag artguard-frontend:1.0.1-local --file frontend/Dockerfile frontend
+docker run --rm --publish 127.0.0.1:15174:5173 artguard-frontend:1.0.1-local
+# http://127.0.0.1:15174
+```
+
+컨테이너는 non-root `node` 사용자로 실행되며 `/` HTTP 응답을 이용한 health check를 포함합니다. API 프록시 대상은 기본적으로 컨테이너 내부 loopback이므로 실제 연결 환경에서는 별도 네트워크·백엔드 구성을 검토해야 합니다.
 
 ## 제공 화면
 

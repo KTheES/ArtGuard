@@ -1,12 +1,29 @@
 {
-  "name": "artworkguard-web",
-  "private": true,
+  "name": "@kthes/artworkguard-web",
+  "version": "1.0.1",
+  "description": "ArtworkGuard web client and local static proxy server",
+  "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KTheES/ArtGuard.git",
+    "directory": "frontend"
+  },
+  "files": [
+    "dist",
+    "server.mjs",
+    "README.md"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
   "scripts": {
     "start": "node server.mjs",
     "lint": "eslint . --max-warnings=0",
     "build": "node scripts/build.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "prepack": "npm run build"
   },
   "engines": {
     "node": ">=22"
