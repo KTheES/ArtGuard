@@ -42,7 +42,7 @@ jobs:
         id: metadata
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/kthes/artworkguard-web
+          images: ghcr.io/kthes/artguard/artworkguard-web
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha,format=long
