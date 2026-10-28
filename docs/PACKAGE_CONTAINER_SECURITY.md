@@ -15,6 +15,8 @@
 
 `frontend-v<version>` 태그와 `package.json` 버전이 일치해야 publish한다. Lint, Test, Build, `npm pack --dry-run`이 모두 성공한 뒤 `packages: write` 권한으로 배포한다. `NODE_AUTH_TOKEN` 값은 로그나 `.npmrc`에 저장하지 않는다.
 
+기본 인증은 실행별 `GITHUB_TOKEN`이다. 계정의 Packages installation 연결 오류가 확인된 경우에만 `write:packages` 범위의 classic PAT를 저장소 Secret `PACKAGES_TOKEN`으로 등록한다. 워크플로우는 이 Secret이 있으면 우선 사용하고, 없으면 `GITHUB_TOKEN`으로 복귀한다. 토큰 원문을 코드, 이슈, PR, Actions 입력 또는 채팅에 남기지 않는다.
+
 ## Docker 이미지
 
 - 로컬 이미지: `artguard-frontend:1.0.1-local`
