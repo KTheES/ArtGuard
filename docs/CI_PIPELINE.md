@@ -2,7 +2,7 @@
 
 ## 목적과 결정 배경
 
-`Application CI`는 프런트엔드의 Lint, Build, Matrix Test, CI Preview Deploy를 한 워크플로우에서 검증한다. Node.js 22는 프로젝트의 최소 지원 버전이며, Node.js 24와 Windows/Ubuntu 조합을 함께 검증해 런타임 및 OS 회귀를 조기에 발견한다.
+`Application CI`는 프런트엔드의 ESLint, Build, Matrix Test, CI Preview Deploy를 한 워크플로우에서 검증한다. Node.js 22는 프로젝트의 최소 지원 버전이며, Node.js 24와 Windows/Ubuntu 조합을 함께 검증해 런타임 및 OS 회귀를 조기에 발견한다.
 
 ## 파이프라인 구조
 
@@ -25,8 +25,9 @@ PR과 기능 브랜치 push에서는 Build와 Matrix Test까지만 실행한다.
 선택형 외부 배포 알림이 필요하면 저장소의 `Settings → Environments → ci-preview → Environment secrets`에 `ARTGUARD_DEPLOY_WEBHOOK_URL`을 등록한다.
 
 - 값은 소스, 워크플로우, 로그, 아티팩트에 기록하지 않는다.
-- Secret이 없으면 Webhook 단계만 건너뛰고 CI Preview 배포 기록은 정상 완료된다.
-- `GITHUB_TOKEN`은 Actions가 실행마다 발급하는 최소 권한 토큰을 사용한다.
+- Secret이 없으면 Webhook 알림만 생략하고 CI Preview 배포 기록은 정상 완료된다.
+- `GITHUB_TOKEN`은 Actions가 실행마다 발급하고 `contents: read`만 허용하며, GitHub API 인증 검증 단계에 안전하게 주입한다.
+- 선택형 Webhook Secret은 알림 단계에만 주입해 다른 Build·Test·Deploy 단계에는 노출하지 않는다.
 - PR, 이슈, 리뷰 코멘트에 Secret 원문을 붙여 넣지 않는다.
 
 ## 실패 대응
