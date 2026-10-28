@@ -19,6 +19,7 @@ ArtworkGuard는 [MIT License](LICENSE)로 공개되어 있습니다. 기여 전 
 ## CI/CD
 
 - [Application CI 운영 가이드](docs/CI_PIPELINE.md) — Lint, Build, OS/Node.js Matrix Test, Artifact 기반 CI Preview Deploy
+- [CI 최적화 전후 비교 리포트](docs/CI_OPTIMIZATION_REPORT.md) — Reusable Workflow, Composite Action, 캐시 개선률, 조건부 실행
 
 작품 업로드와 로컬 MinIO 실행은 [STEP 3 안내](docs/STEP3_ARTWORK.md)를 참고하세요. 기본 실행에서는 저장소 연동이 비활성 상태입니다.
 
