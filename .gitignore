@@ -15,6 +15,7 @@ frontend/dist/
 .pytest_cache/
 .coverage
 htmlcov/
+reports/security/npm-audit.json
 .model-cache/
 *.log
 /prd.md

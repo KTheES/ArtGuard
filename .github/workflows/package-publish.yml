@@ -1,0 +1,56 @@
+name: Publish npm Package
+
+on:
+  push:
+    tags:
+      - "frontend-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    name: Publish @kthes/artworkguard-web
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          registry-url: https://npm.pkg.github.com
+          scope: "@kthes"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate package
+        run: npm run lint && npm test && npm run build && npm pack --dry-run
+
+      - name: Verify tag matches package version
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          node --input-type=module -e '
+            import pkg from "./package.json" with {type: "json"};
+            const expected = `frontend-v${pkg.version}`;
+            if (process.env.RELEASE_TAG !== expected) {
+              throw new Error(`Expected tag ${expected}, received ${process.env.RELEASE_TAG}`);
+            }
+          '
+
+      - name: Publish package
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
