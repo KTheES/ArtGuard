@@ -8,9 +8,9 @@
 
 - 패키지: `@kthes/artguard-frontend`
 - Registry: `https://npm.pkg.github.com`
-- 기준 버전: `1.0.0`
-- Patch 업데이트: `1.0.1`
-- 배포 태그: `frontend-v1.0.1`
+- 이전 버전: `1.0.1`
+- Patch 업데이트: `1.0.2`
+- 배포 태그: `frontend-v1.0.2`
 - 워크플로우: `.github/workflows/package-publish.yml`
 
 `frontend-v<version>` 태그와 `package.json` 버전이 일치해야 publish한다. Lint, Test, Build, `npm pack --dry-run`이 모두 성공한 뒤 `packages: write` 권한으로 배포한다. `NODE_AUTH_TOKEN` 값은 로그나 `.npmrc`에 저장하지 않는다.
@@ -19,7 +19,7 @@
 
 ## Docker 이미지
 
-- 로컬 이미지: `artguard-frontend:1.0.1-local`
+- 로컬 이미지: `artguard-frontend:1.0.2-local`
 - 원격 이미지: `ghcr.io/kthes/artguard-frontend`
 - 워크플로우: `.github/workflows/container-publish.yml`
 - 태그: `latest`, 전체 commit SHA, `frontend-v*`에서 추출한 버전
