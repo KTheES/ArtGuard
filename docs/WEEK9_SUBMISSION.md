@@ -33,7 +33,7 @@
 - 이미지: `ghcr.io/kthees/artguard-frontend`
 - GHCR 패키지: [artguard-frontend Container package](https://github.com/users/KTheES/packages/container/package/artguard-frontend)
 - 자동화 설정: [`.github/workflows/container-publish.yml`](https://github.com/KTheES/ArtGuard/blob/main/.github/workflows/container-publish.yml)
-- 게시 성공 증거: [Publish Frontend Container 실행 #18](https://github.com/KTheES/ArtGuard/actions/runs/41194470144)
+- 1.0.3 게시·실행 검증 성공: [Publish Frontend Container 실행 #20](https://github.com/KTheES/ArtGuard/actions/runs/41195098338)
 
 워크플로의 검증 순서는 다음과 같습니다.
 
@@ -64,7 +64,7 @@
 
 - 자동화 설정: [`.github/workflows/dependency-security.yml`](https://github.com/KTheES/ArtGuard/blob/main/.github/workflows/dependency-security.yml)
 - 리포트 생성기: [`frontend/scripts/render-audit-report.mjs`](https://github.com/KTheES/ArtGuard/blob/main/frontend/scripts/render-audit-report.mjs)
-- 성공 실행: [Dependency Security 실행 #12](https://github.com/KTheES/ArtGuard/actions/runs/41194248165)
+- 최신 성공 실행: [Dependency Security 실행 #13](https://github.com/KTheES/ArtGuard/actions/runs/41195094601)
 - 전체 실행 목록: [Dependency Security workflow](https://github.com/KTheES/ArtGuard/actions/workflows/dependency-security.yml)
 
 push, pull request, 수동 실행과 매주 월요일 06:00 KST 스케줄에서 다음 결과를 자동 생성합니다.
