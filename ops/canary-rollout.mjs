@@ -1,5 +1,6 @@
 import {mkdir, writeFile} from 'node:fs/promises';
 import path from 'node:path';
+import {decideCanaryTransition} from '../frontend/delivery-policy.js';
 
 const stages = [1, 10, 50, 100];
 const argument = (name) => process.argv.find((value) => value.startsWith(`--${name}=`))?.split('=').slice(1).join('=');
@@ -20,12 +21,13 @@ async function healthy(stage) {
 for (const percentage of stages) {
   const passed = await healthy(percentage);
   history.push({percentage, action: 'PROMOTE', health: passed ? 'PASS' : 'FAIL'});
-  if (!passed) {
-    history.push({percentage: stable, action: 'ROLLBACK', health: 'PASS'});
+  const transition = decideCanaryTransition({candidate: percentage, stable, healthy: passed});
+  if (transition.action === 'ROLLBACK') {
+    history.push({percentage: transition.percentage, action: 'ROLLBACK', health: 'PASS'});
     status = 'ROLLED_BACK';
     break;
   }
-  stable = percentage;
+  stable = transition.stablePercentage;
 }
 
 const report = {strategy: stages, status, stablePercentage: stable, history};

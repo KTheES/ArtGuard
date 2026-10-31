@@ -8,7 +8,7 @@ import {runtimeConfigScript} from './runtime-config.mjs';
 export function createServer(backend='http://127.0.0.1:8080') {
  const upstream=new URL(backend);
  if(upstream.protocol!=='http:' || upstream.hostname!=='127.0.0.1' || upstream.pathname!=='/' || upstream.search || upstream.username || upstream.password) throw Error('Use a loopback HTTP backend origin');
- const files={'/':'index.html','/app.js':'app.js','/api.js':'api.js','/feature-flags.js':'feature-flags.js','/style.css':'style.css'};
+ const files={'/':'index.html','/app.js':'app.js','/api.js':'api.js','/delivery-policy.js':'delivery-policy.js','/feature-flags.js':'feature-flags.js','/style.css':'style.css'};
  return http.createServer(async(req,res)=>{
   res.setHeader('Cache-Control','no-store'); res.setHeader('X-Content-Type-Options','nosniff'); res.setHeader('Referrer-Policy','no-referrer');
   const origin=`http://${req.headers.host}`;

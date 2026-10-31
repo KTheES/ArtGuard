@@ -5,7 +5,7 @@ import {runtimeConfigScript} from '../runtime-config.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output = path.join(root, 'dist');
-const assets = ['index.html', 'style.css', 'app.js', 'api.js', 'feature-flags.js'];
+const assets = ['index.html', 'style.css', 'app.js', 'api.js', 'delivery-policy.js', 'feature-flags.js'];
 
 await rm(output, {recursive: true, force: true});
 await mkdir(output, {recursive: true});
