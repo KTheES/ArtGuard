@@ -9,7 +9,7 @@
 | A/B 2개 variant와 일관된 할당 | ✅ | [`control`/`treatment` 배정 코드](../frontend/feature-flags.js) · [일관성 테스트](../frontend/feature-flags.test.js) |
 | 이벤트 추적 | ✅ | [익명화된 실험 이벤트 로그](../reports/week11/experiment-events.json) · [로그 생성기](../frontend/scripts/simulate-experiment.mjs) |
 | Canary 1%-10%-50%-100% | ✅ 선택과제 | [롤아웃 설정](../ops/canary-rollout.mjs) · [자동 롤백 결과](../reports/week11/canary-rollout.json) |
-| CI 검증/Artifact | ✅ | [Week 11 Feature Flags workflow](https://github.com/KTheES/ArtGuard/actions/workflows/week11-feature-flags.yml) |
+| CI 검증/Artifact | ✅ | [성공 실행 #1](https://github.com/KTheES/ArtGuard/actions/runs/41195803435) · [90일 보관 Artifact](https://github.com/KTheES/ArtGuard/actions/runs/41195803435/artifacts/13040198061) |
 
 ## 1. Feature Flag 구성
 
@@ -60,6 +60,9 @@ node ops/canary-rollout.mjs \
 ```
 
 CI는 플래그/A-B 단위 테스트, 프런트엔드 lint/build, Canary 롤백 테스트를 실행하고 두 JSON 로그를 90일 Artifact로 보관합니다.
+
+- 최신 검증: [Week 11 Feature Flags 실행 #1 — Success](https://github.com/KTheES/ArtGuard/actions/runs/41195803435)
+- 실행 Job: [Flags, experiment, and canary rollback](https://github.com/KTheES/ArtGuard/actions/runs/41195803435/job/124521590590)
 
 ## 제출 URL
 
