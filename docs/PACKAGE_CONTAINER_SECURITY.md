@@ -8,9 +8,9 @@
 
 - 패키지: `@kthes/artguard-frontend`
 - Registry: `https://npm.pkg.github.com`
-- 기준 버전: `1.0.0`
-- Patch 업데이트: `1.0.1`
-- 배포 태그: `frontend-v1.0.1`
+- 이전 버전: `1.0.1`
+- Patch 업데이트: `1.0.2`
+- 배포 태그: `frontend-v1.0.2`
 - 워크플로우: `.github/workflows/package-publish.yml`
 
 `frontend-v<version>` 태그와 `package.json` 버전이 일치해야 publish한다. Lint, Test, Build, `npm pack --dry-run`이 모두 성공한 뒤 `packages: write` 권한으로 배포한다. `NODE_AUTH_TOKEN` 값은 로그나 `.npmrc`에 저장하지 않는다.
@@ -19,7 +19,7 @@
 
 ## Docker 이미지
 
-- 로컬 이미지: `artguard-frontend:1.0.1-local`
+- 로컬 이미지: `artguard-frontend:1.0.2-local`
 - 원격 이미지: `ghcr.io/kthes/artguard-frontend`
 - 워크플로우: `.github/workflows/container-publish.yml`
 - 태그: `latest`, 전체 commit SHA, `frontend-v*`에서 추출한 버전
@@ -74,6 +74,18 @@ Major, minor, production dependency, GitHub Actions, Docker 업데이트는 수�
 - 로컬 `npm audit`: 취약점 0건
 - High/Critical: 0건
 - 정책 결과: PASS
+
+## 과제 전체 재현
+
+Windows PowerShell에서 저장소 루트를 기준으로 다음 명령을 실행한다.
+
+```powershell
+.\scripts\verify-week9.ps1
+```
+
+이 스크립트는 잠금 파일 기반 npm 설치, Lint, 6개 테스트, 정적 자산 Build, package dry-run, high 기준 npm audit, Docker image build, 컨테이너 health, HTTP 200 및 본문 검사를 순서대로 수행한다. Docker 엔진을 사용할 수 없는 환경에서 npm 검증만 실행하려면 `-SkipDocker`를 사용한다.
+
+제출용 웹페이지는 `week9-evidence/`를 GitHub Pages artifact로 배포한다. 워크플로우가 성공하면 저장소의 Deployments 또는 `https://kthes.github.io/ArtGuard/`에서 결과를 확인한다.
 
 ## 트러블슈팅
 

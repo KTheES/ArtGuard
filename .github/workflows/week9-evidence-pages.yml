@@ -1,0 +1,41 @@
+name: Deploy Week 9 Evidence Page
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "week9-evidence/**"
+      - ".github/workflows/week9-evidence-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload evidence site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: week9-evidence
+
+      - name: Deploy evidence site
+        id: deployment
+        uses: actions/deploy-pages@v4
