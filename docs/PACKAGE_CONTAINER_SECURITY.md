@@ -89,8 +89,8 @@ Windows PowerShell에서 저장소 루트를 기준으로 다음 명령을 실�
 
 ## 트러블슈팅
 
-- npm publish 403: workflow의 `packages: write`, package scope, 저장소 연결을 확인한다.
+- npm publish 403: workflow의 `packages: write`, 저장소 연결, 그리고 GitHub 사용자명 `KTheES`에 대응하는 정확한 소문자 scope `@kthees`를 확인한다.
 - 동일 버전 publish 실패: 기존 버전을 덮어쓰지 말고 patch 버전을 올린 새 태그를 사용한다.
-- GHCR push 실패: 이미지 이름이 소문자인지와 `packages: write`를 확인한다.
+- GHCR push 실패: 이미지 소유자 경로가 정확한 `ghcr.io/kthees/...`인지와 `packages: write`를 확인한다.
 - Docker 시작 시 `dockerInference` 오류: Docker/WSL을 중지하고 `%LOCALAPPDATA%\Docker\run`을 백업한 뒤 새 runtime 디렉터리로 재시작한다.
 - audit JSON 생성 실패: npm Registry 연결과 lockfile 무결성을 확인하며 토큰을 로그에 출력하지 않는다.
