@@ -5,6 +5,11 @@ on:
     tags:
       - "frontend-v*"
   workflow_dispatch:
+    inputs:
+      package_name:
+        description: Package name to publish (use a unique name for namespace diagnostics)
+        required: false
+        default: "@kthes/artguard-frontend"
 
 permissions:
   contents: read
@@ -33,6 +38,53 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Verify package token identity and scopes
+        shell: bash
+        env:
+          PACKAGE_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+          EXPECTED_OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+          headers="$RUNNER_TEMP/package-token-headers.txt"
+          response="$RUNNER_TEMP/package-token-user.json"
+          curl --fail-with-body --silent --show-error \
+            --dump-header "$headers" \
+            --output "$response" \
+            --header "Authorization: Bearer $PACKAGE_TOKEN" \
+            --header "Accept: application/vnd.github+json" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/user
+
+          token_login="$(node --input-type=module -e '
+            import {readFileSync} from "node:fs";
+            const user = JSON.parse(readFileSync(process.argv[1], "utf8"));
+            process.stdout.write(user.login ?? "");
+          ' "$response")"
+          token_scopes="$(sed -n 's/^x-oauth-scopes:[[:space:]]*//Ip' "$headers" | tr -d '\r')"
+
+          echo "Authenticated GitHub user: $token_login"
+          echo "OAuth scopes reported by GitHub: ${token_scopes:-<none>}"
+
+          if [ "${token_login,,}" != "${EXPECTED_OWNER,,}" ]; then
+            echo "::error::PACKAGES_TOKEN belongs to $token_login, expected $EXPECTED_OWNER."
+            exit 1
+          fi
+          if [[ ",${token_scopes// /}," != *",write:packages,"* ]]; then
+            echo "::error::PACKAGES_TOKEN does not report the write:packages scope."
+            exit 1
+          fi
+
+          npm_identity="$(npm whoami --registry=https://npm.pkg.github.com)"
+          echo "GitHub Packages npm identity: $npm_identity"
+
+      - name: Select package name
+        env:
+          PUBLISH_PACKAGE_NAME: ${{ inputs.package_name || '@kthes/artguard-frontend' }}
+        run: |
+          npm pkg set "name=$PUBLISH_PACKAGE_NAME"
+          echo "Publishing $(npm pkg get name) at version $(npm pkg get version)"
 
       - name: Validate package
         run: npm run lint && npm test && npm run build && npm pack --dry-run
