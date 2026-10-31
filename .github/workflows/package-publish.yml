@@ -10,6 +10,18 @@ on:
         description: Package name to publish (use a unique name for namespace diagnostics)
         required: false
         default: "@kthes/artguard-frontend"
+      package_version:
+        description: Package version to publish
+        required: false
+        default: "1.0.2"
+      token_source:
+        description: Token used to authenticate to GitHub Packages
+        required: true
+        type: choice
+        options:
+          - github_token
+          - packages_token
+        default: github_token
 
 permissions:
   contents: read
@@ -39,7 +51,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Verify package token identity and scopes
+      - name: Verify classic package token identity and scopes
+        if: github.event_name != 'workflow_dispatch' || inputs.token_source == 'packages_token'
         shell: bash
         env:
           PACKAGE_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
@@ -79,11 +92,39 @@ jobs:
           npm_identity="$(npm whoami --registry=https://npm.pkg.github.com)"
           echo "GitHub Packages npm identity: $npm_identity"
 
-      - name: Select package name
+      - name: Verify built-in GitHub Actions token
+        if: github.event_name == 'workflow_dispatch' && inputs.token_source == 'github_token'
+        shell: bash
+        env:
+          ACTIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          headers="$RUNNER_TEMP/github-token-headers.txt"
+          curl --fail-with-body --silent --show-error \
+            --dump-header "$headers" \
+            --output /dev/null \
+            --header "Authorization: Bearer $ACTIONS_TOKEN" \
+            --header "Accept: application/vnd.github+json" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY"
+          echo "Built-in GITHUB_TOKEN repository API access confirmed."
+          sed -n 's/^x-accepted-github-permissions:[[:space:]]*/Accepted API permissions: /Ip' "$headers" | tr -d '\r'
+          if npm_identity="$(npm whoami --registry=https://npm.pkg.github.com 2>&1)"; then
+            echo "GitHub Packages npm identity: $npm_identity"
+          else
+            echo "::notice::npm whoami is unavailable for the installation token: $npm_identity"
+          fi
+
+      - name: Select package identity
         env:
           PUBLISH_PACKAGE_NAME: ${{ inputs.package_name || '@kthes/artguard-frontend' }}
+          PUBLISH_PACKAGE_VERSION: ${{ inputs.package_version || '' }}
         run: |
           npm pkg set "name=$PUBLISH_PACKAGE_NAME"
+          if [ -n "$PUBLISH_PACKAGE_VERSION" ]; then
+            npm pkg set "version=$PUBLISH_PACKAGE_VERSION"
+          fi
           echo "Publishing $(npm pkg get name) at version $(npm pkg get version)"
 
       - name: Validate package
@@ -105,4 +146,4 @@ jobs:
       - name: Publish package
         run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ inputs.token_source == 'github_token' && secrets.GITHUB_TOKEN || secrets.PACKAGES_TOKEN }}
