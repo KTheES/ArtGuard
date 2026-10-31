@@ -1,6 +1,6 @@
 {
   "name": "@kthees/artguard-frontend",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ArtworkGuard web client and local static proxy server",
   "license": "MIT",
   "type": "module",

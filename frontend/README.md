@@ -6,7 +6,7 @@
 
 ```bash
 npm config set @kthees:registry https://npm.pkg.github.com
-npm install @kthees/artguard-frontend@1.0.2
+npm install @kthees/artguard-frontend@1.0.3
 ```
 
 Private package 접근이 필요한 경우 토큰을 `.npmrc`에 직접 쓰지 말고 `NODE_AUTH_TOKEN` 환경변수 또는 GitHub Actions Secret으로 주입합니다.

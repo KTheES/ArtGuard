@@ -13,7 +13,7 @@ on:
       package_version:
         description: Package version to publish
         required: false
-        default: "1.0.2"
+        default: "1.0.3"
       token_source:
         description: Token used to authenticate to GitHub Packages
         required: true
