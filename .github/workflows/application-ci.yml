@@ -79,7 +79,7 @@ jobs:
         run: npm run build
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: frontend-build-${{ github.run_id }}
           path: frontend/dist
@@ -132,7 +132,7 @@ jobs:
           path: deploy/frontend
 
       - name: Upload deployable artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: frontend-deployable-${{ github.run_id }}
           path: deploy/frontend
