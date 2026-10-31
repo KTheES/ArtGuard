@@ -2,7 +2,7 @@
 
 ## 결정 배경
 
-프런트엔드 산출물을 npm 패키지와 OCI 이미지 두 형태로 재현 가능하게 배포하고, 의존성 갱신과 취약점 감시를 자동화한다. 인증 토큰은 저장소에 기록하지 않고 GitHub Actions가 실행마다 발급하는 최소 권한 `GITHUB_TOKEN`을 사용한다.
+프런트엔드 산출물을 npm 패키지와 OCI 이미지 두 형태로 재현 가능하게 배포하고, 의존성 갱신과 취약점 감시를 자동화한다. 게시 인증은 저장소에 기록하지 않은 Actions Secret `PACKAGES_TOKEN`을 사용하며, 값은 `write:packages` 범위의 personal access token (classic)이다.
 
 ## npm 패키지 배포
 
@@ -15,7 +15,7 @@
 
 `frontend-v<version>` 태그와 `package.json` 버전이 일치해야 publish한다. Lint, Test, Build, `npm pack --dry-run`이 모두 성공한 뒤 `packages: write` 권한으로 배포한다. `NODE_AUTH_TOKEN` 값은 로그나 `.npmrc`에 저장하지 않는다.
 
-게시 인증은 저장소와 패키지를 자동 연결하는 실행별 `GITHUB_TOKEN`을 사용한다. 저장소 Actions 기본 권한과 워크플로우의 `packages: write` 권한이 모두 활성화되어야 한다. classic PAT는 다른 저장소의 비공개 패키지를 설치하는 경우에만 별도 Secret으로 사용하며, 게시 토큰 원문을 코드, 이슈, PR, Actions 입력 또는 채팅에 남기지 않는다.
+게시 인증은 저장소 Secret `PACKAGES_TOKEN`을 사용한다. 이 Secret에는 `write:packages` 범위의 classic PAT를 저장하고, 워크플로우의 `packages: write` 권한도 유지한다. 게시 토큰 원문을 코드, 이슈, PR, Actions 입력 또는 채팅에 남기지 않는다.
 
 ## Docker 이미지
 
