@@ -1,20 +1,20 @@
-# [9주차] GitHub Packages 및 의존성 보안 자동화 — 제출 증빙
+# 9주차 증빙: GitHub Packages 및 의존성 보안 자동화
+
+| 요구사항 | 결과 | 증거 링크 | 성공 실행 |
+|---|---|---|---|
+| npm 패키지 배포 (`1.0.2 → 1.0.3`) | ✅ | [`@kthees/artguard-frontend` 패키지](https://github.com/users/KTheES/packages/npm/package/artguard-frontend) | [1.0.2 게시 #9](https://github.com/KTheES/ArtGuard/actions/runs/41194258619) · [1.0.3 게시 #10](https://github.com/KTheES/ArtGuard/actions/runs/41195098309) |
+| Docker 이미지 자동 빌드/푸시 | ✅ | [`ghcr.io/kthees/artguard-frontend`](https://github.com/users/KTheES/packages/container/package/artguard-frontend) | [Docker 게시 #20](https://github.com/KTheES/ArtGuard/actions/runs/41195098338) |
+| 로컬 실행 검증 | ✅ | [`docs/docker-verify.md`](docker-verify.md) | [Build and push GHCR image 로그](https://github.com/KTheES/ArtGuard/actions/runs/41195098338/job/124519566172) |
+| Dependabot 정책 | ✅ | [`.github/dependabot.yml`](https://github.com/KTheES/ArtGuard/blob/main/.github/dependabot.yml) · [자동머지 조건](https://github.com/KTheES/ArtGuard/blob/main/.github/workflows/dependabot-auto-merge.yml) | [Dependabot PR #30](https://github.com/KTheES/ArtGuard/pull/30) |
+| 보안 스캔 자동화 | ✅ | [`npm audit` 리포트/Artifact](https://github.com/KTheES/ArtGuard/actions/runs/41195094601) | [Dependency Security #13](https://github.com/KTheES/ArtGuard/actions/runs/41195094601) |
+
+검증일: **2026-10-31**
 
 - 저장소: [KTheES/ArtGuard](https://github.com/KTheES/ArtGuard)
 - 제출 기준 브랜치: `main`
-- 최종 확인일: 2026-10-31
 - 패키지 네임스페이스: GitHub 사용자명 `KTheES`의 소문자 표기인 `kthees`
 
-이 문서는 과제의 세 가지 요구사항과 공개된 실행 증거를 한 URL에서 확인하기 위한 제출 페이지입니다. GitHub Pages 배포는 과제 요구사항이 아니므로 GitHub가 직접 렌더링하는 이 문서를 제출 URL로 사용합니다.
-
-## 요구사항 충족 요약
-
-| 과제 요구사항 | 구현·검증 결과 | 판정 |
-|---|---|---|
-| npm 패키지를 GitHub Packages에 배포하고 버전 업데이트 | `@kthees/artguard-frontend` **1.0.2 게시 후 1.0.3으로 실제 패치 업데이트하여 재게시** | 충족 |
-| Docker 이미지 자동 빌드·푸시 및 로컬 실행 검증 | `ghcr.io/kthees/artguard-frontend` 자동 빌드·GHCR 푸시, 푸시 전 컨테이너 health/curl smoke test | 충족 |
-| Dependabot 스케줄·그룹·자동머지 조건 | 매주 월요일 KST 스케줄, 생태계별 그룹, npm 직접 개발 의존성 patch만 자동머지 | 충족 |
-| npm audit/Snyk 보안 결과 자동화 | `npm audit` JSON/Markdown 리포트, Job Summary, 90일 Artifact, high/critical 이슈 자동화 | 충족 |
+이 문서는 과제 요구사항과 공개된 실행 증거를 한 URL에서 확인하기 위한 제출 페이지입니다. GitHub Pages 배포는 과제 요구사항이 아니므로 GitHub가 직접 렌더링하는 이 문서를 제출 URL로 사용합니다.
 
 ## 1. npm 패키지 게시 및 버전 업데이트
 
