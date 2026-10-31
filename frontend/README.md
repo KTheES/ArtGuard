@@ -2,11 +2,11 @@
 
 ## GitHub Packages
 
-배포 패키지는 `@kthes/artguard-frontend` 이름으로 GitHub Packages에서 관리합니다. `frontend-v<version>` 태그가 `package.json` 버전과 일치할 때만 publish workflow가 실행됩니다.
+배포 패키지는 `@kthees/artguard-frontend` 이름으로 GitHub Packages에서 관리합니다. `frontend-v<version>` 태그가 `package.json` 버전과 일치할 때만 publish workflow가 실행됩니다.
 
 ```bash
-npm config set @kthes:registry https://npm.pkg.github.com
-npm install @kthes/artguard-frontend@1.0.1
+npm config set @kthees:registry https://npm.pkg.github.com
+npm install @kthees/artguard-frontend@1.0.2
 ```
 
 Private package 접근이 필요한 경우 토큰을 `.npmrc`에 직접 쓰지 말고 `NODE_AUTH_TOKEN` 환경변수 또는 GitHub Actions Secret으로 주입합니다.

@@ -9,7 +9,7 @@ on:
       package_name:
         description: Package name to publish (use a unique name for namespace diagnostics)
         required: false
-        default: "@kthes/artguard-frontend"
+        default: "@kthees/artguard-frontend"
       package_version:
         description: Package version to publish
         required: false
@@ -29,7 +29,7 @@ permissions:
 
 jobs:
   publish:
-    name: Publish @kthes/artguard-frontend
+    name: Publish @kthees/artguard-frontend
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -44,7 +44,7 @@ jobs:
         with:
           node-version: "22.x"
           registry-url: https://npm.pkg.github.com
-          scope: "@kthes"
+          scope: "@kthees"
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
@@ -118,7 +118,7 @@ jobs:
 
       - name: Select package identity
         env:
-          PUBLISH_PACKAGE_NAME: ${{ inputs.package_name || '@kthes/artguard-frontend' }}
+          PUBLISH_PACKAGE_NAME: ${{ inputs.package_name || '@kthees/artguard-frontend' }}
           PUBLISH_PACKAGE_VERSION: ${{ inputs.package_version || '' }}
         run: |
           npm pkg set "name=$PUBLISH_PACKAGE_NAME"

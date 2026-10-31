@@ -1,5 +1,5 @@
 {
-  "name": "@kthes/artguard-frontend",
+  "name": "@kthees/artguard-frontend",
   "version": "1.0.2",
   "description": "ArtworkGuard web client and local static proxy server",
   "license": "MIT",

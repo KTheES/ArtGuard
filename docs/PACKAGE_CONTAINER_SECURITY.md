@@ -6,7 +6,7 @@
 
 ## npm 패키지 배포
 
-- 패키지: `@kthes/artguard-frontend`
+- 패키지: `@kthees/artguard-frontend`
 - Registry: `https://npm.pkg.github.com`
 - 이전 버전: `1.0.1`
 - Patch 업데이트: `1.0.2`
@@ -20,7 +20,7 @@
 ## Docker 이미지
 
 - 로컬 이미지: `artguard-frontend:1.0.2-local`
-- 원격 이미지: `ghcr.io/kthes/artguard-frontend`
+- 원격 이미지: `ghcr.io/kthees/artguard-frontend`
 - 워크플로우: `.github/workflows/container-publish.yml`
 - 태그: `latest`, 전체 commit SHA, `frontend-v*`에서 추출한 버전
 - Build cache: GitHub Actions cache backend
@@ -85,7 +85,7 @@ Windows PowerShell에서 저장소 루트를 기준으로 다음 명령을 실�
 
 이 스크립트는 잠금 파일 기반 npm 설치, Lint, 6개 테스트, 정적 자산 Build, package dry-run, high 기준 npm audit, Docker image build, 컨테이너 health, HTTP 200 및 본문 검사를 순서대로 수행한다. Docker 엔진을 사용할 수 없는 환경에서 npm 검증만 실행하려면 `-SkipDocker`를 사용한다.
 
-제출용 웹페이지는 `week9-evidence/`를 GitHub Pages artifact로 배포한다. 워크플로우가 성공하면 저장소의 Deployments 또는 `https://kthes.github.io/ArtGuard/`에서 결과를 확인한다.
+제출용 웹페이지는 `week9-evidence/`를 GitHub Pages artifact로 배포한다. 워크플로우가 성공하면 저장소의 Deployments 또는 `https://kthees.github.io/ArtGuard/`에서 결과를 확인한다.
 
 ## 트러블슈팅
 
