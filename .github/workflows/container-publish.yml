@@ -70,7 +70,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.PACKAGES_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate image metadata
         id: metadata
