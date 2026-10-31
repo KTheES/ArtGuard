@@ -1,0 +1,32 @@
+{
+  "strategy": [
+    1,
+    10,
+    50,
+    100
+  ],
+  "status": "ROLLED_BACK",
+  "stablePercentage": 10,
+  "history": [
+    {
+      "percentage": 1,
+      "action": "PROMOTE",
+      "health": "PASS"
+    },
+    {
+      "percentage": 10,
+      "action": "PROMOTE",
+      "health": "PASS"
+    },
+    {
+      "percentage": 50,
+      "action": "PROMOTE",
+      "health": "FAIL"
+    },
+    {
+      "percentage": 10,
+      "action": "ROLLBACK",
+      "health": "PASS"
+    }
+  ]
+}

@@ -23,6 +23,8 @@
     "lint": "eslint . --max-warnings=0",
     "build": "node scripts/build.mjs",
     "test": "node --test",
+    "test:canary": "node --test ../ops/canary-rollout.test.mjs",
+    "evidence:experiment": "node scripts/simulate-experiment.mjs --output=../reports/week11/experiment-events.json",
     "prepack": "npm run build"
   },
   "engines": {

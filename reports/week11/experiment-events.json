@@ -1,0 +1,70 @@
+{
+  "experiment": "upload-cta-v1",
+  "assignment": "deterministic FNV-1a hash",
+  "events": [
+    {
+      "timestamp": "2026-10-31T11:00:00.000Z",
+      "experiment": "upload-cta-v1",
+      "variant": "control",
+      "event": "exposure",
+      "user": "user-19",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-10-31T11:00:01.000Z",
+      "experiment": "upload-cta-v1",
+      "variant": "control",
+      "event": "upload_cta_click",
+      "user": "user-19",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-10-31T11:00:02.000Z",
+      "experiment": "upload-cta-v1",
+      "variant": "treatment",
+      "event": "exposure",
+      "user": "user-72",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-10-31T11:00:03.000Z",
+      "experiment": "upload-cta-v1",
+      "variant": "treatment",
+      "event": "upload_cta_click",
+      "user": "user-72",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-10-31T11:00:04.000Z",
+      "experiment": "upload-cta-v1",
+      "variant": "control",
+      "event": "exposure",
+      "user": "user-50",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-10-31T11:00:05.000Z",
+      "experiment": "upload-cta-v1",
+      "variant": "control",
+      "event": "upload_cta_click",
+      "user": "user-50",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-10-31T11:00:06.000Z",
+      "experiment": "upload-cta-v1",
+      "variant": "treatment",
+      "event": "exposure",
+      "user": "user-43",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-10-31T11:00:07.000Z",
+      "experiment": "upload-cta-v1",
+      "variant": "treatment",
+      "event": "upload_cta_click",
+      "user": "user-43",
+      "metadata": {}
+    }
+  ]
+}

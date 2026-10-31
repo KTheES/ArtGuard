@@ -18,6 +18,7 @@ ArtworkGuard는 [MIT License](LICENSE)로 공개되어 있습니다. 기여 전 
 
 ## CI/CD
 
+- **[11주차 과제 제출 증빙](docs/WEEK11_FEATURE_FLAGS.md)** — Feature Flag 3종, 일관된 A/B 테스트·이벤트 로그, Canary 헬스체크 자동 롤백
 - **[9주차 과제 제출 증빙](docs/WEEK9_SUBMISSION.md)** — npm GitHub Packages 버전 업데이트, GHCR 빌드·실행·푸시, Dependabot 및 npm audit 자동화 실행 URL
 - [Application CI 운영 가이드](docs/CI_PIPELINE.md) — Lint, Build, OS/Node.js Matrix Test, Artifact 기반 CI Preview Deploy
 - [CI 최적화 전후 비교 리포트](docs/CI_OPTIMIZATION_REPORT.md) — Reusable Workflow, Composite Action, 캐시 개선률, 조건부 실행

@@ -1,0 +1,81 @@
+name: Week 11 Feature Flags
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - "ops/canary-rollout*"
+      - "reports/week11/**"
+      - ".github/workflows/week11-feature-flags.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - "ops/canary-rollout*"
+      - ".github/workflows/week11-feature-flags.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Flags, experiment, and canary rollback
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Lint and test feature flags
+        working-directory: frontend
+        run: |
+          npm run lint
+          npm test
+          npm run test:canary
+          npm run build
+
+      - name: Generate deterministic A/B experiment log
+        working-directory: frontend
+        run: npm run evidence:experiment
+
+      - name: Verify 1-10-50-100 canary rollback
+        run: node ops/canary-rollout.mjs --simulate-failure=50 --output=reports/week11/canary-rollout.json
+
+      - name: Write verification summary
+        shell: bash
+        run: |
+          {
+            echo "## Week 11 verification"
+            echo
+            echo "- Feature flags: 3"
+            echo "- A/B variants: control, treatment"
+            echo "- Assignment: deterministic and repeatable"
+            echo "- Canary stages: 1% → 10% → 50% → 100%"
+            echo "- Simulated failure: 50%"
+            echo "- Automatic rollback target: 10%"
+            echo
+            echo '```json'
+            cat reports/week11/canary-rollout.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload experiment and rollout evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: week11-evidence-${{ github.run_id }}
+          path: reports/week11
+          if-no-files-found: error
+          retention-days: 90
