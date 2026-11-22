@@ -4,9 +4,9 @@
 
 | Metric | Result | Gate |
 |---|---:|---:|
-| Lines | 96.62% | 80% |
-| Branches | 83.54% | 80% |
-| Functions | 85.71% | 80% |
+| Lines | 96.64% | 80% |
+| Branches | 88.75% | 80% |
+| Functions | 89.29% | 80% |
 
 실행 명령:
 
