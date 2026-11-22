@@ -5,6 +5,9 @@ test('visitor can switch between login and signup while runtime flags load', asy
 
   await expect(page).toHaveTitle(/ArtworkGuard/);
   await expect(page.getByRole('heading', {name: '다시 만나 반갑습니다'})).toBeVisible();
+  if (process.env.E2E_FAILURE_DRILL === '1') {
+    expect(false, 'Intentional screenshot artifact drill').toBe(true);
+  }
   await expect(page.getByLabel('이메일')).toBeVisible();
   await expect(page.getByLabel('비밀번호')).toBeVisible();
 

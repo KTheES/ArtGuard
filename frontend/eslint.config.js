@@ -3,7 +3,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['dist/**', 'playwright-report/**', 'test-results/**'],
+    ignores: ['dist/**', 'playwright-report/**', 'test-results/**', 'drill-results/**', 'playwright-drill-report/**'],
   },
   {
     ...js.configs.recommended,

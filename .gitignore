@@ -14,6 +14,8 @@ node_modules/
 frontend/dist/
 frontend/playwright-report/
 frontend/test-results/
+frontend/drill-results/
+frontend/playwright-drill-report/
 .pytest_cache/
 .coverage
 htmlcov/

@@ -1,3 +1,4 @@
+const ERROR_MESSAGES = Object.freeze({401:'이메일과 비밀번호를 확인해 주세요.',403:'이 작업의 권한이 없습니다.',409:'상태가 변경되었습니다. 새로고침 후 다시 시도해 주세요.',413:'파일 크기 제한을 초과했습니다.',429:'요청이 많습니다. 잠시 후 다시 시도해 주세요.',502:'백엔드에 연결할 수 없습니다.'});
 export function safeUrl(value){try{const u=new URL(value);return ['http:','https:'].includes(u.protocol)&&!u.username&&!u.password?u.href:null;}catch{return null;}}
 export function createApi(fetcher=fetch,onExpired=()=>{}){
  let tokens=null,refreshing=null,epoch=0;
@@ -16,7 +17,7 @@ export function createApi(fetcher=fetch,onExpired=()=>{}){
   if(current!==epoch)throw Error('세션이 변경되었습니다.');
   if(r.ok&&blob)return r.blob();
   const data=await r.json().catch(()=>null);
-  if(!r.ok||!data?.success){if(r.status===401&&tokens){clear();onExpired();}const error=Error(({401:'이메일과 비밀번호를 확인해 주세요.',403:'이 작업의 권한이 없습니다.',409:'상태가 변경되었습니다. 새로고침 후 다시 시도해 주세요.',413:'파일 크기 제한을 초과했습니다.',429:'요청이 많습니다. 잠시 후 다시 시도해 주세요.',502:'백엔드에 연결할 수 없습니다.'})[r.status]||'요청을 완료하지 못했습니다.');error.code=data?.error?.code;throw error;}
+  if(!r.ok||!data?.success){if(r.status===401&&tokens){clear();onExpired();}const error=Error(ERROR_MESSAGES[r.status]||'요청을 완료하지 못했습니다.');error.code=data?.error?.code;throw error;}
   return data.data;
  }
  return {request,async login(body){clear();tokens=await request('/auth/login',{method:'POST',body});},async logout(){const token=tokens?.refreshToken;clear();if(token)await request('/auth/logout',{method:'POST',body:{refreshToken:token}});},clear};
