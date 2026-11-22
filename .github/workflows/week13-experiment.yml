@@ -13,7 +13,22 @@ concurrency:
   group: week13-experiment
   cancel-in-progress: false
 jobs:
+  window:
+    runs-on: ubuntu-latest
+    outputs:
+      active: ${{ steps.date.outputs.active }}
+    steps:
+      - id: date
+        run: |
+          today=$(TZ=Asia/Seoul date +%F)
+          if [[ "$today" < "2026-11-22" || "$today" > "2026-12-05" ]]; then
+            echo "active=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "active=true" >> "$GITHUB_OUTPUT"
+          fi
   panel:
+    needs: window
+    if: needs.window.outputs.active == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
