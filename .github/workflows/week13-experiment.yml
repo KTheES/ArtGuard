@@ -1,0 +1,77 @@
+name: Week 13 Lean Experiment
+on:
+  push:
+    branches: [main]
+    paths: ["experiments/week13/**", "frontend/e2e/week13-panel.spec.js", ".github/workflows/week13-experiment.yml"]
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: week13-experiment
+  cancel-in-progress: false
+jobs:
+  panel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Run ten synthetic user scenarios
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npx playwright test e2e/week13-panel.spec.js
+      - name: Aggregate dated observations
+        run: node experiments/week13/report.mjs
+      - name: Save experiment data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/week13
+          git diff --cached --quiet || git commit -m "docs: record week13 synthetic experiment observation"
+          git push
+      - name: Update experiment backlog and weekly report issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const title = '[Week13] Experiment backlog and weekly reporting';
+            const metrics = JSON.parse(fs.readFileSync('reports/week13/metrics.json','utf8'));
+            const body = [
+              'Synthetic LLM persona experiment. Not human interviews or live conversion data.',
+              '- [ ] Complete 14 observed dates (2026-11-22 through 2026-12-05 KST)',
+              '- [ ] Address misleading protection copy identified by P01/P04',
+              '- [ ] Validate privacy explanation for P07',
+              '- [ ] Review final Pivot/Persevere evidence',
+              '',
+              fs.readFileSync('reports/week13/REPORT.md','utf8'),
+              '',
+              'Run: '+context.serverUrl+'/'+context.repo.owner+'/'+context.repo.repo+'/actions/runs/'+context.runId
+            ].join('\n');
+            const issues = await github.paginate(github.rest.issues.listForRepo,{...context.repo,state:'open'});
+            const existing = issues.find(i=>i.title===title && !i.pull_request);
+            if(existing) {
+              await github.rest.issues.update({...context.repo,issue_number:existing.number,body});
+              if([7,14].includes(metrics.observedDates.length)) {
+                const marker='Week13 observed-day milestone: '+metrics.observedDates.length;
+                const comments=await github.paginate(github.rest.issues.listComments,{...context.repo,issue_number:existing.number});
+                if(!comments.some(c=>c.body.startsWith(marker))) await github.rest.issues.createComment({...context.repo,issue_number:existing.number,body:marker+'\n'+body});
+              }
+            } else await github.rest.issues.create({...context.repo,title,body});
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: week13-experiment-${{ github.run_id }}
+          path: |
+            reports/week13
+            frontend/playwright-report
+            frontend/test-results
+          retention-days: 90

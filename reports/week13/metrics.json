@@ -1,0 +1,24 @@
+{
+  "source": "synthetic-panel",
+  "observedDates": [
+    "2026-11-22"
+  ],
+  "complete": false,
+  "history": [
+    {
+      "date": "2026-11-22",
+      "variant": "control",
+      "users": 4,
+      "clicks": 4,
+      "ctr": 1
+    },
+    {
+      "date": "2026-11-22",
+      "variant": "treatment",
+      "users": 6,
+      "clicks": 6,
+      "ctr": 1
+    }
+  ],
+  "limitation": "Repeated scripted panel. No causal conversion or human engagement inference."
+}

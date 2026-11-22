@@ -1,0 +1,14 @@
+{
+  "key": "upload-cta-v1",
+  "start": "2026-11-22",
+  "endExclusive": "2026-12-06",
+  "source": "synthetic-panel",
+  "minimumDays": 14,
+  "minimumPersonas": 10,
+  "primaryMetric": "unique persona CTA clicks / unique persona exposures per variant",
+  "guardrails": [
+    "scenario failures",
+    "misleading protection claims"
+  ],
+  "decisionRule": "No final decision before 14 observed dates. Scripted clicks cannot establish product conversion uplift. Qualitative feedback guides a provisional pivot of copy only."
+}

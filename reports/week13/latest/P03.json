@@ -1,0 +1,10 @@
+{
+  "source": "synthetic-playwright-panel",
+  "persona": "P03",
+  "variant": "treatment",
+  "observedAt": "2026-11-22T09:08:34.145Z",
+  "exposure": true,
+  "click": true,
+  "scenarioPassed": true,
+  "note": "Scripted click; not human conversion behavior. Backend mocked; actual upload not measured."
+}

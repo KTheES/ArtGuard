@@ -1,0 +1,77 @@
+{
+  "source": "LLM-authored synthetic persona evaluation; not human interviews",
+  "generatedAt": "2026-11-22",
+  "method": "Codex generated 10 contrasting personas and qualitative feedback after reviewing the existing login, artwork list, CTA, and upload code. Preferences are hypotheses, not observed conversions.",
+  "personas": [
+    {
+      "id": "P01",
+      "role": "초보 일러스트레이터",
+      "scenario": "처음 작품을 등록하며 무엇이 시작되는지 확인한다",
+      "feedback": "보호라는 말이 매력적이지만 버튼만 누르면 법적 보호가 되는 줄 알 수 있다.",
+      "preferredVariant": "treatment"
+    },
+    {
+      "id": "P02",
+      "role": "숙련 프리랜서",
+      "scenario": "반복 등록을 빠르게 수행한다",
+      "feedback": "첫 작품이라는 표현은 재방문할 때 맞지 않는다. 작품 등록이 정확하다.",
+      "preferredVariant": "control"
+    },
+    {
+      "id": "P03",
+      "role": "디지털 접근성 중시 작가",
+      "scenario": "키보드로 로그인과 등록 버튼을 탐색한다",
+      "feedback": "문구보다 키보드 포커스와 입력 레이블이 중요하다. 두 문구 모두 행동을 예측할 수 있어야 한다.",
+      "preferredVariant": "control"
+    },
+    {
+      "id": "P04",
+      "role": "저작권 침해 경험 작가",
+      "scenario": "등록 이후 탐지와 법적 보호의 차이를 확인한다",
+      "feedback": "보호하기가 법률적 해결을 약속하는 듯하다. 탐지 지원임을 명시해야 한다.",
+      "preferredVariant": "control"
+    },
+    {
+      "id": "P05",
+      "role": "시간이 부족한 학생",
+      "scenario": "과제 작품 한 장을 빠르게 등록한다",
+      "feedback": "첫 작품 보호하기가 시작 버튼처럼 보여 진입하기 쉽다.",
+      "preferredVariant": "treatment"
+    },
+    {
+      "id": "P06",
+      "role": "작은 스튜디오 운영자",
+      "scenario": "여러 작품의 모니터링 업무를 관리한다",
+      "feedback": "등록은 팀 업무에 자연스럽지만 첫 작품이라는 개인 중심 표현은 부적절하다.",
+      "preferredVariant": "control"
+    },
+    {
+      "id": "P07",
+      "role": "개인정보에 민감한 사진가",
+      "scenario": "업로드 전 이미지 이용 범위를 확인한다",
+      "feedback": "어느 문구든 업로드 저장과 삭제 정책을 보기 전에는 진행하기 어렵다.",
+      "preferredVariant": "control"
+    },
+    {
+      "id": "P08",
+      "role": "온라인 판매 초보자",
+      "scenario": "상품 이미지 도용 방지 수단을 찾는다",
+      "feedback": "보호하기는 목적이 분명하다. 다만 실제 탐지 범위를 다음 화면에 알려주면 좋겠다.",
+      "preferredVariant": "treatment"
+    },
+    {
+      "id": "P09",
+      "role": "신중한 고령 창작자",
+      "scenario": "전문 용어 없이 다음 동작을 이해한다",
+      "feedback": "작품 등록은 파일을 올리는 동작이라는 뜻이 명확하다.",
+      "preferredVariant": "control"
+    },
+    {
+      "id": "P10",
+      "role": "모바일 위주 웹툰 작가",
+      "scenario": "작은 화면에서 업로드 경로를 찾는다",
+      "feedback": "긴 설명보다 목적을 말하는 보호하기가 눈에 띈다. 모바일 파일 선택도 검증해 달라.",
+      "preferredVariant": "treatment"
+    }
+  ]
+}
