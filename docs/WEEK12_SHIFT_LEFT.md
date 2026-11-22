@@ -2,6 +2,9 @@
 
 검증일: 2026-11-22
 
+- CI 실행: [Week 12 실행 #1](https://github.com/KTheES/ArtGuard/actions/runs/45003985969)
+- 로컬 Chromium E2E: 1 passed (2026-11-22)
+
 | 요구사항 | 증거 |
 |---|---|
 | 단위 테스트 80% 이상 | [커버리지 보고서](../reports/week12/coverage-summary.md): Lines 96.62%, Branches 83.54%, Functions 85.71% |

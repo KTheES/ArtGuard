@@ -1,6 +1,6 @@
 # Week 12 coverage summary
 
-검증일: 2026-10-31
+검증일: 2026-11-22 (재실행 통과)
 
 | Metric | Result | Gate |
 |---|---:|---:|
