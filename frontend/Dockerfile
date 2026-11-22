@@ -14,6 +14,7 @@ ENV NODE_ENV=production \
 WORKDIR /app
 COPY --from=build /app/dist/ ./
 COPY --from=build /app/server.mjs ./server.mjs
+COPY --from=build /app/runtime-config.mjs ./runtime-config.mjs
 USER node
 EXPOSE 5173
 HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \

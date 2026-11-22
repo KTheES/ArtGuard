@@ -1,0 +1,78 @@
+name: Week 12 Shift-Left Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - "ops/**"
+      - "reports/week12/**"
+      - ".github/workflows/week12-shift-left.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - "ops/**"
+      - ".github/workflows/week12-shift-left.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-and-e2e:
+    name: Coverage gate and Playwright
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Lint and enforce 80 percent coverage
+        working-directory: frontend
+        shell: bash
+        run: |
+          npm run lint
+          set -o pipefail
+          npm run test:coverage | tee ../reports/week12/coverage-ci.txt
+          npm run test:canary
+          npm run build
+
+      - name: Install Chromium
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E
+        working-directory: frontend
+        run: npm run test:e2e
+
+      - name: Upload failure screenshots and traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: week12-playwright-failure-${{ github.run_id }}
+          path: frontend/test-results
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Upload coverage and E2E report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: week12-test-report-${{ github.run_id }}
+          path: |
+            reports/week12/coverage-ci.txt
+            frontend/playwright-report
+          if-no-files-found: warn
+          retention-days: 90

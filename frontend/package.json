@@ -23,7 +23,9 @@
     "lint": "eslint . --max-warnings=0",
     "build": "node scripts/build.mjs",
     "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage --test-coverage-exclude=**/*.test.js --test-coverage-exclude=app.js --test-coverage-exclude=server.mjs --test-coverage-lines=80 --test-coverage-functions=80 --test-coverage-branches=80",
     "test:canary": "node --test ../ops/canary-rollout.test.mjs",
+    "test:e2e": "playwright test",
     "evidence:experiment": "node scripts/simulate-experiment.mjs --output=../reports/week11/experiment-events.json",
     "prepack": "npm run build"
   },
@@ -32,6 +34,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
     "eslint": "^10.13.0",
     "globals": "^17.13.0"
   }
