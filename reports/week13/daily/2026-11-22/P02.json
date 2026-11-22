@@ -2,7 +2,7 @@
   "source": "synthetic-playwright-panel",
   "persona": "P02",
   "variant": "treatment",
-  "observedAt": "2026-11-22T09:08:33.529Z",
+  "observedAt": "2026-11-22T09:10:07.702Z",
   "exposure": true,
   "click": true,
   "scenarioPassed": true,
