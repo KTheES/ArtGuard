@@ -1,0 +1,19 @@
+{
+  "schema": 2,
+  "evaluatedDate": "2026-11-23",
+  "evaluator": "Codex conversation model",
+  "method": "Manual LLM role-play authored in this conversation after reviewing app.js and persona scenarios. Not API-generated, not human feedback. Prior qualitative feedback was visible to the evaluator, so this is an unblinded exploratory panel, not independent validation.",
+  "prompt": "For each of the ten existing personas, evaluate only its stable assigned CTA in the current empty artwork list. Visible context: 내 작품; 작품을 등록하고 분석 진행 상태를 확인하세요; 아직 등록한 작품이 없습니다. 첫 작품을 업로드하세요. control CTA: 작품 등록. treatment CTA: 첫 작품 보호하기. No privacy or legal guarantee explanation is present here. Choose click, defer (needs more information), or leave (abandon this session); give understanding from 1 to 5 and a reason specific to the role and scenario. Do not optimize arm totals or assert successful upload. Decisions are hypothetical LLM judgments. Keyboard/mobile usability is checked separately by Playwright.",
+  "responses": [
+    {"persona":"P01","variant":"treatment","action":"click","understanding":3,"reason":"처음 작품을 올릴 시작점으로 보인다. 보호가 어디까지 제공되는지는 불명확하지만 다음 화면에서 확인하기 위해 눌러 보겠다."},
+    {"persona":"P02","variant":"treatment","action":"click","understanding":4,"reason":"첫 작품이라는 표현은 반복 등록 목적과 맞지 않지만 빈 목록 안내를 보면 업로드 경로임을 추측할 수 있다. 빠르게 등록 화면으로 이동하겠다."},
+    {"persona":"P03","variant":"treatment","action":"click","understanding":3,"reason":"보호의 구체적 의미는 모호하지만 등록 시작 버튼으로 이해한다. 키보드 포커스와 Enter가 작동한다는 조건에서 진행하겠다."},
+    {"persona":"P04","variant":"control","action":"defer","understanding":4,"reason":"파일 등록 동작은 이해된다. 다만 침해 경험자로서 등록 후 탐지와 법적 대응의 차이를 확인할 설명이 필요해 진행을 보류하겠다."},
+    {"persona":"P05","variant":"control","action":"click","understanding":5,"reason":"과제 작품 한 장을 등록하려는 목적과 버튼 문구가 일치하므로 바로 다음 화면으로 가겠다."},
+    {"persona":"P06","variant":"treatment","action":"defer","understanding":3,"reason":"팀의 여러 작품을 관리해야 하는데 첫 작품 중심 안내만 보인다. 반복 등록과 팀 관리 지원 여부를 먼저 확인하겠다."},
+    {"persona":"P07","variant":"control","action":"leave","understanding":5,"reason":"등록이라는 동작은 명확하지만 이미지 보관과 삭제 정책이 보이지 않는다. 개인정보 이용 범위를 확인할 수 없어 이번 세션을 종료하겠다."},
+    {"persona":"P08","variant":"control","action":"click","understanding":4,"reason":"상품 이미지 도용 탐지에 앞서 원본 등록이 필요하다고 이해한다. 다음 화면에서 탐지 범위를 확인하기 위해 진행하겠다."},
+    {"persona":"P09","variant":"treatment","action":"defer","understanding":2,"reason":"보호하기를 누르면 파일 선택인지 별도 보호 서비스 신청인지 확신하기 어렵다. 다음 동작에 대한 쉬운 설명을 기다리겠다."},
+    {"persona":"P10","variant":"treatment","action":"click","understanding":4,"reason":"모바일에서 빈 목록의 첫 업로드 경로로 이해된다. 버튼이 화면에 표시되면 눌러 파일 선택 화면까지 이동하겠다. 실제 모바일 파일 선택 가능 여부는 아직 모른다."}
+  ]
+}

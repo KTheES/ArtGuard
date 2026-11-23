@@ -21,7 +21,7 @@ jobs:
       - id: date
         run: |
           today=$(TZ=Asia/Seoul date +%F)
-          if [[ "$today" < "2026-11-22" || "$today" > "2026-12-05" ]]; then
+          if [[ "$today" < "2026-11-23" || "$today" > "2026-12-06" ]]; then
             echo "active=false" >> "$GITHUB_OUTPUT"
           else
             echo "active=true" >> "$GITHUB_OUTPUT"
@@ -38,22 +38,34 @@ jobs:
           node-version: "22.x"
           cache: npm
           cache-dependency-path: frontend/package-lock.json
+      - name: Validate experiment protocol
+        run: node --test experiments/week13/protocol.test.mjs
+      - name: Require fresh LLM assessment
+        run: node experiments/week13/prepare.mjs
       - name: Run ten synthetic user scenarios
+        id: panel
+        env:
+          WEEK13_PANEL: '1'
         working-directory: frontend
         run: |
           npm ci
           npx playwright install --with-deps chromium
           npx playwright test e2e/week13-panel.spec.js
       - name: Aggregate dated observations
+        if: ${{ !cancelled() && steps.panel.outcome != 'skipped' }}
+        id: aggregate
         run: node experiments/week13/report.mjs
       - name: Save experiment data
+        if: ${{ !cancelled() && steps.aggregate.outcome == 'success' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add reports/week13
           git diff --cached --quiet || git commit -m "docs: record week13 synthetic experiment observation"
+          git pull --rebase origin main
           git push
       - name: Update experiment backlog and weekly report issue
+        if: ${{ !cancelled() && steps.aggregate.outcome == 'success' }}
         uses: actions/github-script@v7
         with:
           script: |
@@ -62,7 +74,7 @@ jobs:
             const metrics = JSON.parse(fs.readFileSync('reports/week13/metrics.json','utf8'));
             const body = [
               'Synthetic LLM persona experiment. Not human interviews or live conversion data.',
-              '- [ ] Complete 14 observed dates (2026-11-22 through 2026-12-05 KST)',
+              '- [ ] Complete 14 fresh LLM-evaluated dates (2026-11-23 through 2026-12-06 KST; no backfilling)',
               '- [ ] Address misleading protection copy identified by P01/P04',
               '- [ ] Validate privacy explanation for P07',
               '- [ ] Review final Pivot/Persevere evidence',
