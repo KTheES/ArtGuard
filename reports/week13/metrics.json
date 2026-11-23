@@ -1,24 +1,34 @@
 {
-  "source": "synthetic-panel",
+  "schema": 2,
+  "source": "manual-llm-judgment-browser-replay-v2",
   "observedDates": [
-    "2026-11-22"
+    "2026-11-23"
   ],
   "complete": false,
   "history": [
     {
-      "date": "2026-11-22",
+      "date": "2026-11-23",
       "variant": "control",
-      "users": 4,
-      "clicks": 4,
-      "ctr": 1
+      "personas": 4,
+      "exposures": 4,
+      "clicks": 2,
+      "ctr": 0.5,
+      "deferred": 1,
+      "left": 1,
+      "failures": 0
     },
     {
-      "date": "2026-11-22",
+      "date": "2026-11-23",
       "variant": "treatment",
-      "users": 6,
-      "clicks": 6,
-      "ctr": 1
+      "personas": 6,
+      "exposures": 6,
+      "clicks": 4,
+      "ctr": 0.6666666666666666,
+      "deferred": 2,
+      "left": 0,
+      "failures": 0
     }
   ],
-  "limitation": "Repeated scripted panel. No causal conversion or human engagement inference."
+  "excluded": [],
+  "limitation": "Unblinded synthetic LLM decisions replayed in a mocked browser. Not independent humans or causal conversion evidence. Legacy scripted days excluded."
 }

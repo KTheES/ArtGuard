@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto';
 import {assignVariant, UPLOAD_CTA_EXPERIMENT} from '../../frontend/feature-flags.js';
 export const kstDate = (time = new Date()) => new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Seoul'}).format(new Date(time));
-export const digest = text => createHash('sha256').update(text).digest('hex');
+export const digest = text => createHash('sha256').update(text.replace(/\r\n/g,'\n')).digest('hex');
 export function validateAssessment(batch, date, ids) {
   if (batch.schema !== 2 || batch.evaluatedDate !== date || !batch.evaluator || !batch.method || !batch.prompt) throw Error('Missing provenance or fresh evaluation');
   if (batch.responses.length !== ids.length || new Set(batch.responses.map(r=>r.persona)).size !== ids.length) throw Error('Expected unique complete panel');

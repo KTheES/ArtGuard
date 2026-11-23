@@ -1,14 +1,14 @@
 # Week 13 experiment report
 
-Updated: 2026-11-22 KST
+Updated: 2026-11-23 KST. Valid observed dates: 1/14. IN PROGRESS — NOT COMPLETE.
 
-Observed dates: 1/14. Status: IN PROGRESS
+Unblinded synthetic LLM decisions replayed in a mocked browser. Not independent humans or causal conversion evidence. Legacy scripted days excluded.
 
-Source: synthetic LLM-persona panel + Playwright. Clicks are scripted, not measured human preference.
+| Date | Variant | Exposed | Clicks | Synthetic CTR | Defer | Leave | Test failures |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 2026-11-23 | control | 4 | 2 | 50.0% | 1 | 1 | 0 |
+| 2026-11-23 | treatment | 6 | 4 | 66.7% | 2 | 0 | 0 |
 
-| Date | Variant | Exposed personas | Clicks | Scripted CTR |
-|---|---|---:|---:|---:|
-| 2026-11-22 | control | 4 | 4 | 100.0% |
-| 2026-11-22 | treatment | 6 | 6 | 100.0% |
+Excluded invalid days: 0. Failures remain in guardrails. Incomplete batches cannot count as a full day.
 
-Decision: provisional PIVOT of misleading protection copy based on qualitative persona feedback. Final product decision deferred; this panel cannot establish conversion uplift.
+Decision: provisional copy PIVOT from exploratory feedback; final product effect undetermined.
