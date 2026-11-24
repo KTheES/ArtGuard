@@ -2,6 +2,8 @@
 
 **2026-11-25: Copilot 자동 평가 연결 코드 구현 완료, 인증 등록 대기. 2주 운영 미완료.**
 
+[연결 검증 CI #6](https://github.com/KTheES/ArtGuard/actions/runs/45424194462): 테스트 단계 통과 후 `Missing COPILOT_GITHUB_TOKEN: no model call made`로 중단됐습니다. 이는 인증 미등록으로 인한 **실패 실행**이며 자동 평가 성공 증거가 아닙니다. CLI 설치·모델 호출·시나리오 실행·새 관측일 저장은 건너뛰었습니다.
+
 추가 유료 사용은 허용하지 않습니다. Copilot Student의 포함 크레딧만 사용하며, 계정의 추가 사용 예산 $0과 Cloud Sandbox paid usage Disabled를 유지합니다. 코드가 과금 설정을 변경하지는 않지만 계정 예산을 자동 조회하는 기능은 없으므로 이 설정을 유지해야 합니다.
 
 [무료 한도·인증 설정 및 운영 안내](WEEK13_COPILOT_SETUP.md)
