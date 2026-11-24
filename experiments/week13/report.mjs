@@ -22,14 +22,16 @@ for(const name of (await readdir(daily)).filter(n=>/^\d{4}-\d{2}-\d{2}\.json$/.t
     const record=JSON.parse(await readFile(new URL(name,daily),'utf8'));
     const assessment=await readFile(new URL(`experiments/week13/assessments/${d}.json`,root),'utf8');
     if(record.date!==d) throw Error('Filename/date mismatch');
-    validateDay(record,JSON.parse(assessment),digest(assessment),ids);
+    const batch=JSON.parse(assessment);
+    validateDay(record,batch,digest(assessment),ids);
+    if(batch.evaluator!=='GitHub Copilot CLI / auto') throw Error('Manual pilot excluded from automatic cohort');
     dates.push(d);
     history.push(...summarize(record.rows).map(arm=>({date:d,...arm})));
   } catch(error) {excluded.push({date:d,reason:error.message});}
 }
 const complete=dates.length>=plan.minimumDays;
 const metrics={schema:2,source:plan.source,observedDates:dates,complete,history,excluded,
-  limitation:'Unblinded synthetic LLM decisions replayed in a mocked browser. Not independent humans or causal conversion evidence. Legacy scripted days excluded.'};
+  limitation:'Synthetic Copilot decisions replayed in a mocked browser. Auto model selection can vary. Not independent humans or causal conversion evidence. Manual and scripted pilot days excluded.'};
 await writeFile(new URL('reports/week13/metrics.json',root),JSON.stringify(metrics,null,2)+'\n');
 const table=history.map(r=>`| ${r.date} | ${r.variant} | ${r.exposures} | ${r.clicks} | ${r.ctr===null?'N/A':(r.ctr*100).toFixed(1)+'%'} | ${r.deferred} | ${r.left} | ${r.failures} |`).join('\n');
 await writeFile(new URL('reports/week13/REPORT.md',root),`# Week 13 experiment report\n\nUpdated: ${date} KST. Valid observed dates: ${dates.length}/${plan.minimumDays}. ${complete?'Collection complete; interpretation pending':'IN PROGRESS — NOT COMPLETE'}.\n\n${metrics.limitation}\n\n| Date | Variant | Exposed | Clicks | Synthetic CTR | Defer | Leave | Test failures |\n|---|---|---:|---:|---:|---:|---:|---:|\n${table}\n\nExcluded invalid days: ${excluded.length}. Failures remain in guardrails. Incomplete batches cannot count as a full day.\n\nDecision: provisional copy PIVOT from exploratory feedback; final product effect undetermined.\n`);

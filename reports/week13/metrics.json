@@ -1,34 +1,15 @@
 {
   "schema": 2,
-  "source": "manual-llm-judgment-browser-replay-v2",
-  "observedDates": [
-    "2026-11-23"
-  ],
+  "source": "copilot-auto-synthetic-panel-v3",
+  "observedDates": [],
   "complete": false,
-  "history": [
+  "history": [],
+  "excluded": [
     {
       "date": "2026-11-23",
-      "variant": "control",
-      "personas": 4,
-      "exposures": 4,
-      "clicks": 2,
-      "ctr": 0.5,
-      "deferred": 1,
-      "left": 1,
-      "failures": 0
-    },
-    {
-      "date": "2026-11-23",
-      "variant": "treatment",
-      "personas": 6,
-      "exposures": 6,
-      "clicks": 4,
-      "ctr": 0.6666666666666666,
-      "deferred": 2,
-      "left": 0,
-      "failures": 0
+      "reason": "Manual pilot; excluded from automatic cohort"
     }
   ],
-  "excluded": [],
-  "limitation": "Unblinded synthetic LLM decisions replayed in a mocked browser. Not independent humans or causal conversion evidence. Legacy scripted days excluded."
+  "status": "WAITING_FOR_COPILOT_AUTHENTICATION",
+  "limitation": "No automatic Copilot evaluation has been collected yet."
 }

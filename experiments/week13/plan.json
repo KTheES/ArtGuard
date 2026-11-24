@@ -1,8 +1,8 @@
 {
   "key": "upload-cta-v1",
-  "start": "2026-11-23",
-  "endExclusive": "2026-12-07",
-  "source": "manual-llm-judgment-browser-replay-v2",
+  "start": "2026-11-25",
+  "endExclusive": "2026-12-09",
+  "source": "copilot-auto-synthetic-panel-v3",
   "minimumDays": 14,
   "minimumPersonas": 10,
   "primaryMetric": "unique persona CTA clicks / unique persona exposures per variant",

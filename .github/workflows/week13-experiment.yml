@@ -21,7 +21,7 @@ jobs:
       - id: date
         run: |
           today=$(TZ=Asia/Seoul date +%F)
-          if [[ "$today" < "2026-11-23" || "$today" > "2026-12-06" ]]; then
+          if [[ "$today" < "2026-11-25" || "$today" > "2026-12-08" ]]; then
             echo "active=false" >> "$GITHUB_OUTPUT"
           else
             echo "active=true" >> "$GITHUB_OUTPUT"
@@ -39,7 +39,18 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - name: Validate experiment protocol
-        run: node --test experiments/week13/protocol.test.mjs
+        run: node --test experiments/week13/protocol.test.mjs experiments/week13/copilot-evaluation.test.mjs
+      - name: Check Copilot authentication without inference
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
+        run: node --input-type=module -e "import {requireAuthentication} from './experiments/week13/copilot-evaluation.mjs'; requireAuthentication(process.env)"
+      - name: Install pinned GitHub Copilot CLI
+        run: npm install --global @github/copilot@1.0.114 --no-audit --no-fund
+      - name: Collect fresh Copilot persona evaluation
+        id: collect
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
+        run: node experiments/week13/collect.mjs
       - name: Require fresh LLM assessment
         run: node experiments/week13/prepare.mjs
       - name: Run ten synthetic user scenarios
@@ -60,7 +71,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports/week13
+          git add reports/week13 experiments/week13/assessments
           git diff --cached --quiet || git commit -m "docs: record week13 synthetic experiment observation"
           git pull --rebase origin main
           git push
@@ -74,7 +85,7 @@ jobs:
             const metrics = JSON.parse(fs.readFileSync('reports/week13/metrics.json','utf8'));
             const body = [
               'Synthetic LLM persona experiment. Not human interviews or live conversion data.',
-              '- [ ] Complete 14 fresh LLM-evaluated dates (2026-11-23 through 2026-12-06 KST; no backfilling)',
+              '- [ ] Complete 14 fresh Copilot-evaluated dates (2026-11-25 through 2026-12-08 KST; no backfilling)',
               '- [ ] Address misleading protection copy identified by P01/P04',
               '- [ ] Validate privacy explanation for P07',
               '- [ ] Review final Pivot/Persevere evidence',
@@ -99,6 +110,7 @@ jobs:
           name: week13-experiment-${{ github.run_id }}
           path: |
             reports/week13
+            experiments/week13/assessments
             frontend/playwright-report
             frontend/test-results
           retention-days: 90
