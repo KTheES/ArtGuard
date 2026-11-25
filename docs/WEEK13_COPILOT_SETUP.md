@@ -1,6 +1,6 @@
 # Copilot 무료 한도 내 실험 자동화
 
-2026-11-25: 연결 코드 구현 완료. 실제 모델 호출 및 새 관측일 수집은 인증 등록 후 검증해야 합니다.
+2026-11-25: 인증 등록 및 실제 모델 호출 검증 완료. [CI #8 성공](https://github.com/KTheES/ArtGuard/actions/runs/45569512031)으로 첫 관측일을 수집했습니다. 아래는 재설정 시 참고하는 절차입니다.
 
 ## 비용 조건
 
@@ -10,7 +10,7 @@
 
 ## 필요한 사용자 인증
 
-현재 Actions Secrets에는 PACKAGES_TOKEN만 있어 Copilot 평가를 실행할 수 없습니다. 기존 패키지 토큰은 변경하지 않습니다.
+사용자가 Actions Secrets에 COPILOT_GITHUB_TOKEN을 등록했고 실제 Copilot 호출이 성공했습니다. 기존 PACKAGES_TOKEN은 변경하지 않았습니다.
 
 1. GitHub Settings → Developer settings → Personal access tokens → **Fine-grained tokens**에서 새 토큰을 생성합니다.
 2. Resource owner는 **KTheES**, Repository access는 **Public repositories**, Account permissions의 **Copilot Requests**만 허용합니다. 공식 인증 안내에 필요한 권한을 선택하고, Contents/Workflows 쓰기 권한은 추가하지 않습니다.
