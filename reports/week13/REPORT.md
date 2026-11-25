@@ -1,11 +1,14 @@
 # Week 13 experiment report
 
-Updated: 2026-11-25 KST.
+Updated: 2026-11-25 KST. Valid observed dates: 1/14. IN PROGRESS — NOT COMPLETE.
 
-**WAITING FOR COPILOT AUTHENTICATION — 0/14 automatic observation dates.**
+Synthetic Copilot decisions replayed in a mocked browser. Auto model selection can vary. Not independent humans or causal conversion evidence. Manual and scripted pilot days excluded.
 
-Planned window: 2026-11-25 through 2026-12-08 KST. No automatic model response has been collected yet. Do not backfill missed dates.
+| Date | Variant | Exposed | Clicks | Synthetic CTR | Defer | Leave | Test failures |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 2026-11-25 | control | 4 | 1 | 25.0% | 3 | 0 | 0 |
+| 2026-11-25 | treatment | 6 | 5 | 83.3% | 1 | 0 | 0 |
 
-The 2026-11-23 manual LLM pilot remains in evaluated-days/2026-11-23.json but is excluded from the automatic cohort. Earlier forced-click daily data is also excluded. There is no automatic-cohort CTR or uplift to report.
+Excluded invalid days: 1. Failures remain in guardrails. Incomplete batches cannot count as a full day.
 
-Decision: provisional copy PIVOT from exploratory pilot feedback only; final product effect undetermined.
+Decision: provisional copy PIVOT from exploratory feedback; final product effect undetermined.

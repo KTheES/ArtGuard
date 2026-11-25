@@ -1,15 +1,39 @@
 {
   "schema": 2,
   "source": "copilot-auto-synthetic-panel-v3",
-  "observedDates": [],
+  "observedDates": [
+    "2026-11-25"
+  ],
   "complete": false,
-  "history": [],
+  "history": [
+    {
+      "date": "2026-11-25",
+      "variant": "control",
+      "personas": 4,
+      "exposures": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "deferred": 3,
+      "left": 0,
+      "failures": 0
+    },
+    {
+      "date": "2026-11-25",
+      "variant": "treatment",
+      "personas": 6,
+      "exposures": 6,
+      "clicks": 5,
+      "ctr": 0.8333333333333334,
+      "deferred": 1,
+      "left": 0,
+      "failures": 0
+    }
+  ],
   "excluded": [
     {
       "date": "2026-11-23",
-      "reason": "Manual pilot; excluded from automatic cohort"
+      "reason": "Outside window"
     }
   ],
-  "status": "WAITING_FOR_COPILOT_AUTHENTICATION",
-  "limitation": "No automatic Copilot evaluation has been collected yet."
+  "limitation": "Synthetic Copilot decisions replayed in a mocked browser. Auto model selection can vary. Not independent humans or causal conversion evidence. Manual and scripted pilot days excluded."
 }
