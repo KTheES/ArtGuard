@@ -21,6 +21,16 @@ export function createPrompt(personas) {
   ].join('\n');
 }
 
+export function extractResponse(jsonl) {
+  const events=jsonl.trim().split(/\r?\n/).filter(Boolean).map(line=>JSON.parse(line));
+  if(events.some(e=>e.type==='error'||e.type==='session.error')) throw Error('Copilot returned an error event');
+  const messages=events.filter(e=>e.type==='assistant.message' && typeof e.data?.content==='string');
+  if(messages.length) return messages.at(-1).data.content;
+  const text=events.filter(e=>e.type==='text' && typeof e.content==='string').map(e=>e.content).join('');
+  if(text.trim()) return text;
+  throw Error('No final assistant text in Copilot structured output');
+}
+
 export function parseEvaluation(raw,{date,prompt,personas,generatedAt,cliVersion}) {
   const parsed=JSON.parse(raw.trim().replace(/^```(?:json)?\s*/,'').replace(/\s*```$/,''));
   const batch={schema:2,evaluatedDate:date,generatedAt,evaluator:'GitHub Copilot CLI / auto',

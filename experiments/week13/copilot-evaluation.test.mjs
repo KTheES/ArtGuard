@@ -1,13 +1,21 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {createPrompt,parseEvaluation,requireAuthentication} from './copilot-evaluation.mjs';
+import {createPrompt,parseEvaluation,requireAuthentication,extractResponse} from './copilot-evaluation.mjs';
 const personas=JSON.parse(readFileSync(new URL('personas.json',import.meta.url))).personas;
 const fixture=JSON.parse(readFileSync(new URL('assessments/2026-11-23.json',import.meta.url)));
 const context={date:'2026-11-25',prompt:createPrompt(personas),personas,generatedAt:'2026-11-25T01:00:00Z',cliVersion:'test-only'};
 test('prompt excludes previous preferences and feedback',()=>{
   for(const p of personas){assert.ok(!context.prompt.includes(p.feedback));assert.ok(context.prompt.includes(p.scenario));}
   assert.ok(!context.prompt.includes('preferredVariant'));
+});
+test('structured transport preserves Korean JSON without terminal formatting',()=>{
+  const response=JSON.stringify({responses:fixture.responses});
+  assert.equal(extractResponse(JSON.stringify({type:'text',content:response})),response);
+  assert.equal(extractResponse(JSON.stringify({type:'assistant.message',data:{content:response}})),response);
+  assert.throws(()=>extractResponse(JSON.stringify({type:'error',message:'denied'})));
+  assert.throws(()=>extractResponse('not JSONL'));
+  assert.throws(()=>extractResponse(JSON.stringify({type:'usage',credits:1})));
 });
 test('missing token and external API credentials stop before inference',()=>{
   assert.throws(()=>requireAuthentication({}));
