@@ -1,15 +1,15 @@
 {
   "schema": 2,
   "date": "2026-11-25",
-  "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
+  "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
   "assessmentHash": "987a8183b429587e4e3c1faaeffcb0b4831bb0b6e447467ca932f08cac81c09c",
   "rows": [
     {
       "persona": "P01",
       "variant": "treatment",
       "action": "click",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:48.408Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:56.873Z",
       "exposure": true,
       "click": true,
       "scenarioPassed": true
@@ -18,8 +18,8 @@
       "persona": "P02",
       "variant": "treatment",
       "action": "click",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:48.708Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:57.274Z",
       "exposure": true,
       "click": true,
       "scenarioPassed": true
@@ -28,8 +28,8 @@
       "persona": "P03",
       "variant": "treatment",
       "action": "defer",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:48.962Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:57.589Z",
       "exposure": true,
       "click": false,
       "scenarioPassed": true
@@ -38,8 +38,8 @@
       "persona": "P04",
       "variant": "control",
       "action": "defer",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:49.210Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:57.889Z",
       "exposure": true,
       "click": false,
       "scenarioPassed": true
@@ -48,8 +48,8 @@
       "persona": "P05",
       "variant": "control",
       "action": "click",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:49.490Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:58.225Z",
       "exposure": true,
       "click": true,
       "scenarioPassed": true
@@ -58,8 +58,8 @@
       "persona": "P06",
       "variant": "treatment",
       "action": "click",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:49.757Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:58.575Z",
       "exposure": true,
       "click": true,
       "scenarioPassed": true
@@ -68,8 +68,8 @@
       "persona": "P07",
       "variant": "control",
       "action": "defer",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:49.995Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:58.886Z",
       "exposure": true,
       "click": false,
       "scenarioPassed": true
@@ -78,8 +78,8 @@
       "persona": "P08",
       "variant": "control",
       "action": "defer",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:50.245Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:59.201Z",
       "exposure": true,
       "click": false,
       "scenarioPassed": true
@@ -88,8 +88,8 @@
       "persona": "P09",
       "variant": "treatment",
       "action": "click",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:50.523Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:59.557Z",
       "exposure": true,
       "click": true,
       "scenarioPassed": true
@@ -98,8 +98,8 @@
       "persona": "P10",
       "variant": "treatment",
       "action": "click",
-      "runId": "b0782458-5db5-40d0-ab28-bbf396d36f06",
-      "observedAt": "2026-11-25T07:37:50.789Z",
+      "runId": "7f46f14e-9216-4108-b8d5-fe283a6634c1",
+      "observedAt": "2026-11-25T07:50:59.906Z",
       "exposure": true,
       "click": true,
       "scenarioPassed": true
