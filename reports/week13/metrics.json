@@ -2,7 +2,8 @@
   "schema": 2,
   "source": "copilot-auto-synthetic-panel-v3",
   "observedDates": [
-    "2026-11-25"
+    "2026-11-25",
+    "2026-11-26"
   ],
   "complete": false,
   "history": [
@@ -25,6 +26,28 @@
       "clicks": 5,
       "ctr": 0.8333333333333334,
       "deferred": 1,
+      "left": 0,
+      "failures": 0
+    },
+    {
+      "date": "2026-11-26",
+      "variant": "control",
+      "personas": 4,
+      "exposures": 4,
+      "clicks": 2,
+      "ctr": 0.5,
+      "deferred": 2,
+      "left": 0,
+      "failures": 0
+    },
+    {
+      "date": "2026-11-26",
+      "variant": "treatment",
+      "personas": 6,
+      "exposures": 6,
+      "clicks": 6,
+      "ctr": 1,
+      "deferred": 0,
       "left": 0,
       "failures": 0
     }

@@ -1,0 +1,108 @@
+{
+  "schema": 2,
+  "date": "2026-11-26",
+  "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+  "assessmentHash": "03ba5805c9fee4cff8c20dbc99b07bf37124c91dc412ee534755f14b768a96a6",
+  "rows": [
+    {
+      "persona": "P01",
+      "variant": "treatment",
+      "action": "click",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:47.449Z",
+      "exposure": true,
+      "click": true,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P02",
+      "variant": "treatment",
+      "action": "click",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:47.782Z",
+      "exposure": true,
+      "click": true,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P03",
+      "variant": "treatment",
+      "action": "click",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:48.048Z",
+      "exposure": true,
+      "click": true,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P04",
+      "variant": "control",
+      "action": "defer",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:48.326Z",
+      "exposure": true,
+      "click": false,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P05",
+      "variant": "control",
+      "action": "click",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:48.614Z",
+      "exposure": true,
+      "click": true,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P06",
+      "variant": "treatment",
+      "action": "click",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:48.914Z",
+      "exposure": true,
+      "click": true,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P07",
+      "variant": "control",
+      "action": "defer",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:49.188Z",
+      "exposure": true,
+      "click": false,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P08",
+      "variant": "control",
+      "action": "click",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:49.496Z",
+      "exposure": true,
+      "click": true,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P09",
+      "variant": "treatment",
+      "action": "click",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:49.796Z",
+      "exposure": true,
+      "click": true,
+      "scenarioPassed": true
+    },
+    {
+      "persona": "P10",
+      "variant": "treatment",
+      "action": "click",
+      "runId": "4942328f-3f38-422e-bf5a-981d5b8cc6ae",
+      "observedAt": "2026-11-26T07:41:50.082Z",
+      "exposure": true,
+      "click": true,
+      "scenarioPassed": true
+    }
+  ]
+}
