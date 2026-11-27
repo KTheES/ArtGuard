@@ -1,0 +1,82 @@
+{
+  "schema": 2,
+  "evaluatedDate": "2026-11-27",
+  "generatedAt": "2026-11-27T07:40:40.519Z",
+  "evaluator": "GitHub Copilot CLI / auto",
+  "method": "Fresh single-session synthetic panel. Prior feedback and preferredVariant excluded from prompt. Ten roles in one model response, not ten independent people. CLI tools and memory disabled.",
+  "cliVersion": "GitHub Copilot CLI 1.0.114.\nRun 'copilot update' to check for updates.",
+  "modelSelection": "auto (underlying model may vary)",
+  "prompt": "You are evaluating a prototype as ten synthetic personas, NOT real human interviewees.\nUse only the supplied screen facts. Do not use tools, prior sessions, memories, or outside sources.\nScreen: 내 작품. 작품을 등록하고 분석 진행 상태를 확인하세요. 아직 등록한 작품이 없습니다. 첫 작품을 업로드하세요.\nThe assigned CTA is below. Clicking opens 새 작품 등록 with title, description, PNG/JPEG file input (max 20 MiB).\nThis screen has no visible privacy/deletion policy or legal guarantee explanation. Backend is mocked.\nFor each persona choose click, defer (needs information), or leave (abandon session) based on its own goal.\nDo not optimize arm totals, force variation, claim completed uploads, or infer legal protection.\nReport understanding as integer 1..5 and a specific Korean reason. Distinguish understanding from willingness.\nReturn ONLY JSON: {\"responses\":[{\"persona\":\"P01\",\"variant\":\"treatment\",\"action\":\"click|defer|leave\",\"understanding\":1,\"reason\":\"...\"}]}.\nInclude every persona exactly once, preserve the assigned variant. These are hypothetical judgments.\n[{\"persona\":\"P01\",\"role\":\"초보 일러스트레이터\",\"scenario\":\"처음 작품을 등록하며 무엇이 시작되는지 확인한다\",\"variant\":\"treatment\",\"cta\":\"첫 작품 보호하기\"},{\"persona\":\"P02\",\"role\":\"숙련 프리랜서\",\"scenario\":\"반복 등록을 빠르게 수행한다\",\"variant\":\"treatment\",\"cta\":\"첫 작품 보호하기\"},{\"persona\":\"P03\",\"role\":\"디지털 접근성 중시 작가\",\"scenario\":\"키보드로 로그인과 등록 버튼을 탐색한다\",\"variant\":\"treatment\",\"cta\":\"첫 작품 보호하기\"},{\"persona\":\"P04\",\"role\":\"저작권 침해 경험 작가\",\"scenario\":\"등록 이후 탐지와 법적 보호의 차이를 확인한다\",\"variant\":\"control\",\"cta\":\"작품 등록\"},{\"persona\":\"P05\",\"role\":\"시간이 부족한 학생\",\"scenario\":\"과제 작품 한 장을 빠르게 등록한다\",\"variant\":\"control\",\"cta\":\"작품 등록\"},{\"persona\":\"P06\",\"role\":\"작은 스튜디오 운영자\",\"scenario\":\"여러 작품의 모니터링 업무를 관리한다\",\"variant\":\"treatment\",\"cta\":\"첫 작품 보호하기\"},{\"persona\":\"P07\",\"role\":\"개인정보에 민감한 사진가\",\"scenario\":\"업로드 전 이미지 이용 범위를 확인한다\",\"variant\":\"control\",\"cta\":\"작품 등록\"},{\"persona\":\"P08\",\"role\":\"온라인 판매 초보자\",\"scenario\":\"상품 이미지 도용 방지 수단을 찾는다\",\"variant\":\"control\",\"cta\":\"작품 등록\"},{\"persona\":\"P09\",\"role\":\"신중한 고령 창작자\",\"scenario\":\"전문 용어 없이 다음 동작을 이해한다\",\"variant\":\"treatment\",\"cta\":\"첫 작품 보호하기\"},{\"persona\":\"P10\",\"role\":\"모바일 위주 웹툰 작가\",\"scenario\":\"작은 화면에서 업로드 경로를 찾는다\",\"variant\":\"treatment\",\"cta\":\"첫 작품 보호하기\"}]",
+  "responses": [
+    {
+      "persona": "P01",
+      "variant": "treatment",
+      "action": "click",
+      "understanding": 4,
+      "reason": "첫 작품을 등록하는 화면이고 버튼을 누르면 제목·설명·이미지 입력 단계로 간다는 점을 이해한다. 보호가 법적으로 보장되는지는 알 수 없지만, 우선 시작을 확인하려 한다."
+    },
+    {
+      "persona": "P02",
+      "variant": "treatment",
+      "action": "click",
+      "understanding": 4,
+      "reason": "작품 등록과 분석 진행 상태 확인이 목적임을 이해한다. ‘첫 작품’이라는 문구는 반복 등록 상황과 맞지 않지만 빠른 등록을 위해 진행한다."
+    },
+    {
+      "persona": "P03",
+      "variant": "treatment",
+      "action": "click",
+      "understanding": 3,
+      "reason": "버튼이 작품 등록으로 이어진다는 점은 알 수 있어 탐색하려 한다. 다만 화면만으로 키보드 조작이 가능한지는 확인할 수 없다."
+    },
+    {
+      "persona": "P04",
+      "variant": "control",
+      "action": "defer",
+      "understanding": 4,
+      "reason": "‘작품 등록’은 등록 단계로 가는 동작임을 이해한다. 등록 후 탐지 기능과 법적 보호의 차이에 관한 설명이 없어 먼저 정보를 원한다."
+    },
+    {
+      "persona": "P05",
+      "variant": "control",
+      "action": "click",
+      "understanding": 5,
+      "reason": "등록할 작품이 없고 ‘작품 등록’ 버튼이 다음 단계라는 점이 분명하다. 과제 작품 한 장을 빠르게 등록하려고 진행한다."
+    },
+    {
+      "persona": "P06",
+      "variant": "treatment",
+      "action": "click",
+      "understanding": 3,
+      "reason": "등록 후 분석 진행 상태를 확인하는 서비스로 이해한다. 여러 작품 관리 기능의 범위는 아직 모르지만 첫 작품 등록부터 시작한다."
+    },
+    {
+      "persona": "P07",
+      "variant": "control",
+      "action": "defer",
+      "understanding": 4,
+      "reason": "버튼을 누르면 작품 등록 화면으로 가는 점은 이해한다. 이미지 이용 범위나 개인정보 관련 안내가 없어 업로드 전 정보를 확인하고 싶다."
+    },
+    {
+      "persona": "P08",
+      "variant": "control",
+      "action": "defer",
+      "understanding": 3,
+      "reason": "작품 등록과 분석 진행 상태 확인이 가능하다는 점은 알 수 있다. 상품 이미지 도용 방지나 탐지 방법은 설명되지 않아 등록 전에 더 알고 싶다."
+    },
+    {
+      "persona": "P09",
+      "variant": "treatment",
+      "action": "click",
+      "understanding": 4,
+      "reason": "‘첫 작품 보호하기’가 제목·설명·이미지를 입력하는 등록 단계로 이어진다는 점을 이해한다. 보호의 구체적 의미는 불분명하지만 다음 동작은 쉬워 보여 진행한다."
+    },
+    {
+      "persona": "P10",
+      "variant": "treatment",
+      "action": "click",
+      "understanding": 4,
+      "reason": "첫 작품을 등록하려면 버튼을 눌러 이미지 입력 단계로 가면 된다는 점을 이해한다. 모바일 화면에서의 편의성은 아직 알 수 없지만 업로드 경로를 찾아 진행한다."
+    }
+  ]
+}
