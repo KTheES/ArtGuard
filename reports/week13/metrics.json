@@ -4,7 +4,8 @@
   "observedDates": [
     "2026-11-25",
     "2026-11-26",
-    "2026-11-27"
+    "2026-11-27",
+    "2026-11-28"
   ],
   "complete": false,
   "history": [
@@ -71,6 +72,28 @@
       "clicks": 6,
       "ctr": 1,
       "deferred": 0,
+      "left": 0,
+      "failures": 0
+    },
+    {
+      "date": "2026-11-28",
+      "variant": "control",
+      "personas": 4,
+      "exposures": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "deferred": 3,
+      "left": 0,
+      "failures": 0
+    },
+    {
+      "date": "2026-11-28",
+      "variant": "treatment",
+      "personas": 6,
+      "exposures": 6,
+      "clicks": 5,
+      "ctr": 0.8333333333333334,
+      "deferred": 1,
       "left": 0,
       "failures": 0
     }
